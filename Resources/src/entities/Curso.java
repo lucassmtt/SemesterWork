@@ -1,11 +1,15 @@
 package entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Curso {
     // Declarando todos os atributos da classe "Curso"
     public int codigoCurso;
     public String nomeCurso;
     public int cargaHoraria;
     public String descricao;
+    public Set<DiaSemana> diaSemana;
 
     // Construtor simples da classse
     public Curso(){}
@@ -16,6 +20,7 @@ public class Curso {
         this.nomeCurso = nomeCurso;
         this.cargaHoraria = cargaHoraria;
         this.descricao = descricao;
+        this.diaSemana = new HashSet<>();
     }
 
     // Getters e Setters da classe
@@ -41,6 +46,18 @@ public class Curso {
 
     public void setCargaHoraria(int cargaHoraria) {
         this.cargaHoraria = cargaHoraria;
+    }
+
+    public void adicionarDiaSemana(DiaSemana dia){
+        diaSemana.add(dia);
+    }
+
+    public void removerDiaSemana(DiaSemana dia){
+        diaSemana.remove(dia);
+    }
+
+    public Set<DiaSemana> getDiasSemana(){
+        return diaSemana;
     }
 
     public String getDescricao() {

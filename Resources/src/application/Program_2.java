@@ -12,74 +12,62 @@ public class Program_2 {
         List<Curso> lista_de_cursos = new ArrayList<>();
         List<Professor> lista_de_professores = new ArrayList<>();
 
-        int resposta = 1;
+        int resposta;
         boolean continuar = true;
 
         while (continuar) {
             try {
                 exibirMenu();
                 resposta = entrada.nextInt();
-                String resp = "";
+                String resp;
                 switch (resposta) {
-                    case 0:
+                    case 0 -> {
                         System.out.println("Saindo...");
                         continuar = false;
-                        break;
-
-                    case 1:
+                    }
+                    case 1 -> {
                         cadastrarAluno(lista_de_alunos, entrada);
                         resp = exibicao("Mostrar listas de alunos?", entrada);
-                        if (resp.equals("S")){exibirListaAlunos(lista_de_alunos);}
-                        break;
-
-                    case 2:
+                        if (resp.equals("S")) {
+                            exibirListaAlunos(lista_de_alunos);
+                        }
+                    }
+                    case 2 -> {
                         cadastrarSala(lista_de_salas, entrada);
                         resp = exibicao("Mostrar lista de salas?", entrada);
-                        if (resp.equals("A")){exibirListaSalas(lista_de_salas);}
-                        break;
-
-                    case 3:
+                        if (resp.equals("A")) {
+                            exibirListaSalas(lista_de_salas);
+                        }
+                    }
+                    case 3 -> {
                         cadastrarCurso(lista_de_cursos, entrada);
                         resp = exibicao("Mostrar lista de cursos?", entrada);
-                        if (resp.equals("S")){exibirListaCursos(lista_de_cursos);}
-                        break;
-
-                    case 4:
+                        if (resp.equals("S")) {
+                            exibirListaCursos(lista_de_cursos);
+                        }
+                    }
+                    case 4 -> {
                         cadastrarTurma(lista_de_salas, lista_de_cursos, entrada);
                         resp = exibicao("Mostrar lista de salas?", entrada);
+                        System.out.println(resp);
+                    }
 //                    if (resp.equals("S")){}
-                        break;
-
-                    case 5:
+                    case 5 -> {
                         cadastrarProfessor(entrada, lista_de_professores);
                         resp = exibicao("Mostrar lista de professores?", entrada);
-                        if (resp.equals("S")){
-                            exibirListaProfessores(lista_de_professores);}
-                        break;
-
-                    case 6:
-                        exibirListaAlunos(lista_de_alunos);
-                        break;
-
-                    case 7:
-                        exibirListaSalas(lista_de_salas);
-                        break;
-
-                    case 8:
-                        exibirListaCursos(lista_de_cursos);
-                        break;
-
-                    case 9:
+                        if (resp.equals("S")) {
+                            exibirListaProfessores(lista_de_professores);
+                        }
+                    }
+                    case 6 -> exibirListaAlunos(lista_de_alunos);
+                    case 7 -> exibirListaSalas(lista_de_salas);
+                    case 8 -> exibirListaCursos(lista_de_cursos);
+                    case 9 -> {
                         continue;
-
-                    case 10:
-                        exibirListaProfessores(lista_de_professores);
-                        break;
-
-                    default:
-                        System.out.println("Por favor, envie um valor válido...");
-                        break;
-            }
+                    }
+                    case 10 -> exibirListaProfessores(lista_de_professores);
+                    default -> System.out.println("Por favor, envie um valor válido...");
+                }
             }
             catch (InputMismatchException e){
                 System.out.println("Erro: Entrada válida. Certifique-se de inserir o tipo correto para cada dado!!!");
@@ -102,7 +90,7 @@ public class Program_2 {
     }
 
     public static void exibirMenu() {
-        System.out.println("_______________________\n");
+        separador();
         System.out.println("""
             DIGITE UM NÚMERO PARA:
             
@@ -121,13 +109,37 @@ public class Program_2 {
         System.out.print("Resposta: ");
     }
 
+    public static void exibirDiaSemana(){
+        separador();
+        System.out.println("Cadastrar nova turma:");
+        System.out.println("Digite o dia da semana que terá aula nessa turma: ");
+        System.out.println();
+        System.out.println("""
+                1 = Segunda
+                2 = Terça
+                3 = Quarta
+                4 = Quinta
+                5 = Sexta
+                            
+                (Se já estiver alocada uma turma na sala no dia enviado, será desconsiderado)
+                (Adicionar apenas um valor por vez)
+                
+                """);
+        System.out.print("Resposta: ");
+    }
+
+    public static void separador(){
+        System.out.println("_______________________\n");
+    }
+
     public static String exibicao(String msg, Scanner entrada) {
         System.out.print(msg + "(S/N): ");
         return entrada.next().substring(0, 1).toUpperCase();
     }
 
     public static void cadastrarAluno(List<Aluno> lista_de_alunos, Scanner entrada) {
-        System.out.println("Cadastrar novo aluno");
+        separador();
+        System.out.println("Cadastrar novo aluno:");
         System.out.println("Por favor envie os dados do aluno para ser cadastrado...");
 
         List<String> dados = cadastrarPessoa(entrada);
@@ -152,7 +164,8 @@ public class Program_2 {
     }
 
     public static void cadastrarSala(List<Sala> lista_de_salas, Scanner entrada) {
-        System.out.println("Cadastrar nova sala");
+        separador();
+        System.out.println("Cadastrar nova sala:");
         System.out.print("Digite o nome da sala: ");
         String nome_sala = entrada.next();
 
@@ -174,7 +187,8 @@ public class Program_2 {
     }
 
     public static void cadastrarCurso(List<Curso> lista_de_cursos, Scanner entrada) {
-        System.out.println("Cadastrar novo curso");
+        separador();
+        System.out.println("Cadastrar novo curso:");
 
         System.out.print("Digite o código do curso: ");
         int codigo_curso = entrada.nextInt();
@@ -202,41 +216,19 @@ public class Program_2 {
     }
 
     public static void cadastrarTurma(List<Sala> lista_de_salas, List<Curso> lista_de_cursos, Scanner entrada) {
-        System.out.println("Cadastrar nova turma");
-
-        System.out.print("Digite o dia da semana que terá aula nessa turma: ");
-        System.out.println("""
-                1 = Segunda
-                2 = Terça
-                3 = Quarta
-                4 = Quinta
-                5 = Sexta
-                            
-                (Se já estiver alocada uma turma na sala no dia enviado, será desconsiderado)
-                """);
-        int opcaoDiaSemana = entrada.nextInt();
-        entrada.nextLine();
-
-        System.out.println("Salas existentes: ");
-        exibirListaSalas(lista_de_salas);
-        System.out.print("Defina em qual sala será lecionada: ");
-        int opcaoSala = entrada.nextInt();
-        entrada.nextLine();
-
-        System.out.println("Cursos existentes: ");
-        exibirListaCursos(lista_de_cursos);
-        System.out.print("Defina qual curso será ministrado: ");
-        int opcaoCurso = entrada.nextInt();
-        entrada.nextLine();
-
-        Sala sala = lista_de_salas.get(opcaoSala - 1);
-        Curso curso = lista_de_cursos.get(opcaoCurso - 1);
-        DiaSemana diaSemana = DiaSemana.values()[opcaoDiaSemana - 1];
-
+        exibirDiaSemana();
+        String resp = entrada.next();
+        System.out.println("Cadastrar turma a mais um dia da semana? (S/N) ");
+        String cadastroMais = entrada.next();
+        if (cadastroMais.equals("S")){
+            exibirDiaSemana();
+            resp = entrada.next();
+        }
     }
 
     public static void cadastrarProfessor(Scanner entrada, List<Professor> lista_de_professores) {
-        System.out.println("Cadastrar novo professor");
+        separador();
+        System.out.println("Cadastrar novo professor: ");
 
         List<String> dados = cadastrarPessoa(entrada);
         String cpf = dados.get(0);
@@ -258,6 +250,7 @@ public class Program_2 {
     }
 
     public static void exibirListaProfessores(List<Professor> lista_de_professores){
+        System.out.println("Lista de professores: ");
         for (Professor professor : lista_de_professores){
             System.out.println(professor);
         }
@@ -279,8 +272,8 @@ public class Program_2 {
         System.out.print("Celular: ");
         String celular = entrada.next();
 
-        List<String> dados = Arrays.asList(_CPF, nome, endereco, email, celular);
-
-        return dados;
+        return Arrays.asList(_CPF, nome, endereco, email, celular);
     }
+
+
 }
