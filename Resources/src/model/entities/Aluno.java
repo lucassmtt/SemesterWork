@@ -1,4 +1,4 @@
-package entities;
+package model.entities;
 
 // Classe "Aluno" que herda da classe "Pessoa"
 // "final" para indicar que está classe não pode ser herdada

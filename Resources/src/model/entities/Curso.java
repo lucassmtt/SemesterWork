@@ -1,5 +1,6 @@
-package entities;
+package model.entities;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,6 +11,8 @@ public class Curso {
     public int cargaHoraria;
     public String descricao;
     public Set<DiaSemana> diaSemana;
+
+    public ArrayList<Aluno> listaAlunoNoCurso;
 
     // Construtor simples da classse
     public Curso(){}
@@ -23,6 +26,15 @@ public class Curso {
         this.diaSemana = new HashSet<>();
     }
 
+    public void adicionarAlunosAoCurso(Aluno aluno)
+    {
+        listaAlunoNoCurso.add(aluno);
+    }
+
+    public void removerAlunoDoCurso(Aluno aluno)
+    {
+        listaAlunoNoCurso.remove(aluno);
+    }
     // Getters e Setters da classe
     public int getCodigoCurso() {
         return codigoCurso;
