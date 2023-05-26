@@ -11,51 +11,93 @@ public class Program_2 {
         List<Sala> lista_de_salas = new ArrayList<>();
         List<Curso> lista_de_cursos = new ArrayList<>();
         List<Professor> lista_de_professores = new ArrayList<>();
+
         int resposta = 1;
+        boolean continuar = true;
 
-        while (resposta != 0) {
-            exibirMenu();
-            resposta = entrada.nextInt();
-            String resp = "";
-            switch (resposta) {
-                case 0:
-                    System.out.println("Saindo...");
-                    break;
+        while (continuar) {
+            try {
+                exibirMenu();
+                resposta = entrada.nextInt();
+                String resp = "";
+                switch (resposta) {
+                    case 0:
+                        System.out.println("Saindo...");
+                        continuar = false;
+                        break;
 
-                case 1:
-                    cadastrarAluno(lista_de_alunos, entrada);
-                    resp = exibicao("Mostrar listas de alunos?", entrada);
-                    if (resp.equals("S")){exibirListaAlunos(lista_de_alunos);}
-                    break;
+                    case 1:
+                        cadastrarAluno(lista_de_alunos, entrada);
+                        resp = exibicao("Mostrar listas de alunos?", entrada);
+                        if (resp.equals("S")){exibirListaAlunos(lista_de_alunos);}
+                        break;
 
-                case 2:
-                    cadastrarSala(lista_de_salas, entrada);
-                    resp = exibicao("Mostrar lista de salas?", entrada);
-                    if (resp.equals("A")){exibirListaSalas(lista_de_salas);}
-                    break;
+                    case 2:
+                        cadastrarSala(lista_de_salas, entrada);
+                        resp = exibicao("Mostrar lista de salas?", entrada);
+                        if (resp.equals("A")){exibirListaSalas(lista_de_salas);}
+                        break;
 
-                case 3:
-                    cadastrarCurso(lista_de_cursos, entrada);
-                    resp = exibicao("Mostrar lista de cursos?", entrada);
-                    if (resp.equals("S")){exibirListaCursos(lista_de_cursos);}
-                    break;
+                    case 3:
+                        cadastrarCurso(lista_de_cursos, entrada);
+                        resp = exibicao("Mostrar lista de cursos?", entrada);
+                        if (resp.equals("S")){exibirListaCursos(lista_de_cursos);}
+                        break;
 
-                case 4:
-                    cadastrarTurma(lista_de_salas, lista_de_cursos, entrada);
-                    resp = exibicao("Mostrar lista de salas?", entrada);
+                    case 4:
+                        cadastrarTurma(lista_de_salas, lista_de_cursos, entrada);
+                        resp = exibicao("Mostrar lista de salas?", entrada);
 //                    if (resp.equals("S")){}
-                    break;
+                        break;
 
-                case 5:
-                    cadastrarProfessor(entrada, lista_de_professores);
-                    resp = exibicao("Mostrar lista de professores?", entrada);
-                    if (resp.equals("S")){exibir_lista_professores(lista_de_professores);}
-                    break;
+                    case 5:
+                        cadastrarProfessor(entrada, lista_de_professores);
+                        resp = exibicao("Mostrar lista de professores?", entrada);
+                        if (resp.equals("S")){
+                            exibirListaProfessores(lista_de_professores);}
+                        break;
 
-                default:
-                    System.out.println("Por favor, envie um valor válido...");
-                    break;
+                    case 6:
+                        exibirListaAlunos(lista_de_alunos);
+                        break;
+
+                    case 7:
+                        exibirListaSalas(lista_de_salas);
+                        break;
+
+                    case 8:
+                        exibirListaCursos(lista_de_cursos);
+                        break;
+
+                    case 9:
+                        continue;
+
+                    case 10:
+                        exibirListaProfessores(lista_de_professores);
+                        break;
+
+                    default:
+                        System.out.println("Por favor, envie um valor válido...");
+                        break;
             }
+            }
+            catch (InputMismatchException e){
+                System.out.println("Erro: Entrada válida. Certifique-se de inserir o tipo correto para cada dado!!!");
+                entrada.nextLine();
+            }
+
+            catch (NoSuchElementException e){
+                System.out.println("Erro: Entrada não encontrada. Certifique-se de inserir todas as informações necessárias!!!");
+                entrada.nextLine();
+            }
+
+            catch (Exception e){
+                System.out.println("Ocorreu um erro inesperado. Por favor tente mais tarde");
+                e.printStackTrace();
+                continuar = false;
+            }
+
+
         }
     }
 
@@ -70,6 +112,11 @@ public class Program_2 {
              3 = CADASTRAR CURSO
              4 = CADASTRAR TURMA
              5 = CADASTRAR PROFESSOR
+             6 = MOSTRAR ALUNOS
+             7 = MOSTRAR SALAS
+             8 = MOSTRAR CURSOS
+             9 = MOSTRAR TURMAS
+             10 = MOSTRAR PROFESSORES
             """);
         System.out.print("Resposta: ");
     }
@@ -210,7 +257,7 @@ public class Program_2 {
         lista_de_professores.add(professor);
     }
 
-    public static void exibir_lista_professores(List<Professor> lista_de_professores){
+    public static void exibirListaProfessores(List<Professor> lista_de_professores){
         for (Professor professor : lista_de_professores){
             System.out.println(professor);
         }
@@ -235,9 +282,5 @@ public class Program_2 {
         List<String> dados = Arrays.asList(_CPF, nome, endereco, email, celular);
 
         return dados;
-    }
-
-    public static void exibir_ou_nao(){
-
     }
 }
