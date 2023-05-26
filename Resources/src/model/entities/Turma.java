@@ -5,6 +5,8 @@ import java.util.ArrayList;
 public class Turma {
     // Declarando todos os atributos da classe "Turma"
     public Sala sala;
+    public String nomeTurma;
+    public int codigo_turma;
     public ArrayList<Aluno> alunos_da_turma;
 
     public ArrayList<DiaSemana> dia_aula;
@@ -13,14 +15,19 @@ public class Turma {
     public Turma(){}
 
     // Construtor com todos os campos da classe "Turma"
-    public Turma(DiaSemana diaSemana) {
+    public Turma(String nomeTurma, int codigo_turma, ArrayList<DiaSemana> lista_de_dias_de_aula) {
+        this.nomeTurma = nomeTurma;
+        this.dia_aula = lista_de_dias_de_aula;
+        this.codigo_turma = codigo_turma;
+    }
+
+    public void adicionar_dia(DiaSemana diaSemana){
         dia_aula.add(diaSemana);
     }
 
-    public void adicionar_dia(DiaSemana diaSemana, int dia_em_formato_numero){
-        dia_aula.set(dia_em_formato_numero, diaSemana);
+    public void remover_dia(DiaSemana diaSemana){
+        dia_aula.remove(diaSemana);
     }
-
     public void adicionar_aluno_a_turma(Aluno aluno){
         alunos_da_turma.add(aluno);
     }
@@ -62,6 +69,23 @@ public class Turma {
         this.sala = sala;
     }
 
+    public String diaDeAula(ArrayList<DiaSemana> dia_aula){
+        ArrayList<String> dias = new ArrayList<>();
+        System.out.println("Dias da semana que tem aula: ");
+        for (DiaSemana dia : dia_aula){
+            String dia_em_string = dia.toString();
+            dias.add(dia_em_string);
+        }
+        return dias.toString();
+    }
+
     // to String da classe
 
+    @Override
+    public String toString() {
+        return  "Nome da turma: " + nomeTurma +
+                ", código da turma: " + codigo_turma +
+                ", alunos da turma: " + alunos_da_turma +
+                ", dias de aula: " + diaDeAula(dia_aula);
+    }
 }

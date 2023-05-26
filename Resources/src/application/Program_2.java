@@ -2,6 +2,8 @@ package application;
 
 import model.entities.*;
 
+import javax.swing.text.html.parser.Entity;
+import javax.xml.transform.Source;
 import java.util.*;
 
 public class Program_2 {
@@ -15,14 +17,13 @@ public class Program_2 {
     public static List<Aluno> lista_de_alunos;
     public static List<Sala> lista_de_salas;
     public static List<Curso> lista_de_cursos;
+    public static List<Turma> lista_de_turmas;
     public static List<Professor> lista_de_professores;
 
     static {lista_de_alunos = new ArrayList<>();}
-
     static {lista_de_salas = new ArrayList<>();}
-
     static {lista_de_cursos = new ArrayList<>();}
-
+    static {lista_de_turmas = new ArrayList<>();}
     static {lista_de_professores = new ArrayList<>();}
 
     public static void main(String[] args) {
@@ -89,10 +90,14 @@ public class Program_2 {
                     case 6 -> { wait(tempoEspera); exibirListaAlunos(lista_de_alunos); }
                     case 7 -> { wait(tempoEspera); exibirListaSalas(lista_de_salas); }
                     case 8 -> { wait(tempoEspera); exibirListaCursos(lista_de_cursos); }
-                    case 9 -> { wait(tempoEspera);
-                        continue;
+                    case 9 -> {
+                        wait(tempoEspera);
+                        exibirListaDeTurmas(lista_de_turmas);
                     }
                     case 10 -> {wait(tempoEspera); exibirListaProfessores(lista_de_professores); }
+                    case 12 -> {
+//                        adicionarTurmaSala();
+                    }
                     default -> System.out.println("Por favor, envie um valor válido...");
                 }
             }
@@ -142,8 +147,6 @@ public class Program_2 {
     }
 
     public static void exibirDiaSemana(){
-        separador();
-        System.out.println("Cadastrar nova turma:");
         System.out.println("Digite o dia da semana que terá aula nessa turma: ");
         System.out.println();
         System.out.println("""
@@ -304,46 +307,72 @@ public class Program_2 {
     {
         System.out.println("Cadastrar turma: ");
         System.out.print("Nome da turma: ");
-        int numeroTurma = entrada.nextInt();
-        Turma turma = new Turma();
-        System.out.println("""
-                    1 = Criar uma nova sala
-                    2 = Anexar as disponíveis?
-                    """);
-        wait(1000);
+        String nomeTurma = entrada.nextLine();
+        int codigo_turma = entrada.nextInt();
+        entrada.nextLine();
+        ArrayList<DiaSemana> diaComAula = new ArrayList<>();
         while (true)
         {
-            int resposta_de_anexo_ou_criacao = entrada.nextInt();
-            if (resposta_de_anexo_ou_criacao == 1){
-                cadastrarSala(lista_de_salas, entrada);
-            }
-            else if (resposta_de_anexo_ou_criacao == 2){
-                System.out.println("Salas disponíveis: (se o valor estiver vazio é porque não existe nenhuma sala criada)");
-                exibirListaSalas(lista_de_salas);
-            }
-            else {
-                System.out.println("Por favor digite uma opção válida...");
-                continue;
-            }
             DiaSemana cronograma = null;
             exibirDiaSemana();
             int resp = entrada.nextInt();
             switch (resp) {
-                case 1 -> turma.adicionar_dia(DiaSemana.SEGUNDA, resp);
-                case 2 -> turma.adicionar_dia(DiaSemana.TERCA, resp);
-                case 3 -> turma.adicionar_dia(DiaSemana.QUARTA, resp);
-                case 4 -> turma.adicionar_dia(DiaSemana.QUINTA, resp);
-                case 5 -> turma.adicionar_dia(DiaSemana.SEXTA, resp);
+                case 1 -> diaComAula.add(DiaSemana.SEGUNDA);
+                case 3 -> diaComAula.add(DiaSemana.TERCA);
+                case 4 -> diaComAula.add(DiaSemana.QUARTA);
+                case 5 -> diaComAula.add(DiaSemana.QUINTA);
+                case 6 -> diaComAula.add(DiaSemana.SEXTA);
                 default -> System.out.println("Por favor digite uma resposta válida...");
             }
-
             System.out.println("Anexar turma a mais um dia da semana? (S/N) ");
             String cadastroMais = entrada.next().substring(0, 1).toUpperCase();
             if (cadastroMais.equals("N")){
+                System.out.println("Nome da turma: " + nomeTurma);
+                System.out.println("Dias escolhidos: ");
+                for (DiaSemana diaSemana : diaComAula){
+                    System.out.println(diaSemana);
+                }
+                System.out.println("Informações corretas? (S/N) ");
+                String resposta = entrada.next().substring(0, 1).toUpperCase();
+                if (resposta.equals("S")) {
+                    Turma turma = new Turma(nomeTurma, codigo_turma, diaComAula);
+                    lista_de_turmas.add(turma);
+                }
+                else {
+                    System.out.println("Operação cancelada...");
+                }
                 break;
             }
         }
+        System.out.println("Gostaria de adicionar esta turma a uma sala? (S/N) ");
+        String resp = entrada.next();
+        if (resp.equals("S")){
+            System.out.println("Adicionando");
+        }
+        else {
+            System.out.println("Encerrando criação de turma...");
+        }
+    }
 
+    public static void exibirListaDeTurmas(List<Turma> lista_de_turmas){
+        System.out.println("Lista de turmas: ");
+        for (Turma turma : lista_de_turmas){
+            System.out.println(turma);
+        }
+    }
+
+    public static void adicionarTurmaSala(List<Turma> lista_de_turmas, Scanner SCANNER){
+        exibirListaDeTurmas(lista_de_turmas);
+        System.out.println("""
+                Adicionar turmas existentes = 1
+                Criar nova turma = 2
+                """);
+        int resp = SCANNER.nextInt();
+        SCANNER.nextLine();
+        if (resp == 1) {
+            System.out.println("Digite o código da turma que você quer adicionar a sala");
+        }
+        exibirListaSalas(lista_de_salas);
     }
 
     public static void cadastrarProfessor(Scanner entrada, List<Professor> lista_de_professores) {
