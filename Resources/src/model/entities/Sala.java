@@ -47,12 +47,7 @@ public class Sala
                 System.out.println("Código de sala indisponível, ja existe uma sala com este código...");
             }
         }
-        if (disponivel){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return disponivel;
     }
 
     public String getNome() {
@@ -82,10 +77,9 @@ public class Sala
     // to String da classe
     @Override
     public String toString() {
-        return "Sala{" +
-                "nome='" + nome + '\'' +
-                ", local='" + local + '\'' +
-                ", capacidade=" + capacidade +
-                '}';
+        return "nome: " + nome +
+                ", local: " + local +
+                ", capacidade: " + capacidade +
+                ", código: " + codigo;
     }
 }

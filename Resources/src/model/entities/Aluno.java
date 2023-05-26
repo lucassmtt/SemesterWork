@@ -16,6 +16,10 @@ public final class Aluno extends Pessoa
         this.matricula = matricula;
     }
 
+    public boolean existeEssaMatricula(int matricula){
+        return false;
+    }
+
     // getter e setter do atributo "matricula"
     public int getMatricula() {
         return matricula;

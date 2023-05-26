@@ -33,6 +33,7 @@ public class Program_2 {
             try {
                 exibirMenu();
                 resposta = SCANNER.nextInt();
+                SCANNER.nextLine();
                 String resp;
                 switch (resposta) {
                     case 0 -> {
@@ -45,6 +46,7 @@ public class Program_2 {
                         resp = exibicao("Mostrar listas de alunos?", SCANNER);
                         if (resp.equals("S")) {
                             exibirListaAlunos(lista_de_alunos);
+                            wait(1500);
                             System.out.println("\n");
                         }
                     }
@@ -55,6 +57,7 @@ public class Program_2 {
                         if (resp.equals("S")) {
                             System.out.println("\n");
                             exibirListaSalas(lista_de_salas);
+                            wait(1500);
                         }
                     }
                     case 3 -> {
@@ -64,6 +67,7 @@ public class Program_2 {
                         if (resp.equals("S")) {
                             System.out.println("\n");
                             exibirListaCursos(lista_de_cursos);
+                            wait(1500);
                         }
                     }
                     case 4 -> {
@@ -94,6 +98,7 @@ public class Program_2 {
             }
             catch (InputMismatchException e){
                 System.out.println("Erro: Entrada válida. Certifique-se de inserir o tipo correto para cada dado!!!");
+                wait(1000);
                 SCANNER.nextLine();
             }
 
@@ -179,21 +184,39 @@ public class Program_2 {
 
         System.out.print("Digite o número da matricula: ");
         int numero_matricula = entrada.nextInt();
-
-        Aluno aluno = new Aluno(cpf, nome, endereco, email, celular, numero_matricula);
-        lista_de_alunos.add(aluno);
+        separador();
+        System.out.println("CPF: " + cpf);
+        System.out.println("Nome: " + nome);
+        System.out.println("Endereço: " + endereco);
+        System.out.println("Email: " + email);
+        System.out.println("Celular: " + celular);
+        System.out.println("CONFIRMAR DADOS? (S/N) ");
+        String resp = entrada.next().substring(0, 1).toUpperCase();
+        if (resp.equals("S")){
+            Aluno aluno = new Aluno(cpf, nome, endereco, email, celular, numero_matricula);
+            lista_de_alunos.add(aluno);
+        }
+        else {
+            System.out.println("Operação cancelada...");
+        }
     }
 
     public static void exibirListaAlunos(List<Aluno> lista_de_alunos) {
         System.out.println("Lista de alunos: ");
         for (Aluno aluno : lista_de_alunos) {
+            wait(400);
             System.out.println("INFORMAÇÕES ALUNO: \n");
+            System.out.println();
             System.out.println("\tNome: " + aluno.nome);
             System.out.println("\tCPF: " + aluno.cpf);
             System.out.println("\tEndereço: " + aluno.endereco);
             System.out.println("\tCelular: " + aluno.celular);
             System.out.println("\tNúmero da Matrícula: " + aluno.matricula);
-            wait(tempoEspera);
+            System.out.println();
+            wait(1500);
+        }
+        if (lista_de_alunos.size() == 0){
+            System.out.println("LISTA DE ALUNOS VAZIA!");
         }
     }
 
@@ -210,44 +233,70 @@ public class Program_2 {
         int capacidadeTotalDaSala = entrada.nextInt();
         System.out.print("Digite o código da sala: ");
         int codigoSala = entrada.nextInt();
+        separador();
+        System.out.println("Nome: " + nome_sala);
+        System.out.println("Local: " + local_sala);
+        System.out.println("Capacidade: " + capacidadeTotalDaSala);
+        System.out.println("Código: " + codigoSala);
 
-        Sala novaSala = new Sala(codigoSala, nome_sala, local_sala, capacidadeTotalDaSala);
-        lista_de_salas.add(novaSala);
+        System.out.println("Informações correta? (S/N) ");
+        System.out.print("Resposta: ");
+        String resp = entrada.next().substring(0, 1).toUpperCase();
+        if (resp.equals("S")){
+            Sala novaSala = new Sala(codigoSala, nome_sala, local_sala, capacidadeTotalDaSala);
+            lista_de_salas.add(novaSala);
+        }
+        else {
+            System.out.println("Operação cancelada...");
+        }
     }
 
     public static void exibirListaSalas(List<Sala> lista_de_salas) {
         System.out.println("Lista de salas: ");
         for (Sala sala : lista_de_salas) {
             System.out.println(sala);
+            wait(1600);
         }
     }
 
-    public static void cadastrarCurso(List<Curso> lista_de_cursos, Scanner entrada) {
+    public static void cadastrarCurso(List<Curso> lista_de_cursos, Scanner SCANNER) {
         separador();
         System.out.println("Cadastrar novo curso:");
 
         System.out.print("Digite o código do curso: ");
-        int codigo_curso = entrada.nextInt();
-        entrada.nextLine();
+        int codigo_curso = SCANNER.nextInt();
+        SCANNER.nextLine();
 
         System.out.print("Digite o nome do curso: ");
-        String nome_curso = entrada.nextLine();
+        String nome_curso = SCANNER.nextLine();
 
         System.out.print("Digite a carga horária do curso: ");
-        int carga_horaria = entrada.nextInt();
-        entrada.nextLine();
+        int carga_horaria = SCANNER.nextInt();
+        SCANNER.nextLine();
 
         System.out.print("Digite uma descrição para o curso: ");
-        String descricao = entrada.nextLine();
-
-        Curso curso = new Curso(codigo_curso, nome_curso, carga_horaria, descricao);
-        lista_de_cursos.add(curso);
+        String descricao = SCANNER.nextLine();
+        separador();
+        System.out.println("Código do curso: " + codigo_curso);
+        System.out.println("Nome do curso: " + nome_curso);
+        System.out.println("Carga horária do curso: " + carga_horaria);
+        System.out.println("Descrição do curso " + descricao);
+        System.out.println("Informações corretas? (S/N)");
+        String resp = SCANNER.next().substring(0, 1).toUpperCase();
+        if (resp.equals("S")){
+            Curso curso = new Curso(codigo_curso, nome_curso, carga_horaria, descricao);
+            lista_de_cursos.add(curso);
+        }
+        else {
+            System.out.println("Operação cancelada...");
+        }
     }
 
     public static void exibirListaCursos(List<Curso> lista_de_cursos) {
         System.out.println("Lista de cursos: ");
         for (Curso curso : lista_de_cursos) {
             System.out.println(curso);
+            wait(1600);
         }
     }
 
@@ -324,24 +373,26 @@ public class Program_2 {
         System.out.println("Lista de professores: ");
         for (Professor professor : lista_de_professores){
             System.out.println(professor);
+            wait(1600);
         }
     }
 
-    public static List<String> cadastrarPessoa(Scanner entrada) {
+    public static List<String> cadastrarPessoa(Scanner SCANNER) {
         System.out.print("Nome: ");
-        String nome = entrada.next();
+        String nome = SCANNER.nextLine();
 
         System.out.print("CPF: ");
-        String _CPF = entrada.next();
+        String _CPF = SCANNER.next();
 
         System.out.print("Endereço: ");
-        String endereco = entrada.next();
+        SCANNER.nextLine();
+        String endereco = SCANNER.nextLine();
 
         System.out.print("Email: ");
-        String email = entrada.next();
+        String email = SCANNER.next();
 
         System.out.print("Celular: ");
-        String celular = entrada.next();
+        String celular = SCANNER.next();
 
         return Arrays.asList(_CPF, nome, endereco, email, celular);
     }
