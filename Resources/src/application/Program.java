@@ -117,6 +117,10 @@ public class Program {
                             (Se já estiver alocada uma turma na sala no dia enviado, será desconsiderado)
                             :
                             """);
+                    int opcaoDiaSemana = entrada.nextInt();
+                    DiaSemana diaSemana = DiaSemana.valueOf()[opcaoDiaSemana - 1];
+                    System.out.println(diaSemana);
+
                     System.out.print("Defina em qual sala será lecionada: ");
                     System.out.println("Salas existentes: ");
                     for (Sala sala : lista_de_salas){
