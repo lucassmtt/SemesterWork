@@ -129,6 +129,9 @@ public class Program_2 {
              8 = MOSTRAR CURSOS
              9 = MOSTRAR TURMAS
              10 = MOSTRAR PROFESSORES
+             11 = ADICIONAR ALUNO A TURMA
+             12 = ADICIONAR TURMA A SALA
+             13 = ADICIONAR PROFESSOR A TURMA
             """);
         System.out.print("Resposta: ");
     }
@@ -205,8 +208,10 @@ public class Program_2 {
 
         System.out.print("Digite a capacidade total da sala: ");
         int capacidadeTotalDaSala = entrada.nextInt();
+        System.out.print("Digite o código da sala: ");
+        int codigoSala = entrada.nextInt();
 
-        Sala novaSala = new Sala(nome_sala, local_sala, capacidadeTotalDaSala);
+        Sala novaSala = new Sala(codigoSala, nome_sala, local_sala, capacidadeTotalDaSala);
         lista_de_salas.add(novaSala);
     }
 
@@ -249,6 +254,9 @@ public class Program_2 {
     public static void cadastrarTurma(List<Sala> lista_de_salas, List<Curso> lista_de_cursos, Scanner entrada)
     {
         System.out.println("Cadastrar turma: ");
+        System.out.print("Nome da turma: ");
+        int numeroTurma = entrada.nextInt();
+        Turma turma = new Turma();
         System.out.println("""
                     1 = Criar uma nova sala
                     2 = Anexar as disponíveis?
@@ -268,15 +276,15 @@ public class Program_2 {
                 System.out.println("Por favor digite uma opção válida...");
                 continue;
             }
-            DiaSemana cronograma;
+            DiaSemana cronograma = null;
             exibirDiaSemana();
             int resp = entrada.nextInt();
             switch (resp) {
-                case 1 -> cronograma = DiaSemana.SEGUNDA;
-                case 2 -> cronograma = DiaSemana.TERCA;
-                case 3 -> cronograma = DiaSemana.QUARTA;
-                case 4 -> cronograma = DiaSemana.QUINTA;
-                case 5 -> cronograma = DiaSemana.SEXTA;
+                case 1 -> turma.adicionar_dia(DiaSemana.SEGUNDA, resp);
+                case 2 -> turma.adicionar_dia(DiaSemana.TERCA, resp);
+                case 3 -> turma.adicionar_dia(DiaSemana.QUARTA, resp);
+                case 4 -> turma.adicionar_dia(DiaSemana.QUINTA, resp);
+                case 5 -> turma.adicionar_dia(DiaSemana.SEXTA, resp);
                 default -> System.out.println("Por favor digite uma resposta válida...");
             }
 
@@ -286,6 +294,7 @@ public class Program_2 {
                 break;
             }
         }
+
     }
 
     public static void cadastrarProfessor(Scanner entrada, List<Professor> lista_de_professores) {

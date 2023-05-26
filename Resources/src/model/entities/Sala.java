@@ -25,17 +25,18 @@ public class Sala
         this.capacidade = capacidade;
     }
 
-    public void adicionarTurmaSala(Sala sala, Turma turma, DiaSemana dia){
+    public void adicionarTurmaSala(Sala sala, Turma turma, DiaSemana dia, int diaIndex){
         if (turma.tamanho_da_turma() > sala.capacidade){
             System.out.println("Impossível adicionar turma a sala, a turma excede a capacidade da sala...");
         }
-        else if () {
-            System.out.println("Impossível adicionar turma a sala no dia previsto, a sala já está sendo utilizada todos os dias...");
+
+        else if (dia == diasIndisponiveis.get(diaIndex)){
+            System.out.println("Impossível adicionar turma a sala no dia previsto, a sala já está sendo utilizada");
         }
         else {
-
+            diasIndisponiveis.set(diaIndex, dia);
+            turmaAnexadaSala.add(turma);
         }
-
     }
 
     public boolean salaTaDisponivel(Sala sala, ArrayList<Sala> listadeSalas){
