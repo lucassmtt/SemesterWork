@@ -16,7 +16,7 @@ public class Program_2 {
         while (resposta != 0) {
             exibirMenu();
             resposta = entrada.nextInt();
-
+            String resp = "";
             switch (resposta) {
                 case 0:
                     System.out.println("Saindo...");
@@ -24,27 +24,32 @@ public class Program_2 {
 
                 case 1:
                     cadastrarAluno(lista_de_alunos, entrada);
-                    exibirListaAlunos(lista_de_alunos);
+                    resp = exibicao("Mostrar listas de alunos?", entrada);
+                    if (resp.equals("S")){exibirListaAlunos(lista_de_alunos);}
                     break;
 
                 case 2:
                     cadastrarSala(lista_de_salas, entrada);
-                    String resp = exibicao("Exemplo", entrada);
+                    resp = exibicao("Mostrar lista de salas?", entrada);
                     if (resp.equals("A")){exibirListaSalas(lista_de_salas);}
                     break;
 
                 case 3:
                     cadastrarCurso(lista_de_cursos, entrada);
-                    exibirListaCursos(lista_de_cursos);
+                    resp = exibicao("Mostrar lista de cursos?", entrada);
+                    if (resp.equals("S")){exibirListaCursos(lista_de_cursos);}
                     break;
 
                 case 4:
                     cadastrarTurma(lista_de_salas, lista_de_cursos, entrada);
+                    resp = exibicao("Mostrar lista de salas?", entrada);
+//                    if (resp.equals("S")){}
                     break;
 
                 case 5:
                     cadastrarProfessor(entrada, lista_de_professores);
-                    exibir_lista_professores(lista_de_professores);
+                    resp = exibicao("Mostrar lista de professores?", entrada);
+                    if (resp.equals("S")){exibir_lista_professores(lista_de_professores);}
                     break;
 
                 default:
@@ -55,21 +60,22 @@ public class Program_2 {
     }
 
     public static void exibirMenu() {
-        System.out.println("_______________________");
+        System.out.println("_______________________\n");
         System.out.println("""
             DIGITE UM NÚMERO PARA:
             
-            0 = SAIR
+             0 = SAIR
              1 = CADASTRAR ALUNO
              2 = CADASTRAR SALA
              3 = CADASTRAR CURSO
              4 = CADASTRAR TURMA
-             5 = CADASTRAR PROFESSOR""");
+             5 = CADASTRAR PROFESSOR
+            """);
         System.out.print("Resposta: ");
     }
 
     public static String exibicao(String msg, Scanner entrada) {
-        System.out.println(msg + "(S/N)");
+        System.out.print(msg + "(S/N): ");
         return entrada.next().substring(0, 1).toUpperCase();
     }
 

@@ -182,8 +182,6 @@ public class Program {
         System.out.print("Celular: ");
         String celular = entrada.next();
 
-        List<String> dados = Arrays.asList(_CPF, nome, endereco, email, celular);
-
-        return dados;
+        return Arrays.asList(_CPF, nome, endereco, email, celular);
     }
 }
