@@ -168,13 +168,13 @@ public class Program {
     {
         Scanner entrada = new Scanner(System.in);
         System.out.print("Nome: ");
-        String nome = entrada.next();
+        String nome = entrada.nextLine();
 
         System.out.print("CPF: ");
         String _CPF = entrada.next();
 
         System.out.print("Endereço: ");
-        String endereco = entrada.next();
+        String endereco = entrada.nextLine();
 
         System.out.print("Email: ");
         String email = entrada.next();
