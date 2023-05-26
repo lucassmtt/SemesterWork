@@ -10,6 +10,7 @@ public class Program_2 {
         List<Aluno> lista_de_alunos = new ArrayList<>();
         List<Sala> lista_de_salas = new ArrayList<>();
         List<Curso> lista_de_cursos = new ArrayList<>();
+        List<Professor> lista_de_professores = new ArrayList<>();
         int resposta = 1;
 
         while (resposta != 0) {
@@ -28,7 +29,8 @@ public class Program_2 {
 
                 case 2:
                     cadastrarSala(lista_de_salas, entrada);
-                    exibirListaSalas(lista_de_salas);
+                    String resp = exibicao("Exemplo", entrada);
+                    if (resp.equals("A")){exibirListaSalas(lista_de_salas);}
                     break;
 
                 case 3:
@@ -41,7 +43,8 @@ public class Program_2 {
                     break;
 
                 case 5:
-                    cadastrarProfessor(entrada);
+                    cadastrarProfessor(entrada, lista_de_professores);
+                    exibir_lista_professores(lista_de_professores);
                     break;
 
                 default:
@@ -63,6 +66,11 @@ public class Program_2 {
              4 = CADASTRAR TURMA
              5 = CADASTRAR PROFESSOR""");
         System.out.print("Resposta: ");
+    }
+
+    public static String exibicao(String msg, Scanner entrada) {
+        System.out.println(msg + "(S/N)");
+        return entrada.next().substring(0, 1).toUpperCase();
     }
 
     public static void cadastrarAluno(List<Aluno> lista_de_alunos, Scanner entrada) {
@@ -172,12 +180,34 @@ public class Program_2 {
         Curso curso = lista_de_cursos.get(opcaoCurso - 1);
         DiaSemana diaSemana = DiaSemana.values()[opcaoDiaSemana - 1];
 
-        // Realize as operações necessárias com a turma
     }
 
-    public static void cadastrarProfessor(Scanner entrada) {
+    public static void cadastrarProfessor(Scanner entrada, List<Professor> lista_de_professores) {
         System.out.println("Cadastrar novo professor");
-        // Implemente a lógica para cadastrar um novo professor
+
+        List<String> dados = cadastrarPessoa(entrada);
+        String cpf = dados.get(0);
+        String nome = dados.get(1);
+        String endereco = dados.get(2);
+        String email = dados.get(3);
+        String celular = dados.get(4);
+        int codigo_funcionario = entrada.nextInt();
+
+        Professor professor = new Professor(
+                cpf,
+                nome,
+                endereco,
+                email,
+                celular,
+                codigo_funcionario
+        );
+        lista_de_professores.add(professor);
+    }
+
+    public static void exibir_lista_professores(List<Professor> lista_de_professores){
+        for (Professor professor : lista_de_professores){
+            System.out.println(professor);
+        }
     }
 
     public static List<String> cadastrarPessoa(Scanner entrada) {
@@ -199,5 +229,9 @@ public class Program_2 {
         List<String> dados = Arrays.asList(_CPF, nome, endereco, email, celular);
 
         return dados;
+    }
+
+    public static void exibir_ou_nao(){
+
     }
 }
