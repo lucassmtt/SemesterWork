@@ -1,3 +1,5 @@
+package GUI;
+
 import java.awt.*;
 
 
@@ -28,6 +30,7 @@ class CheckBox{
     }
 
     public static void main(String args[]){
-        new CheckBox();
+        System.out.println("New object!!");
+        CheckBox checkbox = new CheckBox();
     }
 }
