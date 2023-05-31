@@ -26,25 +26,25 @@ public class Cadastrar
      */
     public static List<String> info_pessoas(Scanner SCANNER)
     {
-        List<String> lista_vazia = new ArrayList<>();
-        String cpf_usuario_sem_formatacao = multiplica("a", 11);
+        List<String> lista_com_conteudo_ou_vazia = new ArrayList<>();
         while (true)
         {
-
             String cpf_validado = Valida.cpf();
-            if (cpf_validado.length() == 0){return lista_vazia;}
+            if (cpf_validado.length() == 0){return lista_com_conteudo_ou_vazia;}
 
             String nome = Valida.nome();
-            if (nome.length() == 0){return lista_vazia;}
+            if (nome.length() == 0){return lista_com_conteudo_ou_vazia;}
 
             String endereco = Valida.endereco();
-            if (endereco.length() == 0){return lista_vazia;}
+            if (endereco.length() == 0){return lista_com_conteudo_ou_vazia;}
 
             String email = Valida.email();
-            if (email.length() == 0) { return lista_vazia; }
+            if (email.length() == 0) { return lista_com_conteudo_ou_vazia; }
 
             String celular = Valida.celular();
-            if (celular.length() == 0){ return lista_vazia; }
+            if (celular.length() == 0){ return lista_com_conteudo_ou_vazia; }
+            lista_com_conteudo_ou_vazia.addAll(List.of(cpf_validado, nome, endereco, email));
+            return lista_com_conteudo_ou_vazia;
         }
     }
 
