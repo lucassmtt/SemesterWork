@@ -1,5 +1,9 @@
 package model.entities;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
 public class Pessoa
 {
     // Declaração de todos os atributos da classe "Pessoa"
@@ -21,7 +25,6 @@ public class Pessoa
         this.email = email;
         this.celular = celular;
     }
-
     // Getters e Setters de "Pessoa"
     public String getCpf() {
         return cpf;
