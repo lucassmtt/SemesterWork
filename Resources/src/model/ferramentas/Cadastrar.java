@@ -4,6 +4,8 @@ import model.auth.Valida;
 import model.entities.*;
 import model.exceptions.DomainException;
 
+import java.sql.SQLOutput;
+import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,63 +26,26 @@ public class Cadastrar
      */
     public static List<String> info_pessoas(Scanner SCANNER)
     {
-        String nome = multiplica("a", 50);
+        List<String> lista_vazia = new ArrayList<>();
         String cpf_usuario_sem_formatacao = multiplica("a", 11);
-        String endereco = multiplica("a",40);
-        String email = multiplica("a", 60);
-        String celular = multiplica("a", 12);
-        while (
-                   (nome.length() > 49)
-//                || (cpf_usuario_sem_formatacao.length() != 18)
-                || (endereco.length() > 39)
-                || (email.length() > 59)
-                || (celular.length() != 11)
-              )
+        while (true)
         {
-            System.out.print("Nome: ");
-            nome = SCANNER.nextLine();
-            if (nome.length() >= 50){
-                System.out.println("Por favor digite o nome corretamente!");
-                continue;
-            }
 
-//            System.out.print("CPF: ");
-//            cpf_usuario_sem_formatacao = SCANNER.next();
-            ArrayList<Integer> cpf_formatado = new ArrayList<Integer>();
-            Valida.cpf(cpf_usuario_sem_formatacao, SCANNER);
+            String cpf_validado = Valida.cpf();
+            if (cpf_validado.length() == 0){return lista_vazia;}
 
+            String nome = Valida.nome();
+            if (nome.length() == 0){return lista_vazia;}
 
-//            SCANNER.nextLine();
-//            if (cpf.length() != 18){
-//                System.out.println("Por favor digite corretamente o cpf (111.222.333.444-55) ");
-//                continue;
-//            }
+            String endereco = Valida.endereco();
+            if (endereco.length() == 0){return lista_vazia;}
 
+            String email = Valida.email();
+            if (email.length() == 0) { return lista_vazia; }
 
-
-
-            System.out.println("Endereço: ");
-            endereco = SCANNER.nextLine();
-            if (endereco.length() >= 40){
-                System.out.println("Digite o endereço corretamente!");
-                continue;
-            }
-
-            System.out.print("Email: ");
-            SCANNER.next();
-            if (email.length() >= 60){
-                System.out.println("Por favor digite o email corretamente!");
-                continue;
-            }
-
-            System.out.print("Celular: ");
-            SCANNER.next();
-            if (celular.length() != 11){
-                System.out.println("Por favor digite o seu celular corretamente!");
-                continue;
-            }
+            String celular = Valida.celular();
+            if (celular.length() == 0){ return lista_vazia; }
         }
-        return Arrays.asList(cpf_usuario_sem_formatacao, nome, endereco, email, celular);
     }
 
     /**
@@ -97,10 +62,11 @@ public class Cadastrar
     {
         Exibir.separador();
         System.out.println("Cadastrar novo aluno:");
-        System.out.println("Por favor envie os dados do aluno para ser cadastrado...");
 
         List<String> dados = info_pessoas(SCANNER);
-
+        if (dados.size() == 0){
+            System.out.println("Operação cancelada.");
+        }
         System.out.print("Digite o número da matricula: ");
         int numero_matricula = SCANNER.nextInt();
         Exibir.separador();
@@ -287,6 +253,9 @@ public class Cadastrar
         System.out.println("Cadastrar novo professor: ");
 
         List<String> dados = info_pessoas(SCANNER);
+        if (dados.size() == 0){
+            System.out.println("Operação cancelada...");
+        }
         int codigo_funcionario = SCANNER.nextInt();
 
         Professor professor = new Professor(
