@@ -43,7 +43,7 @@ public class Cadastrar
 
             String celular = Valida.celular();
             if (celular.length() == 0){ return lista_com_conteudo_ou_vazia; }
-            lista_com_conteudo_ou_vazia.addAll(List.of(cpf_validado, nome, endereco, email));
+            lista_com_conteudo_ou_vazia.addAll(List.of(cpf_validado, nome, endereco, email, celular));
             return lista_com_conteudo_ou_vazia;
         }
     }

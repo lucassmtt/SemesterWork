@@ -6,7 +6,7 @@ import model.ferramentas.Exibir;
 
 import java.util.*;
 
-public class Program_2
+public class Program
 {
     public static final Scanner SCANNER;
     public static final int tempoEspera = 500;
@@ -51,13 +51,13 @@ public class Program_2
                     case 1 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         Cadastrar.aluno(lista_de_alunos, SCANNER);
-                        resp = Exibir.exibicao("Mostrar listas de alunos?", SCANNER);
+                        resp = Exibir.exibicao("Mostrar listas de alunos?");
                         if (resp.equals("S")) {
                             Exibir.listaDeAlunos(lista_de_alunos);
                             Exibir.espera_em_ms(1500);
                             System.out.println("\n");
                         }
-                        resp = Exibir.exibicao("Adicionar aluno a alguma sala?", SCANNER);
+                        resp = Exibir.exibicao("Adicionar aluno a alguma sala?");
                         if (resp.equals("S")){
 
                         }
@@ -65,7 +65,7 @@ public class Program_2
                     case 2 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         Cadastrar.sala(lista_de_salas, SCANNER);
-                        resp = Exibir.exibicao("Mostrar lista de salas?", SCANNER);
+                        resp = Exibir.exibicao("Mostrar lista de salas?");
                         if (resp.equals("S")) {
                             System.out.println("\n");
                             Exibir.listaDeSalas(lista_de_salas);
@@ -75,7 +75,7 @@ public class Program_2
                     case 3 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         Cadastrar.curso(lista_de_cursos, SCANNER);
-                        resp = Exibir.exibicao("Mostrar lista de cursos?", SCANNER);
+                        resp = Exibir.exibicao("Mostrar lista de cursos?");
                         if (resp.equals("S")) {
                             System.out.println("\n");
                             Exibir.listaDeCursos(lista_de_cursos);
@@ -85,7 +85,7 @@ public class Program_2
                     case 4 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         Cadastrar.turma(lista_de_salas, lista_de_cursos, lista_de_turmas, SCANNER);
-                        resp = Exibir.exibicao("Mostrar lista de salas?", SCANNER);
+                        resp = Exibir.exibicao("Mostrar lista de salas?");
                         System.out.println("\n");
                         System.out.println(resp);
                     }
@@ -93,7 +93,7 @@ public class Program_2
                     case 5 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         Cadastrar.professor(lista_de_professores, SCANNER);
-                        resp = Exibir.exibicao("Mostrar lista de professores?", SCANNER);
+                        resp = Exibir.exibicao("Mostrar lista de professores?");
                         if (resp.equals("S")) {
                             Exibir.listaDeProfessores(lista_de_professores);
                         }

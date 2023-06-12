@@ -23,12 +23,13 @@ public class Valida {
         while (true)
         {
             if (contador_de_vezes_na_funcao >= 1){
-                resp = Exibir.exibicao("Gostaria de cancelar a operação? ", SCANNER).toUpperCase().substring(0, 1);
+                resp = Exibir.exibicao("Gostaria de cancelar a operação? ").toUpperCase().substring(0, 1);
                 if (resp.equals("S")){ return ""; }
             }
             System.out.println("Por favor digite o cpf (111.222.333-45): ");
             System.out.print(": ");
             cpf = SCANNER.next();
+            SCANNER.nextLine();
             if (cpf.length() != 14){
                 System.out.println("Por favor digite um corretamente o CPF.");
                 contador_de_vezes_na_funcao += 1;
@@ -124,38 +125,26 @@ public class Valida {
         while (true)
         {
             if (contador_de_vezes_na_funcao >= 1){
-                resp = Exibir.exibicao("Gostaria de cancelar a operação? ", SCANNER).toUpperCase().substring(0, 1);
+                resp = Exibir.exibicao("Gostaria de cancelar a operação? ").toUpperCase().substring(0, 1);
                 if (resp.equals("S")){return "";}
             }
-            System.out.println("Digite o nome inteiro: ");
+            System.out.print("Digite o nome inteiro: ");
             String nome = SCANNER.nextLine();
             if (nome.length() > 100){
                 contador_de_vezes_na_funcao += 1;
+                System.out.println("Falhou 1");
                 continue;
             }
             if (nome.length() < 5){
                 contador_de_vezes_na_funcao += 1;
+                System.out.println("Falhou 2");
                 continue;
             }
-            int i = 0;
-            int j = 1;
-            int cont = 0;
 
-            for (; i <= nome.length(); i++, j++){
-                try {
-                    int num = Integer.parseInt(nome.substring(i, j));
-                }
-                catch (Exception e){
-                    cont += 1;
-                }
-            }
-            if (cont != nome.length()) {
-                contador_de_vezes_na_funcao += 1;
-                continue;
-            }
             System.out.println("Nome correto? " + nome + " (S/N) ");
             System.out.print(": ");
-            resp = SCANNER.next();
+            resp = SCANNER.next().substring(0, 1).toUpperCase();
+            SCANNER.nextLine();
             if (resp.equals("S")){
                 return nome;
             }
@@ -167,7 +156,7 @@ public class Valida {
         int contador_de_vezes_na_funcao = 0;
         while (true){
             if (contador_de_vezes_na_funcao >= 1){
-                resp = Exibir.exibicao("Gostaria de cancelar a operação? ", SCANNER).toUpperCase().substring(0, 1);
+                resp = Exibir.exibicao("Gostaria de cancelar a operação? ").toUpperCase().substring(0, 1);
                 if (resp.equals("S")){return "";}
             }
             System.out.print("Digite o endereço: ");
@@ -182,10 +171,10 @@ public class Valida {
                 contador_de_vezes_na_funcao += 1;
                 continue;
             }
-            System.out.println("Endereço correto? (S/N) ");
-            System.out.println(endereco);
+            System.out.println("Endereço correto? (S/N) " + endereco);
             System.out.print(": ");
-            resp = SCANNER.next();
+            resp = SCANNER.next().substring(0, 1).toUpperCase();
+            SCANNER.nextLine();
             if (resp.equals("S")) {
                 return endereco;
             }
@@ -197,7 +186,7 @@ public class Valida {
         int contador_de_vezes_na_funcao = 0;
         while (true){
             if (contador_de_vezes_na_funcao >= 1){
-                resp = Exibir.exibicao("Gostaria de cancelar a operação? ", SCANNER).toUpperCase().substring(0, 1);
+                resp = Exibir.exibicao("Gostaria de cancelar a operação? ").toUpperCase().substring(0, 1);
                 if (resp.equals("S")){return "";}
             }
             System.out.print("Digite seu email: ");
@@ -217,9 +206,10 @@ public class Valida {
             int cont = 0;
 
             for (; j <= email.length(); j++, k++){
-                if (email.substring(j, k) == "@"){
+                if (email.substring(j, k).equals("@")){
                     cont += 1;
                 }
+                if (j+1 == email.length()){break;}
             }
             if (cont != 1){
                 System.out.println("Por favor digite corretamente, um email não pode conter nenhuma ou mais de uma @!!!");
@@ -233,15 +223,14 @@ public class Valida {
     }
 
     public static String celular(){
-        System.out.println("Digite seu telefone celular: ");
         String celular, resp;
         int contador_de_vezes_na_funcao = 0;
         while (true){
             if (contador_de_vezes_na_funcao >= 1){
-                resp = Exibir.exibicao("Gostaria de cancelar a operação? ", SCANNER).toUpperCase().substring(0, 1);
+                resp = Exibir.exibicao("Gostaria de cancelar a operação? ").toUpperCase().substring(0, 1);
                 if (resp.equals("S")){return "";}
             }
-            System.out.print(": ");
+            System.out.print("Digite seu telefone celular: ");
             celular = SCANNER.next();
 
             if (celular.length() != 11){
@@ -261,9 +250,10 @@ public class Valida {
             int k = 1;
             int cont = 0;
 
-            for (; j < celular.length(); j++){
+            for (; j < celular.length(); j++, k++){
                 try {
                     int num = Integer.parseInt(celular.substring(j, k));
+                    System.out.println(num);
                 }
                 catch (Exception e){
                     cont += 1;

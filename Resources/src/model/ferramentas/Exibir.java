@@ -5,7 +5,7 @@ import model.entities.*;
 import java.util.List;
 import java.util.Scanner;
 
-import static application.Program_2.lista_de_salas;
+import static application.Program.lista_de_salas;
 public class Exibir
 {
     public static void menu()
@@ -145,9 +145,11 @@ public class Exibir
     }
 
 
-    public static String exibicao(String msg, Scanner SCANNER)
+    public static String exibicao(String msg)
     {
+        Scanner scanner = new Scanner(System.in);
         System.out.print(msg + "(S/N): ");
-        return SCANNER.next().substring(0, 1).toUpperCase();
+        String retorno = scanner.next().substring(0, 1).toUpperCase();
+        return retorno;
     }
 }
