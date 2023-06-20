@@ -24,3 +24,16 @@ hs_err_pid*
 replay_pid*
 ContainerConfig/.env
 ContainerConfig/docker-compose.yml
+ContainerConfig/ContainerConfig/undo_002
+*.dblwr
+*.000001
+*.index
+*.pem
+ContainerConfig/ContainerConfig/ibtmp1
+*.sock
+*.ibd
+ContainerConfig/ContainerConfig/undo_001
+ContainerConfig/ContainerConfig/ibdata1
+ContainerConfig/ContainerConfig/ib_buffer_pool
+*.000002
+*.cnf
