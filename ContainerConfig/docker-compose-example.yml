@@ -1,0 +1,22 @@
+version: '3.9'
+services:
+  ContainerConfig:
+    container_name: ContainerConfig
+    hostname: ContainerConfig
+    image: mysql:8
+    restart: always
+    command:
+      - --authentication-policy=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --innodb_force_recovery=0
+    volumes:
+      - ./ContainerConfig:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: CHANGE-ME
+      MYSQL_DATABASE: CHANGE-ME
+      MYSQL_USER: CHANGE-ME
+      MYSQL_PASSWORD: CHANGE-ME
+      TZ: America/Sao_Paulo
