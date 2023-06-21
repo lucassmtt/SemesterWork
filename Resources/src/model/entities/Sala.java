@@ -1,109 +1,80 @@
 package model.entities;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.util.Objects;
 
-public class Sala
-{
+public class Sala implements Serializable {
     // Declarando todos os atributos da classe "Sala"
-    public int codigo;
-    public String nome;
-    public String local;
-    public int capacidade;
-
-    public ArrayList<Turma> turmaAnexadaSala;
-    public ArrayList<DiaSemana> diasIndisponiveis;
+    public Integer Id_Sala;
+    public String nomeSala;
+    public String localSala;
+    public int capacidadeSala;
 
 
     // Construtor simples da classe
-    public Sala(){}
+    public Sala() {
+    }
 
     // Construtor com todos os campos
-    public Sala(int codigo, String nome, String local, int capacidade) {
-        this.codigo = codigo;
-        this.nome = nome;
-        this.local = local;
-        this.capacidade = capacidade;
+    public Sala(Integer id_Sala, String nome, String local, int capacidade) {
+        this.Id_Sala = id_Sala;
+        this.nomeSala = nome;
+        this.localSala = local;
+        this.capacidadeSala = capacidade;
     }
 
-    public void adicionarTurmaSala(Sala sala, Turma turma, DiaSemana dia, int diaIndex){
-        if (turma.tamanho_da_turma() > sala.capacidade){
-            System.out.println("Impossível adicionar turma a sala, a turma excede a capacidade da sala...");
-        }
-
-        else if (dia == diasIndisponiveis.get(diaIndex)){
-            System.out.println("Impossível adicionar turma a sala no dia previsto, a sala já está sendo utilizada");
-        }
-        else {
-            diasIndisponiveis.set(diaIndex, dia);
-            turmaAnexadaSala.add(turma);
-        }
+    public Integer getId_Sala() {
+        return Id_Sala;
     }
 
-    public boolean salaTaDisponivel(Sala sala, ArrayList<Sala> listadeSalas){
-        boolean disponivel = true;
-        for (Sala salaIn : listadeSalas){
-            if (salaIn.codigo == sala.codigo){
-                disponivel = false;
-                System.out.println("Código de sala indisponível, ja existe uma sala com este código...");
-            }
-        }
-        return disponivel;
+    public void setId_Sala(Integer id_Sala) {
+        Id_Sala = id_Sala;
     }
 
-    public int getCodigo() {
-        return codigo;
+    public String getNomeSala() {
+        return nomeSala;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public void setNomeSala(String nomeSala) {
+        this.nomeSala = nomeSala;
     }
 
-    public ArrayList<Turma> getTurmaAnexadaSala() {
-        return turmaAnexadaSala;
+    public String getLocalSala() {
+        return localSala;
     }
 
-    public void setTurmaAnexadaSala(ArrayList<Turma> turmaAnexadaSala) {
-        this.turmaAnexadaSala = turmaAnexadaSala;
+    public void setLocalSala(String localSala) {
+        this.localSala = localSala;
     }
 
-    public ArrayList<DiaSemana> getDiasIndisponiveis() {
-        return diasIndisponiveis;
+    public int getCapacidadeSala() {
+        return capacidadeSala;
     }
 
-    public void setDiasIndisponiveis(ArrayList<DiaSemana> diasIndisponiveis) {
-        this.diasIndisponiveis = diasIndisponiveis;
+    public void setCapacidadeSala(int capacidadeSala) {
+        this.capacidadeSala = capacidadeSala;
     }
 
-    public String getNome() {
-        return nome;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sala sala = (Sala) o;
+        return capacidadeSala == sala.capacidadeSala && Objects.equals(Id_Sala, sala.Id_Sala) && Objects.equals(nomeSala, sala.nomeSala) && Objects.equals(localSala, sala.localSala);
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    @Override
+    public int hashCode() {
+        return Objects.hash(Id_Sala, nomeSala, localSala, capacidadeSala);
     }
 
-    public String getLocal() {
-        return local;
-    }
-
-    public void setLocal(String local) {
-        this.local = local;
-    }
-
-    public int getCapacidade() {
-        return capacidade;
-    }
-
-    public void setCapacidade(int capacidade) {
-        this.capacidade = capacidade;
-    }
-
-    // to String da classe
     @Override
     public String toString() {
-        return "nome: " + nome +
-                ", local: " + local +
-                ", capacidade: " + capacidade +
-                ", código: " + codigo;
+        return "Sala{" +
+                "Id_Sala=" + Id_Sala +
+                ", nomeSala='" + nomeSala + '\'' +
+                ", localSala='" + localSala + '\'' +
+                ", capacidadeSala=" + capacidadeSala +
+                '}';
     }
 }

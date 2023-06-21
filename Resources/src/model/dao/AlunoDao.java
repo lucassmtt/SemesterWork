@@ -2,15 +2,12 @@ package model.dao;
 
 import model.entities.Aluno;
 
-import java.util.List;
-
 public interface AlunoDao
 {
-    // Interface que estabelece os contratos a serem implementados
+    void inserirAluno(Aluno aluno);
+    void apagarAlunoPorId(Integer Id);
 
-    void insere(Aluno obj);
-    void atualiza(Aluno obj);
-    void deletaPorId(Integer id);
-    Aluno buscaPorId(Integer id);
-    List<Aluno> buscaTodos();
+    void atualizarAluno(Aluno aluno);
+    void buscarAlunoPorId(Integer id);
+    void buscarTodosAlunos();
 }

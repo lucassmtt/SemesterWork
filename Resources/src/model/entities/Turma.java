@@ -1,61 +1,51 @@
 package model.entities;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.util.Objects;
 
-public class Turma {
-    // Declarando todos os atributos da classe "Turma"
-    public int codigo_turma;
-    public Sala sala;
+public class Turma implements Serializable
+{
+    public Integer Id_Turma;
     public String nomeTurma;
-    public ArrayList<Aluno> alunos_da_turma;
+    public Sala sala;
+    public Curso curso;
 
-    public ArrayList<DiaSemana> dia_aula;
+    public Turma(){};
 
-    // Construtor simples da classe "Turma"
-    public Turma(){}
+    public Turma(Integer id_Turma, String nomeTurma)
+    {
+        Id_Turma = id_Turma;
+        this.nomeTurma = nomeTurma;
+    }
 
-    public Turma(Sala sala, String nomeTurma){
+    public Turma(Integer id_Turma, String nomeTurma, Sala sala)
+    {
+        Id_Turma = id_Turma;
+        this.nomeTurma = nomeTurma;
         this.sala = sala;
+    }
+
+    public Turma(Integer id_Turma, String nomeTurma, Curso curso)
+    {
+        Id_Turma = id_Turma;
         this.nomeTurma = nomeTurma;
+        this.curso = curso;
     }
 
-    public Turma(int CodigoTurma, String nomeTurma, int CodigoSala){
-        this.codigo_turma = CodigoTurma;
+    public Turma(Integer id_Turma, String nomeTurma, Sala sala, Curso curso)
+    {
+        Id_Turma = id_Turma;
         this.nomeTurma = nomeTurma;
-        sala.setCodigo(CodigoSala);
+        this.sala = sala;
+        this.curso = curso;
     }
 
-    // Construtor com todos os campos da classe "Turma"
-    public Turma(int codigo_turma, String nomeTurma) {
-        this.codigo_turma = codigo_turma;
-        this.nomeTurma = nomeTurma;
+    public Integer getId_Turma() {
+        return Id_Turma;
     }
 
-    public Turma(String nomeTurma) {
-        this.nomeTurma = nomeTurma;
-    }
-
-    public void adicionar_dia(DiaSemana diaSemana){
-        dia_aula.add(diaSemana);
-    }
-
-    public void remover_dia(DiaSemana diaSemana){
-        dia_aula.remove(diaSemana);
-    }
-    public void adicionar_aluno_a_turma(Aluno aluno){
-        alunos_da_turma.add(aluno);
-    }
-
-    public int tamanho_da_turma(){
-        return alunos_da_turma.size();
-    }
-
-    public int getCodigo_turma() {
-        return codigo_turma;
-    }
-
-    public void setCodigo_turma(int codigo_turma) {
-        this.codigo_turma = codigo_turma;
+    public void setId_Turma(Integer id_Turma) {
+        Id_Turma = id_Turma;
     }
 
     public String getNomeTurma() {
@@ -66,47 +56,6 @@ public class Turma {
         this.nomeTurma = nomeTurma;
     }
 
-    public ArrayList<Aluno> getAlunos_da_turma() {
-        return alunos_da_turma;
-    }
-
-    public void setAlunos_da_turma(ArrayList<Aluno> alunos_da_turma) {
-        this.alunos_da_turma = alunos_da_turma;
-    }
-
-    public ArrayList<DiaSemana> getDia_aula() {
-        return dia_aula;
-    }
-
-    public void setDia_aula(ArrayList<DiaSemana> dia_aula) {
-        this.dia_aula = dia_aula;
-    }
-
-    //    public void adicionar_aula_a_dia(int indexdia){
-//        switch (dia_aula.get(indexdia)){
-//            case SEGUNDA -> {
-//                dia_aula.get(indexdia)
-//            }
-//            case TERCA -> {}
-//            case QUARTA -> {}
-//            case QUINTA -> {}
-//            case SEXTA -> {}
-//        }
-//
-//
-//        if (dia_aula.get(indexdia) == DiaSemana.SEGUNDA){
-//
-//        }
-//    }
-
-//    public void adicionarTurmaSala(Turma turma){
-//    }
-//    public void adicionarMaisDias(){
-//        if (diasComprometidos.size() == 5){
-//
-//        }
-//    }
-
     public Sala getSala() {
         return sala;
     }
@@ -115,23 +64,34 @@ public class Turma {
         this.sala = sala;
     }
 
-//    public String diaDeAula(ArrayList<DiaSemana> dia_aula){
-//        ArrayList<String> dias = new ArrayList<>();
-//        System.out.println("Dias da semana que tem aula: ");
-//        for (DiaSemana dia : dia_aula){
-//            String dia_em_string = dia.toString();
-//            dias.add(dia_em_string);
-//        }
-//        return dias.toString();
-//    }
+    public Curso getCurso() {
+        return curso;
+    }
 
-    // to String da classe
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Turma turma = (Turma) o;
+        return Objects.equals(Id_Turma, turma.Id_Turma) && Objects.equals(nomeTurma, turma.nomeTurma) && Objects.equals(sala, turma.sala) && Objects.equals(curso, turma.curso);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Id_Turma, nomeTurma, sala, curso);
+    }
 
     @Override
     public String toString() {
-        return  "Nome da turma: " + nomeTurma +
-                ", código da turma: " + codigo_turma +
-                ", alunos da turma: " + alunos_da_turma;
-//                ", dias de aula: " + diaDeAula(dia_aula);
+        return "Turma{" +
+                "Id_Turma=" + Id_Turma +
+                ", nomeTurma='" + nomeTurma + '\'' +
+                ", sala=" + sala +
+                ", curso=" + curso +
+                '}';
     }
 }

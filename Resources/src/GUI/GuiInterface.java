@@ -1,13 +1,9 @@
 package GUI;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicArrowButton;
-import java.awt.*;
 
-public class GuiInterface
-{
-    public static void main(String args[])
-    {
+public class GuiInterface {
+    public static void main(String args[]) {
         JFrame frame = new JFrame(); // declares new frame
 
         JButton button = new JButton("Click-me"); // declares new btn
@@ -17,7 +13,6 @@ public class GuiInterface
         );
 
         frame.add(button);
-
 
 
         frame.setSize(500, 600);

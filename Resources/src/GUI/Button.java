@@ -5,11 +5,7 @@ import java.awt.*;
 
 class button {
 
-    public static void main(String args[]){
-        new button();
-    }
-
-    button(){
+    button() {
         Frame frame = new Frame("My Mini APP");
         Button btn_01 = new Button("OK");
         btn_01.setBounds(100, 50, 50, 50);
@@ -26,5 +22,9 @@ class button {
         frame.setSize(500, 500);
         frame.setLayout(null);
         frame.setVisible(true);
+    }
+
+    public static void main(String args[]) {
+        new button();
     }
 }

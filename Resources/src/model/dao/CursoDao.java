@@ -2,15 +2,11 @@ package model.dao;
 
 import model.entities.Curso;
 
-import java.util.List;
-
 public interface CursoDao
 {
-    // Interface que estabelece os contratos a serem implementados
-
-    void insere(Curso obj);
-    void atualiza(Curso obj);
-    void deletaPorId(Integer id);
-    Curso buscaPorId(Integer id);
-    List<Curso> buscaTodos();
+    void inserirCurso(Curso curso);
+    void apagarCurso(Curso curso);
+    void atualizarCurso(Curso curso);
+    void buscarCursoPorId(Integer Id);
+    void buscarTodosCursos();
 }

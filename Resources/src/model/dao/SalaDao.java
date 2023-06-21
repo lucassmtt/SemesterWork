@@ -2,15 +2,11 @@ package model.dao;
 
 import model.entities.Sala;
 
-import java.util.List;
-
 public interface SalaDao
 {
-    // Interface que estabelece os contratos a serem implementados
-
-    void insere(Sala obj);
-    void atualiza(Sala obj);
-    void deletaPorId(Integer id);
-    Sala buscaPorId(Integer id);
-    List<Sala> buscaTodos();
+    void inserirSala(Sala sala);
+    void apagarSala(Sala sala);
+    void atualizarSala(Sala sala);
+    void buscarSalaPorId(Integer Id);
+    void buscarTodasTurmas();
 }

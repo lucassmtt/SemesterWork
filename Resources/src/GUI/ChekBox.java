@@ -3,8 +3,8 @@ package GUI;
 import java.awt.*;
 
 
-class CheckBox{
-    CheckBox(){
+class CheckBox {
+    CheckBox() {
         Frame frame = new Frame();
 
         Label label = new Label("Select know languages");
@@ -29,7 +29,7 @@ class CheckBox{
         frame.setVisible(true);
     }
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
         System.out.println("New object!!");
         CheckBox checkbox = new CheckBox();
     }

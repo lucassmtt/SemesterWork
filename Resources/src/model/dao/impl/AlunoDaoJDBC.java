@@ -1,41 +1,239 @@
 package model.dao.impl;
 
+import db.DB;
+import db.DbException;
 import model.dao.AlunoDao;
 import model.entities.Aluno;
 
-import java.sql.Connection;
-import java.util.List;
+import java.sql.*;
+import java.util.Scanner;
 
 public class AlunoDaoJDBC implements AlunoDao
 {
     private Connection connection = null;
-    public AlunoDaoJDBC(Connection connection)
-    {
+
+    public AlunoDaoJDBC(Connection connection) {
         this.connection = connection;
     }
 
     @Override
-    public void insere(Aluno obj) {
+    public void inserirAluno(Aluno aluno)
+    {
+        if (connection != null){
+            PreparedStatement preparedStatement = null;
+            ResultSet resultSet = null;
+            try{
+                System.out.println("A");
+                String sql = "INSERT INTO faculdade.aluno (nome, endereco, celular, email, cpf, Id_Curso)" +
+                        " VALUES (?, ?, ?, ?, ?, ?);";
+                preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
+                preparedStatement = connection.prepareStatement(
+                        "INSERT INTO faculdade.aluno (nome, endereco, celular, email, cpf, Id_Curso)" +
+                        " VALUES (?, ?, ?, ?, ?, ?);"
+                        , Statement.RETURN_GENERATED_KEYS);
+                preparedStatement.setString(1, aluno.getNome());
+                preparedStatement.setString(2, aluno.getEndereco());
+                preparedStatement.setString(3, aluno.getCelular());
+                preparedStatement.setString(4, aluno.getEmail());
+                preparedStatement.setString(5, aluno.getCpf());
+                int linhas_afetadas = 0;
+                System.out.println("B");
+
+                preparedStatement.setObject(6, aluno.se_existir_o_curso_retorna_id_ou_null());
+
+                linhas_afetadas = preparedStatement.executeUpdate();
+
+                if (linhas_afetadas > 0) {
+                    resultSet = preparedStatement.getGeneratedKeys();
+                    if (resultSet.next()){
+                        int id = resultSet.getInt(1);
+                        aluno.setId_Matricula(id);
+                    }
+                    DB.fechaResultSet(resultSet);
+                    System.out.println("Inserção de aluno no banco de dados feita com sucesso...");
+                }
+                else {
+                    System.out.println("Impossível inserir aluno! ");
+                }
+            }
+            catch (Exception e){
+                throw new DbException(e.getMessage());
+            }
+            finally {
+                DB.fechaStatement(preparedStatement);
+            }
+        }
     }
 
     @Override
-    public void atualiza(Aluno obj) {
+    public void apagarAlunoPorId(Integer Id)
+    {
+        if (connection != null)
+        {
+            PreparedStatement preparedStatement = null;
 
+            try {
+                String sql = "DELETE FROM faculdade.aluno WHERE ID_matricula = ?;";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setInt(1, Id);
+
+                int rows_affect = preparedStatement.executeUpdate();
+
+                if (rows_affect > 0) {
+                    System.out.println("Aluno deletado com sucesso...");
+                }
+                else {
+                    System.out.println("Deleção incompleta...");
+                }
+            }
+            catch (SQLException e)
+            {
+                throw new DbException(e.getMessage());
+            }
+            finally {
+                DB.fechaStatement(preparedStatement);
+            }
+        }
+        else {
+            System.out.println("Impossível apagar dados com a conexão nula...");
+        }
     }
 
     @Override
-    public void deletaPorId(Integer id) {
+    public void atualizarAluno(Aluno aluno)
+    {
+        if (connection != null)
+        {
+            PreparedStatement preparedStatement = null;
+            try{
+                String sql = "UPDATE faculdade.aluno " +
+                        "SET nome = ?, endereco = ?, celular = ?, email = ?, cpf = ?,  ID_curso = ? " +
+                        "WHERE ID_matricula = ?;";
+                preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
+                preparedStatement.setString(1, aluno.getNome());
+                preparedStatement.setString(2, aluno.getEndereco());
+                preparedStatement.setString(3, aluno.getCelular());
+                preparedStatement.setString(4, aluno.getEmail());
+                preparedStatement.setString(5, aluno.getCpf());
+                preparedStatement.setObject(6, aluno.se_existir_o_curso_retorna_id_ou_null());
+                preparedStatement.setInt(7, aluno.getId_Matricula());
+
+                int linhas_afetadas = preparedStatement.executeUpdate();
+
+                if (linhas_afetadas > 0){
+                    System.out.println("Aluno atualizado com sucesso...");
+                }
+                else {
+                    System.out.println("Impossível atualizar aluno...");
+                }
+
+            } catch (SQLException e) {
+                throw new DbException(e.getMessage());
+            }
+            finally {
+                DB.fechaStatement(preparedStatement);
+            }
+        }
     }
 
     @Override
-    public Aluno buscaPorId(Integer id) {
-        return null;
+    public void buscarAlunoPorId(Integer id)
+    {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        if (connection != null)
+        {
+            try {
+                preparedStatement = connection.prepareStatement(
+                        "SELECT * FROM faculdade.aluno where ID_matricula = ?;"
+                );
+                preparedStatement.setInt(1, id);
+                resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()){
+                    System.out.println(
+                        "Matricula: " + resultSet.getInt(1) + "\n" +
+                                "Nome: " + resultSet.getString(2) + "\n" +
+                                "Endereço: " + resultSet.getString(3) + "\n" +
+                                "Celular: " + resultSet.getString(4) + "\n" +
+                                "Email: " + resultSet.getString(5) + "\n" +
+                                "Cpf: " + resultSet.getString(6)
+                );
+                    if (resultSet.getObject(7) == null){
+                        System.out.println("Curso: Nenhum curso matriculado");
+                    }
+                    else{
+                        System.out.println("Curso ID: " + resultSet.getInt(7));
+                    }
+
+                }
+                else {
+                    System.out.println("Nenhum registro encontrado...");
+                }
+
+            }
+            catch (SQLException e){
+                throw new DbException(e.getMessage());
+            }
+            finally {
+                DB.fechaStatement(preparedStatement);
+                DB.fechaResultSet(resultSet);
+            }
+        }
+        else{
+            System.out.println("The connection is null...");
+        }
     }
 
     @Override
-    public List<Aluno> buscaTodos() {
-        return null;
+    public void buscarTodosAlunos()
+    {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        if (connection != null)
+        {
+            try {
+                preparedStatement = connection.prepareStatement(
+                        "SELECT * FROM faculdade.aluno;"
+                );
+                resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()){
+                    System.out.println("_______________________________");
+                    System.out.println(
+                            "Matricula: " + resultSet.getInt(1) + "\n" +
+                            "Nome: " + resultSet.getString(2) + "\n" +
+                            "Endereço: " + resultSet.getString(3) + "\n" +
+                            "Celular: " + resultSet.getString(4) + "\n" +
+                            "Email: " + resultSet.getString(5) + "\n" +
+                            "Cpf: " + resultSet.getString(6)
+                    );
+                    if (resultSet.getObject(7) == null){
+                        System.out.println("Curso: Nenhum curso matriculado");
+                    }
+                    else{
+                        System.out.println("Curso ID: " + resultSet.getInt(7));
+                    }
+                }
+            }
+            catch (SQLException e){
+                throw new DbException(e.getMessage());
+            }
+            finally {
+                DB.fechaStatement(preparedStatement);
+                DB.fechaResultSet(resultSet);
+            }
+        }
+        else{
+            System.out.println("The connection is null...");
+        }
+
     }
 }
+
+
+

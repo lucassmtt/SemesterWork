@@ -1,35 +1,72 @@
 package model.entities;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 // Classe "Professor" que herda da classe "Pessoa"
 // "final" para indicar que está classe não pode ser herdada
-public final class Professor extends Pessoa
-{
-    public int codigoFuncionario;
+public final class Professor extends Pessoa implements Serializable {
+    public int Id_Professor;
+
+    public Curso curso;
 
     // construtor simples de "Professor"
-    Professor(){}
+    Professor() {
+    }
 
     // construtor com todos os campos de "Professor"
-    public Professor(String cpf, String nome, String endereco, String email, String celular, int codigoFuncionario) {
+    public Professor(String cpf, String nome, String endereco, String email, String celular, int Id_Professor)
+    {
         super(cpf, nome, endereco, email, celular);
-        this.codigoFuncionario = codigoFuncionario;
+        this.Id_Professor = Id_Professor;
+    }
+
+    public Professor(String cpf, String nome, String endereco, String email, String celular, int id_Professor, Curso curso)
+    {
+        super(cpf, nome, endereco, email, celular);
+        Id_Professor = id_Professor;
+        this.curso = curso;
     }
 
     // getter e setter do atributo "codigoFuncionario"
-    public int getCodigoFuncionario() {
-        return codigoFuncionario;
+    public int getId_Professor() {
+        return Id_Professor;
     }
 
-    public void setCodigoFuncionario(int codigoFuncionario) {
-        this.codigoFuncionario = codigoFuncionario;
+    public void setId_Professor(int id_Professor) {
+        this.Id_Professor = id_Professor;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Professor professor = (Professor) o;
+        return Id_Professor == professor.Id_Professor && Objects.equals(curso, professor.curso);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(Id_Professor, curso);
     }
 
     // to String da classe "Professor"
-
     @Override
     public String toString() {
         return "Professor{" +
-                "codigoFuncionario=" + codigoFuncionario +
+                "cpf='" + cpf + '\'' +
+                ", nome='" + nome + '\'' +
+                ", endereco='" + endereco + '\'' +
+                ", email='" + email + '\'' +
+                ", celular='" + celular + '\'' +
                 '}';
     }
 }

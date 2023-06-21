@@ -1,11 +1,6 @@
 package model.entities;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
-
-public class Pessoa
-{
+public class Pessoa {
     // Declaração de todos os atributos da classe "Pessoa"
     public String cpf;
     public String nome;
@@ -14,17 +9,18 @@ public class Pessoa
     public String celular;
 
     // Construtor simples de "Pessoa"
-    Pessoa(){}
+    Pessoa() {
+    }
 
     // Construtor com todos os campos de "Pessoa"
-    public Pessoa(String cpf, String nome, String endereco, String email, String celular)
-    {
+    public Pessoa(String cpf, String nome, String endereco, String email, String celular) {
         this.cpf = cpf;
         this.nome = nome;
         this.endereco = endereco;
         this.email = email;
         this.celular = celular;
     }
+
     // Getters e Setters de "Pessoa"
     public String getCpf() {
         return cpf;
