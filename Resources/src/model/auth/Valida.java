@@ -1,14 +1,9 @@
 package model.auth;
 
-import model.entities.DiaSemana;
-import model.ferramentas.Exibir;
+import model.tools.Exibir;
 
-import javax.xml.transform.Source;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Scanner;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 
 public class Valida {

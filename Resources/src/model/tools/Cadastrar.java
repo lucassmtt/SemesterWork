@@ -1,13 +1,9 @@
-package model.ferramentas;
+package model.tools;
 
 import model.auth.Valida;
 import model.entities.*;
-import model.exceptions.DomainException;
 
-import java.sql.SQLOutput;
-import java.text.BreakIterator;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 

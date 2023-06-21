@@ -1,8 +1,8 @@
 package application;
 
 import model.entities.*;
-import model.ferramentas.Cadastrar;
-import model.ferramentas.Exibir;
+import model.tools.Cadastrar;
+import model.tools.Exibir;
 
 import java.util.*;
 
