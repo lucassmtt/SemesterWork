@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface DaoSala
 {
+    // Interface que estabelece os contratos a serem implementados
+
     void insere(Sala obj);
     void atualiza(Sala obj);
     void deletaPorId(Integer id);

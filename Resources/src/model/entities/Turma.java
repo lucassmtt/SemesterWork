@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class Turma {
     // Declarando todos os atributos da classe "Turma"
+    public int codigo_turma;
     public Sala sala;
     public String nomeTurma;
-    public int codigo_turma;
     public ArrayList<Aluno> alunos_da_turma;
 
     public ArrayList<DiaSemana> dia_aula;

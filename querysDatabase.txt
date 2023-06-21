@@ -1,0 +1,45 @@
+CREATE TABLE curso (
+	CodigoCurso int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	NomeCurso varchar(30) DEFAULT NULL,
+	CargaHoraria int (11) DEFAULT NULL,
+	Descriação varchar(200) DEFAULT NULL
+);
+
+CREATE TABLE aluno (
+	MatriculaId int (11) NOT NULL AUTO_INCREMENT,
+	Nome varchar(200) DEFAULT NULL,
+	Endereco varchar(200) DEFAULT NULL,
+	Celular varchar(11) DEFAULT NULL,
+	Email varchar(200) DEFAULT NULL,
+	Cpf varchar(11) DEFAULT NULL,
+	CodigoCurso int (20) DEFAULT NULL,
+	PRIMARY KEY (MatriculaId),
+	FOREIGN KEY (CodigoCurso) REFERENCES curso (CodigoCurso)
+);
+
+CREATE TABLE professor (
+	CodigoFuncionarioId int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	Nome varchar(200) DEFAULT NULL,
+	Endereco varchar(200) DEFAULT NULL,
+	Celular varchar(11) DEFAULT NULL,
+	Email varchar(200) DEFAULT NULL,
+	Cpf varchar(11) DEFAULT NULL,
+	CodigoCurso int(11) DEFAULT NULL,
+	FOREIGN KEY (CodigoCurso) REFERENCES curso (CodigoCurso)
+);
+
+CREATE TABLE sala (
+	CodigoSala int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	Nome varchar(200) DEFAULT NULL,
+	Local varchar(50) DEFAULT NULL,
+	Capacidade int(4) DEFAULT NULL,
+	CodigoTurma int(11) DEFAULT NULL
+);
+
+CREATE TABLE turma (
+	CodigoTurma int(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	NomeTurma varchar(50) DEFAULT NULL,
+	CodigoSala int(11) DEFAULT NULL,
+	FOREIGN KEY (CodigoSala) REFERENCES sala (CodigoSala)
+);
+
