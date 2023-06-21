@@ -4,7 +4,7 @@ import model.entities.Sala;
 
 import java.util.List;
 
-public interface DaoSala
+public interface SalaDao
 {
     // Interface que estabelece os contratos a serem implementados
 
@@ -12,5 +12,5 @@ public interface DaoSala
     void atualiza(Sala obj);
     void deletaPorId(Integer id);
     Sala buscaPorId(Integer id);
-    List<Sala> findAll();
+    List<Sala> buscaTodos();
 }

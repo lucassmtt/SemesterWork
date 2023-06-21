@@ -4,7 +4,7 @@ import model.entities.Turma;
 
 import java.util.List;
 
-public interface DaoTurma
+public interface TurmaDao
 {
     // Interface que estabelece os contratos a serem implementados
 
@@ -12,5 +12,5 @@ public interface DaoTurma
     void atualiza(Turma obj);
     void deletaPorId(Integer id);
     Turma buscaPorId(Integer id);
-    List<Turma> findAll();
+    void buscaTodos();
 }

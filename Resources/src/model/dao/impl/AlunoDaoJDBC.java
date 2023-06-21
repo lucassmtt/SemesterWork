@@ -1,12 +1,19 @@
 package model.dao.impl;
 
-import model.dao.DaoAluno;
+import model.dao.AlunoDao;
 import model.entities.Aluno;
 
+import java.sql.Connection;
 import java.util.List;
 
-public class DaoAlunoJDBC implements DaoAluno
+public class AlunoDaoJDBC implements AlunoDao
 {
+    private Connection connection = null;
+    public AlunoDaoJDBC(Connection connection)
+    {
+        this.connection = connection;
+    }
+
     @Override
     public void insere(Aluno obj) {
 
@@ -28,7 +35,7 @@ public class DaoAlunoJDBC implements DaoAluno
     }
 
     @Override
-    public List<Aluno> findAll() {
+    public List<Aluno> buscaTodos() {
         return null;
     }
 }

@@ -37,3 +37,4 @@ ContainerConfig/ContainerConfig/ibdata1
 ContainerConfig/ContainerConfig/ib_buffer_pool
 *.000002
 *.cnf
+*.000003

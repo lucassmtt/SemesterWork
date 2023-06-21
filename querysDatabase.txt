@@ -43,3 +43,5 @@ CREATE TABLE turma (
 	FOREIGN KEY (CodigoSala) REFERENCES sala (CodigoSala)
 );
 
+
+

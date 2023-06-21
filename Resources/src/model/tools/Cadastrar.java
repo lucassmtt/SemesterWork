@@ -214,7 +214,7 @@ public class Cadastrar
                 System.out.println("Informações corretas? (S/N) ");
                 String resposta = SCANNER.next().substring(0, 1).toUpperCase();
                 if (resposta.equals("S")) {
-                    Turma turma = new Turma(nomeTurma, codigo_turma, diaComAula);
+                    Turma turma = new Turma(nomeTurma);
                     lista_de_turmas.add(turma);
                     System.out.println("Turma adicionada com sucesso!");
                 }

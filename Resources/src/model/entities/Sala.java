@@ -50,6 +50,30 @@ public class Sala
         return disponivel;
     }
 
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public ArrayList<Turma> getTurmaAnexadaSala() {
+        return turmaAnexadaSala;
+    }
+
+    public void setTurmaAnexadaSala(ArrayList<Turma> turmaAnexadaSala) {
+        this.turmaAnexadaSala = turmaAnexadaSala;
+    }
+
+    public ArrayList<DiaSemana> getDiasIndisponiveis() {
+        return diasIndisponiveis;
+    }
+
+    public void setDiasIndisponiveis(ArrayList<DiaSemana> diasIndisponiveis) {
+        this.diasIndisponiveis = diasIndisponiveis;
+    }
+
     public String getNome() {
         return nome;
     }

@@ -4,7 +4,7 @@ import model.entities.Aluno;
 
 import java.util.List;
 
-public interface DaoAluno
+public interface AlunoDao
 {
     // Interface que estabelece os contratos a serem implementados
 
@@ -12,5 +12,5 @@ public interface DaoAluno
     void atualiza(Aluno obj);
     void deletaPorId(Integer id);
     Aluno buscaPorId(Integer id);
-    List<Aluno> findAll();
+    List<Aluno> buscaTodos();
 }

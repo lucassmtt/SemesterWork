@@ -12,6 +12,7 @@ public class DB
     // Carrega propriedades do banco de dados
     public static Properties carregaPropriedades()
     {
+
         try(FileInputStream fileInputStream = new FileInputStream(
                 "/home/lucas-motta/Documents/GitHub/SemesterWork/ContainerConfig/.env"))
         {
@@ -27,7 +28,7 @@ public class DB
     // Estabelece conexão com o banco de dados
     public static Connection pegaConexao()
     {
-        if (connection != null)
+        if (connection == null)
         {
             try {
                 Properties properties = carregaPropriedades();
@@ -48,7 +49,6 @@ public class DB
         {
             try{
                 connection.close();
-                System.out.println("Close connection success...");
             }
             catch (SQLException e) {
                 throw new DbException(e.getMessage());
@@ -62,7 +62,6 @@ public class DB
         if (statement != null){
             try {
                 statement.close();
-                System.out.println("Closed statement");
             }
             catch (SQLException e){
                 throw new DbException(e.getMessage());
@@ -76,7 +75,6 @@ public class DB
         if (resultSet != null){
             try{
                 resultSet.close();
-                System.out.println("Result set closed...");
             }
             catch (SQLException e){
                 throw new DbException(e.getMessage());

@@ -1,11 +1,18 @@
 package model.dao.impl;
 
-import model.dao.DaoSala;
+import model.dao.SalaDao;
 import model.entities.Sala;
 
+import java.sql.Connection;
 import java.util.List;
 
-public class DaoSalaJDBC implements DaoSala {
+public class SalaDaoJDBC implements SalaDao
+{
+    private Connection connection = null;
+    public SalaDaoJDBC(Connection connection)
+    {
+        this.connection = connection;
+    }
     @Override
     public void insere(Sala obj) {
 
@@ -27,7 +34,7 @@ public class DaoSalaJDBC implements DaoSala {
     }
 
     @Override
-    public List<Sala> findAll() {
+    public List<Sala> buscaTodos() {
         return null;
     }
 }

@@ -1,12 +1,18 @@
 package model.dao.impl;
 
-import model.dao.DaoCurso;
+import model.dao.CursoDao;
 import model.entities.Curso;
 
+import java.sql.Connection;
 import java.util.List;
 
-public class DaoCursoJDBC implements DaoCurso
+public class CursoDaoJDBC implements CursoDao
 {
+    private Connection connection = null;
+    public CursoDaoJDBC(Connection connection)
+    {
+        this.connection = connection;
+    }
     @Override
     public void insere(Curso obj) {
 
@@ -28,7 +34,7 @@ public class DaoCursoJDBC implements DaoCurso
     }
 
     @Override
-    public List<Curso> findAll() {
+    public List<Curso> buscaTodos() {
         return null;
     }
 }

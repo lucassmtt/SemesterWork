@@ -4,7 +4,7 @@ import model.entities.Professor;
 
 import java.util.List;
 
-public interface DaoProfessor
+public interface ProfessorDao
 {
     // Interface que estabelece os contratos a serem implementados
 
@@ -12,5 +12,5 @@ public interface DaoProfessor
     void atualiza(Professor obj);
     void deletaPorId(Integer id);
     Professor buscaPorId(Integer id);
-    List<Professor> findAll();
+    List<Professor> buscaTodos();
 }

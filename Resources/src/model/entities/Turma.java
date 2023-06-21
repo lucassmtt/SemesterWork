@@ -14,11 +14,25 @@ public class Turma {
     // Construtor simples da classe "Turma"
     public Turma(){}
 
-    // Construtor com todos os campos da classe "Turma"
-    public Turma(String nomeTurma, int codigo_turma, ArrayList<DiaSemana> lista_de_dias_de_aula) {
+    public Turma(Sala sala, String nomeTurma){
+        this.sala = sala;
         this.nomeTurma = nomeTurma;
-        this.dia_aula = lista_de_dias_de_aula;
+    }
+
+    public Turma(int CodigoTurma, String nomeTurma, int CodigoSala){
+        this.codigo_turma = CodigoTurma;
+        this.nomeTurma = nomeTurma;
+        sala.setCodigo(CodigoSala);
+    }
+
+    // Construtor com todos os campos da classe "Turma"
+    public Turma(int codigo_turma, String nomeTurma) {
         this.codigo_turma = codigo_turma;
+        this.nomeTurma = nomeTurma;
+    }
+
+    public Turma(String nomeTurma) {
+        this.nomeTurma = nomeTurma;
     }
 
     public void adicionar_dia(DiaSemana diaSemana){
@@ -36,7 +50,39 @@ public class Turma {
         return alunos_da_turma.size();
     }
 
-//    public void adicionar_aula_a_dia(int indexdia){
+    public int getCodigo_turma() {
+        return codigo_turma;
+    }
+
+    public void setCodigo_turma(int codigo_turma) {
+        this.codigo_turma = codigo_turma;
+    }
+
+    public String getNomeTurma() {
+        return nomeTurma;
+    }
+
+    public void setNomeTurma(String nomeTurma) {
+        this.nomeTurma = nomeTurma;
+    }
+
+    public ArrayList<Aluno> getAlunos_da_turma() {
+        return alunos_da_turma;
+    }
+
+    public void setAlunos_da_turma(ArrayList<Aluno> alunos_da_turma) {
+        this.alunos_da_turma = alunos_da_turma;
+    }
+
+    public ArrayList<DiaSemana> getDia_aula() {
+        return dia_aula;
+    }
+
+    public void setDia_aula(ArrayList<DiaSemana> dia_aula) {
+        this.dia_aula = dia_aula;
+    }
+
+    //    public void adicionar_aula_a_dia(int indexdia){
 //        switch (dia_aula.get(indexdia)){
 //            case SEGUNDA -> {
 //                dia_aula.get(indexdia)
@@ -69,15 +115,15 @@ public class Turma {
         this.sala = sala;
     }
 
-    public String diaDeAula(ArrayList<DiaSemana> dia_aula){
-        ArrayList<String> dias = new ArrayList<>();
-        System.out.println("Dias da semana que tem aula: ");
-        for (DiaSemana dia : dia_aula){
-            String dia_em_string = dia.toString();
-            dias.add(dia_em_string);
-        }
-        return dias.toString();
-    }
+//    public String diaDeAula(ArrayList<DiaSemana> dia_aula){
+//        ArrayList<String> dias = new ArrayList<>();
+//        System.out.println("Dias da semana que tem aula: ");
+//        for (DiaSemana dia : dia_aula){
+//            String dia_em_string = dia.toString();
+//            dias.add(dia_em_string);
+//        }
+//        return dias.toString();
+//    }
 
     // to String da classe
 
@@ -85,7 +131,7 @@ public class Turma {
     public String toString() {
         return  "Nome da turma: " + nomeTurma +
                 ", código da turma: " + codigo_turma +
-                ", alunos da turma: " + alunos_da_turma +
-                ", dias de aula: " + diaDeAula(dia_aula);
+                ", alunos da turma: " + alunos_da_turma;
+//                ", dias de aula: " + diaDeAula(dia_aula);
     }
 }

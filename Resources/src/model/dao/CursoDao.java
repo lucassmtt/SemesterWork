@@ -4,7 +4,7 @@ import model.entities.Curso;
 
 import java.util.List;
 
-public interface DaoCurso
+public interface CursoDao
 {
     // Interface que estabelece os contratos a serem implementados
 
@@ -12,5 +12,5 @@ public interface DaoCurso
     void atualiza(Curso obj);
     void deletaPorId(Integer id);
     Curso buscaPorId(Integer id);
-    List<Curso> findAll();
+    List<Curso> buscaTodos();
 }
