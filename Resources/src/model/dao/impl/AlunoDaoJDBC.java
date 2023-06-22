@@ -62,6 +62,9 @@ public class AlunoDaoJDBC implements AlunoDao
                 DB.fechaStatement(preparedStatement);
             }
         }
+        else {
+            System.out.println("Impossível inserir dados com a conexão nula...");
+        }
     }
 
     @Override
@@ -134,6 +137,9 @@ public class AlunoDaoJDBC implements AlunoDao
                 DB.fechaStatement(preparedStatement);
             }
         }
+        else {
+            System.out.println("Impossível atualizar dados com a conexão nula...");
+        }
     }
 
     @Override
@@ -181,8 +187,8 @@ public class AlunoDaoJDBC implements AlunoDao
                 DB.fechaResultSet(resultSet);
             }
         }
-        else{
-            System.out.println("The connection is null...");
+        else {
+            System.out.println("Impossível buscar dado com a conexão nula...");
         }
     }
 
@@ -226,12 +232,8 @@ public class AlunoDaoJDBC implements AlunoDao
                 DB.fechaResultSet(resultSet);
             }
         }
-        else{
-            System.out.println("Impossível realizar operações com a conexão nula.");
+        else {
+            System.out.println("Impossível buscar dados com a conexão nula...");
         }
-
     }
 }
-
-
-

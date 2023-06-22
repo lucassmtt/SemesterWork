@@ -56,6 +56,9 @@ public class ProfessorDaoJDBC implements ProfessorDao
                 DB.fechaStatement(preparedStatement);
             }
         }
+        else {
+            System.out.println("Impossível inserir dados com a conexão nula...");
+        }
 
     }
 
@@ -130,6 +133,9 @@ public class ProfessorDaoJDBC implements ProfessorDao
                 DB.fechaStatement(preparedStatement);
             }
         }
+        else {
+            System.out.println("Impossível atualizar dados com a conexão nula...");
+        }
 
     }
 
@@ -174,6 +180,9 @@ public class ProfessorDaoJDBC implements ProfessorDao
                 DB.fechaResultSet(resultSet);
             }
         }
+        else {
+            System.out.println("Impossível buscar dados com a conexão nula...");
+        }
     }
 
     @Override
@@ -217,7 +226,7 @@ public class ProfessorDaoJDBC implements ProfessorDao
             }
         }
         else{
-            System.out.println("Impossível realizar operações com a conexão nula.");
+            System.out.println("Impossível buscar dados com a conexão nula.");
         }
 
     }
