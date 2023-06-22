@@ -1,10 +1,11 @@
 CREATE TABLE curso
 (
-    Id_curso     int PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    ID_curso     int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     nomeCurso    varchar(30)  DEFAULT NULL,
     cargaHoraria int      DEFAULT NULL,
     descriacao   varchar(200) DEFAULT NULL
 );
+
 
 CREATE TABLE sala
 (
@@ -20,9 +21,9 @@ CREATE TABLE turma
 	ID_turma int PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	nomeTurma varchar(50) DEFAULT NULL,
 	ID_Sala int DEFAULT NULL,
-	ID_Curso int,
-	FOREIGN KEY (ID_sala) REFERENCES sala(ID_sala),
-	FOREIGN KEY (ID_curso) REFERENCES curso(ID_curso)
+	ID_curso int,
+	FOREIGN KEY (ID_sala) REFERENCES faculdade.sala(ID_sala),
+	FOREIGN KEY (ID_curso) REFERENCES faculdade.curso(ID_curso)
 );
 
 
@@ -33,8 +34,8 @@ CREATE TABLE aula
     ID_turma int,
     dia_semana VARCHAR(20),
 
-    FOREIGN KEY (ID_sala) REFERENCES sala(ID_sala),
-    FOREIGN KEY (ID_turma) REFERENCES turma(ID_turma)
+    FOREIGN KEY (ID_sala) REFERENCES faculdade.sala(ID_sala),
+    FOREIGN KEY (ID_turma) REFERENCES faculdade.turma(ID_turma)
 );
 
 
@@ -45,9 +46,9 @@ CREATE TABLE aluno
 	endereco varchar(200) DEFAULT NULL,
 	celular varchar(11) DEFAULT NULL,
 	email varchar(200) DEFAULT NULL,
-	cpf varchar(11) DEFAULT NULL,
+	cpf varchar(200) DEFAULT NULL,
 	ID_curso int DEFAULT NULL,
-	FOREIGN KEY (ID_curso) REFERENCES curso (ID_curso)
+	FOREIGN KEY (ID_curso) REFERENCES faculdade.curso (ID_curso)
 );
 
 
@@ -58,7 +59,7 @@ CREATE TABLE professor
 	endereco varchar(200) DEFAULT NULL,
 	celular varchar(11) DEFAULT NULL,
 	email varchar(200) DEFAULT NULL,
-	cpf varchar(11) DEFAULT NULL,
+	cpf varchar(200) DEFAULT NULL,
 	ID_curso int DEFAULT NULL,
-	FOREIGN KEY (ID_curso) REFERENCES curso (ID_curso)
+	FOREIGN KEY (ID_curso) REFERENCES faculdade.curso (ID_curso)
 )
