@@ -12,32 +12,55 @@ public class Turma implements Serializable
 
     public Turma(){};
 
-    public Turma(Integer id_Turma, String nomeTurma)
+    public Turma(String nomeTurma)
     {
-        Id_Turma = id_Turma;
         this.nomeTurma = nomeTurma;
     }
 
-    public Turma(Integer id_Turma, String nomeTurma, Sala sala)
+    public Turma(String nomeTurma, Sala sala)
     {
-        Id_Turma = id_Turma;
         this.nomeTurma = nomeTurma;
         this.sala = sala;
     }
 
-    public Turma(Integer id_Turma, String nomeTurma, Curso curso)
+    public Turma(String nomeTurma, Curso curso)
     {
-        Id_Turma = id_Turma;
         this.nomeTurma = nomeTurma;
         this.curso = curso;
     }
 
-    public Turma(Integer id_Turma, String nomeTurma, Sala sala, Curso curso)
+    public Turma(String nomeTurma, Sala sala, Curso curso)
     {
-        Id_Turma = id_Turma;
         this.nomeTurma = nomeTurma;
         this.sala = sala;
         this.curso = curso;
+    }
+
+    public Object se_existir_o_sala_retorna_id_ou_null(){
+        if (sala == null){
+            return null;
+        }
+        else {
+            return sala.getId_Sala();
+        }
+    }
+
+    public Object se_existir_o_curso_retorna_id_ou_null(){
+        if (curso == null){
+            return null;
+        }
+        else {
+            return curso.getId_Curso();
+        }
+    }
+
+    public Object se_existir_o_nome_retorna_nome_ou_null(){
+        if (nomeTurma == null){
+            return null;
+        }
+        else {
+            return getNomeTurma();
+        }
     }
 
     public Integer getId_Turma() {
