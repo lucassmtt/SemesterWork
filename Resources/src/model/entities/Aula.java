@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Aula implements Serializable {
     public int idAula;
+    public String nomeAula;
     public Sala sala;
     public Turma turma;
     public String diaSemana;
@@ -11,32 +12,76 @@ public class Aula implements Serializable {
     public Aula() {
     }
 
-    public Aula(int idAula, String diaSemana)
+    public Aula(String diaSemana, String nomeAula)
     {
-        this.idAula = idAula;
         this.diaSemana = diaSemana;
+        this.nomeAula = nomeAula;
     }
 
-    public Aula(int idAula, Sala sala, Turma turma, String diaSemana)
+    public Aula(String nomeAula, String diaSemana, Sala sala, Turma turma)
     {
-        this.idAula = idAula;
+        this.nomeAula = nomeAula;
+        this.diaSemana = diaSemana;
         this.sala = sala;
         this.turma = turma;
-        this.diaSemana = diaSemana;
     }
 
-    public Aula(int idAula, Sala sala, String diaSemana)
+    public Aula(String diaSemana, String nomeAula, Sala sala)
     {
-        this.idAula = idAula;
+        this.nomeAula = nomeAula;
+        this.diaSemana = diaSemana;
         this.sala = sala;
-        this.diaSemana = diaSemana;
     }
 
-    public Aula(int idAula, Turma turma, String diaSemana)
+    public Aula(String diaSemana, String nomeAula, Turma turma)
     {
-        this.idAula = idAula;
-        this.turma = turma;
+        this.nomeAula = nomeAula;
         this.diaSemana = diaSemana;
+        this.turma = turma;
+    }
+
+    public Object se_existir_a_sala_retorna_id_ou_null(){
+        if (sala == null){
+            return null;
+        }
+        else {
+            return sala.getId_Sala();
+        }
+    }
+
+    public Object se_existir_a_turma_retorna_id_ou_null(){
+        if (sala == null){
+            return null;
+        }
+        else {
+            return turma.getId_Turma();
+        }
+    }
+
+    public Object se_existir_a_dia_semana_retorna_dia_ou_null(){
+        if (diaSemana == null){
+            return null;
+        }
+        else {
+            return getDiaSemana();
+        }
+    }
+
+    public Object se_existir_nome_retorna_nome_ou_null(){
+        if (nomeAula == null){
+            return null;
+        }
+        else {
+            return getNomeAula();
+        }
+    }
+
+    public String getNomeAula() {
+        return nomeAula;
+    }
+
+    public void setNomeAula(String nomeAula) {
+        this.nomeAula = nomeAula;
     }
 
     public int getIdAula() {

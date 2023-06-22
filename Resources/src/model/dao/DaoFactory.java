@@ -8,6 +8,10 @@ public class DaoFactory {
         return new AlunoDaoJDBC(DB.pegaConexao());
     }
 
+    public static AulaDao criaAulaDao(){
+        return new AulaDaoJDBC(DB.pegaConexao());
+    }
+
 //    public static CursoDao criaCursoDao() {
 //        return new CursoDaoJDBC(DB.pegaConexao());
 //    }

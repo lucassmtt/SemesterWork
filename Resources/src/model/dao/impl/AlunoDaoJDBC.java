@@ -23,10 +23,6 @@ public class AlunoDaoJDBC implements AlunoDao
             PreparedStatement preparedStatement = null;
             ResultSet resultSet = null;
             try{
-                String sql = "INSERT INTO faculdade.aluno (nome, endereco, celular, email, cpf, ID_curso)" +
-                        " VALUES (?, ?, ?, ?, ?, ?);";
-                preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
                 preparedStatement = connection.prepareStatement(
                         "INSERT INTO faculdade.aluno (nome, endereco, celular, email, cpf, ID_curso)" +
                         " VALUES (?, ?, ?, ?, ?, ?);"
@@ -160,11 +156,11 @@ public class AlunoDaoJDBC implements AlunoDao
                 if (resultSet.next()){
                     System.out.println(
                         "Matricula: " + resultSet.getInt(1) + "\n" +
-                                "Nome: " + resultSet.getString(2) + "\n" +
-                                "Endereço: " + resultSet.getString(3) + "\n" +
-                                "Celular: " + resultSet.getString(4) + "\n" +
-                                "Email: " + resultSet.getString(5) + "\n" +
-                                "Cpf: " + resultSet.getString(6)
+                        "Nome: " + resultSet.getString(2) + "\n" +
+                        "Endereço: " + resultSet.getString(3) + "\n" +
+                        "Celular: " + resultSet.getString(4) + "\n" +
+                        "Email: " + resultSet.getString(5) + "\n" +
+                        "Cpf: " + resultSet.getString(6)
                 );
                     if (resultSet.getObject(7) == null){
                         System.out.println("Curso: Nenhum curso matriculado");
@@ -177,6 +173,7 @@ public class AlunoDaoJDBC implements AlunoDao
                 else {
                     System.out.println("Nenhum registro encontrado...");
                 }
+                DB.fechaResultSet(resultSet);
 
             }
             catch (SQLException e){
@@ -184,7 +181,6 @@ public class AlunoDaoJDBC implements AlunoDao
             }
             finally {
                 DB.fechaStatement(preparedStatement);
-                DB.fechaResultSet(resultSet);
             }
         }
         else {
@@ -223,13 +219,13 @@ public class AlunoDaoJDBC implements AlunoDao
                         System.out.println("Curso ID: " + resultSet.getInt(7));
                     }
                 }
+                DB.fechaResultSet(resultSet);
             }
             catch (SQLException e){
                 throw new DbException(e.getMessage());
             }
             finally {
                 DB.fechaStatement(preparedStatement);
-                DB.fechaResultSet(resultSet);
             }
         }
         else {
