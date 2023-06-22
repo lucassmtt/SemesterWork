@@ -12,9 +12,9 @@ public class DaoFactory {
 //        return new CursoDaoJDBC(DB.pegaConexao());
 //    }
 
-//    public static ProfessorDao criaProfessorDao() {
-//        return new ProfessorDaoJDBC(DB.pegaConexao());
-//    }
+    public static ProfessorDao criaProfessorDao() {
+        return new ProfessorDaoJDBC(DB.pegaConexao());
+    }
 
 //    public static SalaDao criaSalaDao() {
 //        return new SalaDaoJDBC(DB.pegaConexao());

@@ -15,17 +15,24 @@ public final class Professor extends Pessoa implements Serializable {
     }
 
     // construtor com todos os campos de "Professor"
-    public Professor(String cpf, String nome, String endereco, String email, String celular, int Id_Professor)
+    public Professor(String cpf, String nome, String endereco, String email, String celular)
     {
         super(cpf, nome, endereco, email, celular);
-        this.Id_Professor = Id_Professor;
     }
 
-    public Professor(String cpf, String nome, String endereco, String email, String celular, int id_Professor, Curso curso)
+    public Professor(String cpf, String nome, String endereco, String email, String celular, Curso curso)
     {
         super(cpf, nome, endereco, email, celular);
-        Id_Professor = id_Professor;
         this.curso = curso;
+    }
+
+    public Object se_existir_o_curso_retorna_id_ou_null(){
+        if (curso == null){
+            return null;
+        }
+        else {
+            return curso.getId_Curso();
+        }
     }
 
     // getter e setter do atributo "codigoFuncionario"

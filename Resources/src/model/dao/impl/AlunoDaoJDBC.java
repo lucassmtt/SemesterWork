@@ -23,13 +23,12 @@ public class AlunoDaoJDBC implements AlunoDao
             PreparedStatement preparedStatement = null;
             ResultSet resultSet = null;
             try{
-                System.out.println("A");
-                String sql = "INSERT INTO faculdade.aluno (nome, endereco, celular, email, cpf, Id_Curso)" +
+                String sql = "INSERT INTO faculdade.aluno (nome, endereco, celular, email, cpf, ID_curso)" +
                         " VALUES (?, ?, ?, ?, ?, ?);";
                 preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
                 preparedStatement = connection.prepareStatement(
-                        "INSERT INTO faculdade.aluno (nome, endereco, celular, email, cpf, Id_Curso)" +
+                        "INSERT INTO faculdade.aluno (nome, endereco, celular, email, cpf, ID_curso)" +
                         " VALUES (?, ?, ?, ?, ?, ?);"
                         , Statement.RETURN_GENERATED_KEYS);
                 preparedStatement.setString(1, aluno.getNome());
@@ -38,7 +37,6 @@ public class AlunoDaoJDBC implements AlunoDao
                 preparedStatement.setString(4, aluno.getEmail());
                 preparedStatement.setString(5, aluno.getCpf());
                 int linhas_afetadas = 0;
-                System.out.println("B");
 
                 preparedStatement.setObject(6, aluno.se_existir_o_curso_retorna_id_ou_null());
 
@@ -47,8 +45,8 @@ public class AlunoDaoJDBC implements AlunoDao
                 if (linhas_afetadas > 0) {
                     resultSet = preparedStatement.getGeneratedKeys();
                     if (resultSet.next()){
-                        int id = resultSet.getInt(1);
-                        aluno.setId_Matricula(id);
+                        int ID = resultSet.getInt(1);
+                        aluno.setId_Matricula(ID);
                     }
                     DB.fechaResultSet(resultSet);
                     System.out.println("Inserção de aluno no banco de dados feita com sucesso...");
@@ -67,7 +65,7 @@ public class AlunoDaoJDBC implements AlunoDao
     }
 
     @Override
-    public void apagarAlunoPorId(Integer Id)
+    public void apagarAlunoPorId(Integer ID)
     {
         if (connection != null)
         {
@@ -76,12 +74,12 @@ public class AlunoDaoJDBC implements AlunoDao
             try {
                 String sql = "DELETE FROM faculdade.aluno WHERE ID_matricula = ?;";
                 preparedStatement = connection.prepareStatement(sql);
-                preparedStatement.setInt(1, Id);
+                preparedStatement.setInt(1, ID);
 
                 int rows_affect = preparedStatement.executeUpdate();
 
                 if (rows_affect > 0) {
-                    System.out.println("Aluno deletado com sucesso...");
+                    System.out.println("Aluno apagado com sucesso...");
                 }
                 else {
                     System.out.println("Deleção incompleta...");
@@ -139,7 +137,7 @@ public class AlunoDaoJDBC implements AlunoDao
     }
 
     @Override
-    public void buscarAlunoPorId(Integer id)
+    public void buscarAlunoPorId(Integer ID)
     {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -150,7 +148,7 @@ public class AlunoDaoJDBC implements AlunoDao
                 preparedStatement = connection.prepareStatement(
                         "SELECT * FROM faculdade.aluno where ID_matricula = ?;"
                 );
-                preparedStatement.setInt(1, id);
+                preparedStatement.setInt(1, ID);
                 resultSet = preparedStatement.executeQuery();
 
                 if (resultSet.next()){
@@ -229,7 +227,7 @@ public class AlunoDaoJDBC implements AlunoDao
             }
         }
         else{
-            System.out.println("The connection is null...");
+            System.out.println("Impossível realizar operações com a conexão nula.");
         }
 
     }

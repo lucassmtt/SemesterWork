@@ -5,8 +5,8 @@ import model.entities.Professor;
 public interface ProfessorDao
 {
     void inserirProfessor(Professor professor);
-    void apagarProfessor(Professor professor);
+    void apagarProfessorPorId(Integer ID);
     void atualizarProfessor(Professor professor);
-    void buscarProfessorPorId(Integer Id);
+    void buscarProfessorPorId(Integer ID);
     void buscarTodosOsProfessores();
 }
