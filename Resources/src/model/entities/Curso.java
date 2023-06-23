@@ -18,8 +18,7 @@ public class Curso implements Serializable {
     }
 
     // Construtor com todos os campos da classe
-    public Curso(Integer Id_Curso, String nomeCurso, int cargaHoraria, String descricao) {
-        this.Id_Curso = Id_Curso;
+    public Curso(String nomeCurso, int cargaHoraria, String descricao) {
         this.nomeCurso = nomeCurso;
         this.cargaHoraria = cargaHoraria;
         this.descricao = descricao;

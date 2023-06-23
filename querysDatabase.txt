@@ -3,7 +3,7 @@ CREATE TABLE curso
     ID_curso     int PRIMARY KEY NOT NULL AUTO_INCREMENT,
     nomeCurso    varchar(30)  DEFAULT NULL,
     cargaHoraria int      DEFAULT NULL,
-    descriacao   varchar(200) DEFAULT NULL
+    descricao   varchar(200) DEFAULT NULL
 );
 
 

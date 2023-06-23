@@ -2,7 +2,6 @@ package application;
 
 import model.dao.DaoFactory;
 import model.dao.TurmaDao;
-import model.dao.impl.TurmaDaoJDBC;
 import model.entities.Turma;
 
 public class test_Turma
