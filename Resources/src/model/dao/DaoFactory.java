@@ -20,9 +20,9 @@ public class DaoFactory {
         return new ProfessorDaoJDBC(DB.pegaConexao());
     }
 
-//    public static SalaDao criaSalaDao() {
-//        return new SalaDaoJDBC(DB.pegaConexao());
-//    }
+    public static SalaDao criaSalaDao() {
+        return new SalaDaoJDBC(DB.pegaConexao());
+    }
 
     public static TurmaDao criaTurmaDao(){return new TurmaDaoJDBC(DB.pegaConexao());}
 }

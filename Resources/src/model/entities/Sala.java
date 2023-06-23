@@ -16,8 +16,7 @@ public class Sala implements Serializable {
     }
 
     // Construtor com todos os campos
-    public Sala(Integer id_Sala, String nome, String local, int capacidade) {
-        this.Id_Sala = id_Sala;
+    public Sala( String nome, String local, int capacidade) {
         this.nomeSala = nome;
         this.localSala = local;
         this.capacidadeSala = capacidade;

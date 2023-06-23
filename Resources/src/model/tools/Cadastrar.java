@@ -1,6 +1,7 @@
 //package model.tools;
 //
 //import model.auth.Valida;
+//import model.dao.DaoFactory;
 //import model.entities.*;
 //
 //import java.util.ArrayList;
@@ -126,6 +127,7 @@
 //        String resp = SCANNER.next().substring(0, 1).toUpperCase();
 //        if (resp.equals("S")) {
 //            Sala novaSala = new Sala(nome_sala, local_sala, capacidadeTotalDaSala);
+//            DaoFactory.cria
 //            lista_de_salas.add(novaSala);
 //            System.out.println("Sala adicionada com sucesso!");
 //        } else {
