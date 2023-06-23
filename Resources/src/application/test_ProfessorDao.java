@@ -2,7 +2,6 @@ package application;
 
 import model.dao.DaoFactory;
 import model.dao.ProfessorDao;
-import model.entities.Curso;
 import model.entities.Professor;
 
 public class test_ProfessorDao

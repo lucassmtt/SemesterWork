@@ -2,10 +2,7 @@ package application;
 
 import model.dao.AlunoDao;
 import model.dao.DaoFactory;
-import model.dao.TurmaDao;
-import model.dao.impl.AlunoDaoJDBC;
 import model.entities.Aluno;
-import model.entities.Turma;
 
 public class test_AlunoDao {
     public static void main(String[] args) {

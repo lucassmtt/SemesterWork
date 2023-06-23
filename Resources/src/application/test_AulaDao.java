@@ -2,7 +2,6 @@ package application;
 
 import model.dao.AulaDao;
 import model.dao.DaoFactory;
-import model.dao.impl.AulaDaoJDBC;
 import model.entities.Aula;
 
 public class test_AulaDao
