@@ -27,7 +27,7 @@ public class test_AulaDao
         System.out.println("Test 4 - Buscar aula por ID");
         aulaDao.buscarAulaPorId(3);
 
-        System.out.println("Test 5 - Buscar todas as aulas por ID");
+        System.out.println("Test 5 - Buscar todas as aulas");
         aulaDao.buscarTodosAulas();
     }
 }

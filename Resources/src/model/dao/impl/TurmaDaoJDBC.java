@@ -1,7 +1,14 @@
 package model.dao.impl;
 
+import db.DB;
+import db.DbException;
 import model.dao.TurmaDao;
 import model.entities.Turma;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class TurmaDaoJDBC implements TurmaDao
 {
@@ -19,9 +26,13 @@ public class TurmaDaoJDBC implements TurmaDao
             ResultSet resultSet = null;
             try{
                 preparedStatement = connection.prepareStatement(
-                        "INSERT INTO faculdade.turma ()" +
-                        " VALUES (?, ?, ?, ?, ?, ?);"
+                        "INSERT INTO faculdade.turma (nomeTurma, ID_sala, ID_curso)" +
+                        " VALUES (?, ?, ?);"
                         , Statement.RETURN_GENERATED_KEYS);
+
+                preparedStatement.setString(1, turma.getNomeTurma());
+                preparedStatement.setObject(2, turma.se_existir_a_sala_retorna_id_ou_null());
+                preparedStatement.setObject(3, turma.se_existir_o_curso_retorna_id_ou_null());
 
                 int linhas_afetadas = 0;
 
@@ -31,14 +42,14 @@ public class TurmaDaoJDBC implements TurmaDao
                     resultSet = preparedStatement.getGeneratedKeys();
                     if (resultSet.next()){
                         int ID = resultSet.getInt(1);
-                        turma.setId_Matricula(ID);
+                        turma.setId_Turma(ID);
                     }
-                    DB.fechaResultSet(resultSet);
                     System.out.println("Inserção de turma no banco de dados feita com sucesso...");
                 }
                 else {
                     System.out.println("Impossível inserir turma! ");
                 }
+                DB.fechaResultSet(resultSet);
             }
             catch (Exception e){
                 throw new DbException(e.getMessage());
@@ -73,7 +84,7 @@ public class TurmaDaoJDBC implements TurmaDao
                     System.out.println("Deleção incompleta...");
                 }
             }
-            catch (SQLException e)
+            catch (Exception e)
             {
                 throw new DbException(e.getMessage());
             }
@@ -94,9 +105,14 @@ public class TurmaDaoJDBC implements TurmaDao
             PreparedStatement preparedStatement = null;
             try{
                 String sql = "UPDATE faculdade.turma " +
-                        "SET  " +
+                        "SET nomeTurma = ?, ID_sala = ?, ID_curso = ? " +
                         "WHERE ID_turma = ?;";
 
+                preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                preparedStatement.setObject(1, turma.se_existir_o_nome_retorna_nome_ou_null());
+                preparedStatement.setObject(2, turma.se_existir_a_sala_retorna_id_ou_null());
+                preparedStatement.setObject(3, turma.se_existir_o_curso_retorna_id_ou_null());
+                preparedStatement.setObject(4, turma.getId_Turma());
 
                 int linhas_afetadas = preparedStatement.executeUpdate();
 
@@ -107,7 +123,7 @@ public class TurmaDaoJDBC implements TurmaDao
                     System.out.println("Impossível atualizar turma...");
                 }
 
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 throw new DbException(e.getMessage());
             }
             finally {
@@ -134,22 +150,31 @@ public class TurmaDaoJDBC implements TurmaDao
                 preparedStatement.setInt(1, ID);
                 resultSet = preparedStatement.executeQuery();
 
+
                 if (resultSet.next()){
-                );
-
-
+                    System.out.println("______________________________");
+                    Object sala = resultSet.getObject(3);
+                    Object curso = resultSet.getObject(4);
+                    System.out.println("ID turma: " + resultSet.getInt(1));
+                    System.out.println("Nome da turma: " + resultSet.getString(2));
+                    if (sala == null){
+                        System.out.print("Sala: sem salas anexadas\n");
+                    }
+                    if (curso == null){
+                        System.out.println("Curso: sem curso anexado\n" );
+                    }
                 }
                 else {
                     System.out.println("Nenhum registro encontrado...");
                 }
-                DB.fechaResultSet(resultSet);
 
             }
-            catch (SQLException e){
+            catch (Exception e){
                 throw new DbException(e.getMessage());
             }
             finally {
                 DB.fechaStatement(preparedStatement);
+                DB.fechaResultSet(resultSet);
             }
         }
         else {
@@ -158,7 +183,7 @@ public class TurmaDaoJDBC implements TurmaDao
     }
 
     @Override
-    public void buscarTodosTurmas()
+    public void buscarTodasTurmas()
     {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -172,18 +197,25 @@ public class TurmaDaoJDBC implements TurmaDao
                 resultSet = preparedStatement.executeQuery();
 
                 while (resultSet.next()){
-
-
+                    System.out.println("______________________________");
+                    Object sala = resultSet.getObject(3);
+                    Object curso = resultSet.getObject(4);
+                    System.out.println("ID turma: " + resultSet.getInt(1));
+                    System.out.println("Nome da turma: " + resultSet.getString(2));
+                    if (sala == null){
+                        System.out.print("Sala: sem salas anexadas\n");
+                    }
+                    if (curso == null){
+                        System.out.println("Curso: sem curso anexado\n" );
+                    }
                 }
                 DB.fechaResultSet(resultSet);
             }
-            catch (SQLException e){
-                throw new DbException(e.getMessage());
-            }
-            finally {
-                DB.fechaStatement(preparedStatement);
+            catch (Exception e){
+
             }
         }
+
         else {
             System.out.println("Impossível buscar dados com a conexão nula...");
         }

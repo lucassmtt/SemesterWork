@@ -24,4 +24,5 @@ public class DaoFactory {
 //        return new SalaDaoJDBC(DB.pegaConexao());
 //    }
 
+    public static TurmaDao criaTurmaDao(){return new TurmaDaoJDBC(DB.pegaConexao());}
 }

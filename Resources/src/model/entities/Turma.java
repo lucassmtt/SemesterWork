@@ -36,7 +36,7 @@ public class Turma implements Serializable
         this.curso = curso;
     }
 
-    public Object se_existir_o_sala_retorna_id_ou_null(){
+    public Object se_existir_a_sala_retorna_id_ou_null(){
         if (sala == null){
             return null;
         }

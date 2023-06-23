@@ -34,7 +34,7 @@ public class test_AlunoDao {
         System.out.println("-- 4 TEST -- PROCURA ALUNO POR ID ");
         alunoDao.buscarAlunoPorId(5);
 
-        System.out.println("-- 4 TEST -- PROCURA TODOS OS ALUNOS");
+        System.out.println("-- 5 TEST -- PROCURA TODOS OS ALUNOS");
         alunoDao.buscarTodosAlunos();
 
     }
