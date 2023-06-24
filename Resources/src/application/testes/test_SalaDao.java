@@ -1,4 +1,4 @@
-package application;
+package application.testes;
 
 import model.dao.AulaDao;
 import model.dao.DaoFactory;
@@ -13,9 +13,10 @@ public class test_SalaDao
         System.out.println("1 Teste - Inserção");
         SalaDao salaDao = DaoFactory.criaSalaDao();
         Sala sala = new Sala("Sala A201", "Bloco B", 10);
+        salaDao.inserirSala(sala);
 
         System.out.println("2 Teste - Apagar sala Por ID");
-        salaDao.apagarSalaPorID(1);
+        salaDao.apagarSalaPorID(2);
 
         System.out.println("3 Teste - Atualizar sala");
         sala.setId_Sala(1);

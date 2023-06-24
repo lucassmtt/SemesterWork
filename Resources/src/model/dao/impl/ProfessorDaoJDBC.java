@@ -3,6 +3,7 @@ package model.dao.impl;
 import db.DB;
 import db.DbException;
 import model.dao.ProfessorDao;
+import model.entities.Curso;
 import model.entities.Professor;
 
 import java.sql.*;
@@ -183,6 +184,54 @@ public class ProfessorDaoJDBC implements ProfessorDao
         else {
             System.out.println("Impossível buscar dados com a conexão nula...");
         }
+    }
+
+    @Override
+    public Professor buscarProfessorPorIdTransformarEmObjProfessor(Integer ID)
+    {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        if (connection != null) {
+            try {
+                preparedStatement = connection.prepareStatement(
+                        "SELECT * FROM faculdade.professor where ID_professor = ?;"
+                );
+                preparedStatement.setInt(1, ID);
+                resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+
+                    Professor professor = new Professor();
+                    professor.setId_Professor(resultSet.getInt(1));
+                    professor.setNome(resultSet.getString(2));
+                    professor.setEndereco(resultSet.getString(3));
+                    professor.setEmail(resultSet.getString(5));
+                    professor.setCelular(resultSet.getString(4));
+                    professor.setCpf(resultSet.getString(6));
+
+                    if (resultSet.getObject(7) == null) {
+                        professor.setCurso(new Curso());
+                    } else {
+                        Curso curso = new Curso();
+                        curso.setId_Curso(resultSet.getInt(7));
+                    }
+                    return professor;
+                } else {
+                    System.out.println("Nenhum registro encontrado...");
+                }
+
+            } catch (SQLException e) {
+                throw new DbException(e.getMessage());
+            } finally {
+                DB.fechaStatement(preparedStatement);
+                DB.fechaResultSet(resultSet);
+            }
+        }
+        else {
+            System.out.println("Impossível buscar dados com a conexão nula...");
+        }
+        return null;
     }
 
     @Override

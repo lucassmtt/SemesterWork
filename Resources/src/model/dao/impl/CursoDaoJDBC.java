@@ -32,11 +32,9 @@ public class CursoDaoJDBC implements CursoDao
 
                 preparedStatement.setString(1, curso.getNomeCurso());
                 preparedStatement.setInt(2, curso.getCargaHoraria());
-                preparedStatement.setString(3, curso.getNomeCurso());
+                preparedStatement.setString(3, curso.getDescricao());
 
                 int linhas_afetadas = preparedStatement.executeUpdate();
-
-                linhas_afetadas = preparedStatement.executeUpdate();
 
                 if (linhas_afetadas > 0) {
                     resultSet = preparedStatement.getGeneratedKeys();
@@ -174,6 +172,49 @@ public class CursoDaoJDBC implements CursoDao
         else {
             System.out.println("Impossível buscar dado com a conexão nula...");
         }
+    }
+
+    @Override
+    public Curso buscarCursoPorIdTransformarEmObj(Integer Id)
+    {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        if (connection != null)
+        {
+            try {
+                preparedStatement = connection.prepareStatement(
+                        "SELECT * FROM faculdade.curso where ID_curso = ?;"
+                );
+                preparedStatement.setInt(1, Id);
+                resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()){
+                    Curso curso = new Curso();
+                    curso.setId_Curso(resultSet.getInt(1));
+                    curso.setCargaHoraria(resultSet.getInt(3));
+                    curso.setDescricao(resultSet.getString(4));
+                    curso.setNomeCurso(resultSet.getString(2));
+                    return curso;
+                }
+                else {
+                    System.out.println("Nenhum registro encontrado...");
+                    return null;
+                }
+
+            }
+            catch (Exception e){
+                throw new DbException(e.getMessage());
+            }
+            finally {
+                DB.fechaResultSet(resultSet);
+                DB.fechaStatement(preparedStatement);
+            }
+        }
+        else {
+            System.out.println("Impossível buscar dado com a conexão nula...");
+        }
+        return null;
     }
 
     @Override

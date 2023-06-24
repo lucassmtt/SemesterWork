@@ -8,5 +8,6 @@ public interface ProfessorDao
     void apagarProfessorPorId(Integer ID);
     void atualizarProfessor(Professor professor);
     void buscarProfessorPorId(Integer ID);
+    Professor buscarProfessorPorIdTransformarEmObjProfessor(Integer ID);
     void buscarTodosOsProfessores();
 }

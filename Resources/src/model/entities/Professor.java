@@ -11,7 +11,7 @@ public final class Professor extends Pessoa implements Serializable {
     public Curso curso;
 
     // construtor simples de "Professor"
-    Professor() {
+    public Professor() {
     }
 
     // construtor com todos os campos de "Professor"

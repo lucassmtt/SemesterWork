@@ -41,3 +41,4 @@ ContainerConfig/ContainerConfig/ib_buffer_pool
 ContainerConfig/ContainerConfig/binlog.000004
 *.000005
 *.000006
+ContainerConfig/ContainerConfig/binlog.000007

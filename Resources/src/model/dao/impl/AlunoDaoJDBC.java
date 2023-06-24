@@ -4,6 +4,7 @@ import db.DB;
 import db.DbException;
 import model.dao.AlunoDao;
 import model.entities.Aluno;
+import model.entities.Curso;
 
 import java.sql.*;
 import java.util.Scanner;
@@ -186,6 +187,57 @@ public class AlunoDaoJDBC implements AlunoDao
         else {
             System.out.println("Impossível buscar dado com a conexão nula...");
         }
+    }
+
+    @Override
+    public Aluno buscarAlunoPorIdTransformaEmAluno(Integer id)
+    {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        if (connection != null)
+        {
+            try {
+                preparedStatement = connection.prepareStatement(
+                        "SELECT * FROM faculdade.aluno where ID_matricula = ?;"
+                );
+                preparedStatement.setInt(1, id);
+                resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()){
+                    Aluno aluno = new Aluno();
+                    aluno.setNome(resultSet.getString(2));
+                    aluno.setEmail(resultSet.getString(5));
+                    if (resultSet.getObject(7) == null){
+                        aluno.setCurso(null);
+                    }
+                    else {
+                        Curso curso = new Curso();
+                        curso.setId_Curso(resultSet.getInt(7));
+                    }
+                    aluno.setEndereco(resultSet.getString(3));
+                    aluno.setCelular(resultSet.getString(4));
+                    aluno.setCpf(resultSet.getString(6));
+                    return aluno;
+
+                }
+                else {
+                    System.out.println("Nenhum registro encontrado...");
+                }
+                DB.fechaResultSet(resultSet);
+
+            }
+            catch (SQLException e){
+                throw new DbException(e.getMessage());
+            }
+            finally {
+                DB.fechaStatement(preparedStatement);
+            }
+        }
+        else {
+            System.out.println("Impossível buscar dado com a conexão nula...");
+        }
+        return null;
     }
 
     @Override

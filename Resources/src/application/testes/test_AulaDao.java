@@ -1,4 +1,4 @@
-package application;
+package application.testes;
 
 import model.dao.AulaDao;
 import model.dao.DaoFactory;

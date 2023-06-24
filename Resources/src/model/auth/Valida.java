@@ -259,7 +259,6 @@ public class Valida {
             for (; j < celular.length(); j++, k++) {
                 try {
                     int num = Integer.parseInt(celular.substring(j, k));
-                    System.out.println(num);
                 } catch (Exception e) {
                     cont += 1;
                 }

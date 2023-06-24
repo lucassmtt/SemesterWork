@@ -8,5 +8,6 @@ public interface AulaDao
     void apagarAulaPorId(Integer ID);
     void atualizarAula(Aula aula);
     void buscarAulaPorId(Integer ID);
+    Aula buscarAulaPorIdTransformarEmObjAula(Integer ID);
     void buscarTodosAulas();
 }

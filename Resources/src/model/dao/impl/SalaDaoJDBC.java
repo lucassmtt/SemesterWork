@@ -28,13 +28,11 @@ public class SalaDaoJDBC implements SalaDao
                         " VALUES (?, ?, ?);"
                         , Statement.RETURN_GENERATED_KEYS);
 
-                int linhas_afetadas = 0;
-
                 preparedStatement.setString(1, sala.getNomeSala());
                 preparedStatement.setString(2, sala.getLocalSala());
                 preparedStatement.setInt(3, sala.getCapacidadeSala());
 
-                linhas_afetadas = preparedStatement.executeUpdate();
+                int linhas_afetadas = preparedStatement.executeUpdate();
 
                 if (linhas_afetadas > 0) {
                     resultSet = preparedStatement.getGeneratedKeys();
@@ -148,9 +146,9 @@ public class SalaDaoJDBC implements SalaDao
                 resultSet = preparedStatement.executeQuery();
 
                 if (resultSet.next()){
-                    System.out.println("ID Sala: " + resultSet.getInt(1) +
-                            "Nome sala: " + resultSet.getString(2) +
-                            "Local: " + resultSet.getString(3) +
+                    System.out.println("ID Sala: " + resultSet.getInt(1) + "\n" +
+                            "Nome sala: " + resultSet.getString(2) + "\n" +
+                            "Local: " + resultSet.getString(3) + "\n" +
                             "Capcidade:  " + resultSet.getInt(4)
                     );
                 }
@@ -175,6 +173,50 @@ public class SalaDaoJDBC implements SalaDao
     }
 
     @Override
+    public Sala buscarSalaPorIdTransformarEmOBjSala(Integer Id)
+    {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        if (connection != null)
+        {
+            try {
+                preparedStatement = connection.prepareStatement(
+                        "SELECT * FROM faculdade.sala where ID_sala = ?;"
+                );
+                preparedStatement.setInt(1, Id);
+                resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()){
+                    Sala sala = new Sala();
+                    sala.setNomeSala(resultSet.getString(2));
+                    sala.setCapacidadeSala(resultSet.getInt(4));
+                    sala.setLocalSala(resultSet.getString(3));
+                    sala.setId_Sala(resultSet.getInt(1) );
+                    return sala;
+                }
+
+                else {
+                    System.out.println("Nenhum registro encontrado...");
+                }
+                DB.fechaResultSet(resultSet);
+            }
+
+            catch (Exception e){
+                throw new DbException(e.getMessage());
+            }
+            finally {
+                DB.fechaStatement(preparedStatement);
+            }
+        }
+
+        else {
+            System.out.println("Impossível buscar dado com a conexão nula...");
+        }
+        return null;
+    }
+
+    @Override
     public void buscarTodasSalas()
     {
         PreparedStatement preparedStatement = null;
@@ -184,15 +226,15 @@ public class SalaDaoJDBC implements SalaDao
         {
             try {
                 preparedStatement = connection.prepareStatement(
-                        "SELECT * FROM faculdade.curso;"
+                        "SELECT * FROM faculdade.sala;"
                 );
                 resultSet = preparedStatement.executeQuery();
 
                 while (resultSet.next()){
                     System.out.println("______________________________________");
-                    System.out.println("ID Sala: " + resultSet.getInt(1) +
-                            "Nome sala: " + resultSet.getString(2) +
-                            "Local: " + resultSet.getString(3) +
+                    System.out.println("ID Sala: " + resultSet.getInt(1) + "\n" +
+                            "Nome sala: " + resultSet.getString(2) + "\n" +
+                            "Local: " + resultSet.getString(3) + "\n" +
                             "Capcidade:  " + resultSet.getObject(4)
                     );
                 }

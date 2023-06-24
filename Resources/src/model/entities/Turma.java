@@ -37,7 +37,7 @@ public class Turma implements Serializable
     }
 
     public Object se_existir_a_sala_retorna_id_ou_null(){
-        if (sala == null){
+        if (sala.getId_Sala() == null){
             return null;
         }
         else {
@@ -46,7 +46,7 @@ public class Turma implements Serializable
     }
 
     public Object se_existir_o_curso_retorna_id_ou_null(){
-        if (curso == null){
+        if (curso.getNomeCurso() == null){
             return null;
         }
         else {

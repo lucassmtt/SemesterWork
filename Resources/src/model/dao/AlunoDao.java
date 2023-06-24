@@ -9,5 +9,6 @@ public interface AlunoDao
 
     void atualizarAluno(Aluno aluno);
     void buscarAlunoPorId(Integer id);
+    Aluno buscarAlunoPorIdTransformaEmAluno(Integer id);
     void buscarTodosAlunos();
 }

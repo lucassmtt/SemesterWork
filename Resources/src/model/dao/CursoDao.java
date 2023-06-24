@@ -8,5 +8,6 @@ public interface CursoDao
     void apagarCursoPorID(Integer ID);
     void atualizarCurso(Curso curso);
     void buscarCursoPorId(Integer Id);
+    Curso buscarCursoPorIdTransformarEmObj(Integer Id);
     void buscarTodosCursos();
 }

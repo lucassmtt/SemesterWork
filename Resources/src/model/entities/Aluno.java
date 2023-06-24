@@ -25,7 +25,7 @@ public final class Aluno extends Pessoa implements Serializable {
     }
 
     public Object se_existir_o_curso_retorna_id_ou_null(){
-        if (curso == null){
+        if (curso.Id_Curso == null){
             return null;
         }
         else {

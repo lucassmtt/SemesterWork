@@ -23,9 +23,11 @@ public class Exibir {
                  8 = MOSTRAR CURSOS
                  9 = MOSTRAR TURMAS
                  10 = MOSTRAR PROFESSORES
-                 11 = ADICIONAR ALUNO A TURMA
-                 12 = ADICIONAR TURMA A SALA
-                 13 = ADICIONAR PROFESSOR A TURMA
+                 11 = ADICIONAR ALUNO A CURSO
+                 12 = ADICIONAR TURMA A CURSO
+                 13 = ADICIONAR PROFESSOR A CURSO
+                 14 = ADICIONAR AULA A SALA
+                 15 = ADICIONAR TURMA A SALA
                 """);
         System.out.print("Resposta: ");
     }
