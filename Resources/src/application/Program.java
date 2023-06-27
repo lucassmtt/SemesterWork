@@ -70,6 +70,7 @@ public class Program {
                             Exibir.espera_em_ms(1500);
                         }
                     }
+                    
                     case 3 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         Curso curso = Cadastrar.curso(SCANNER);
@@ -81,6 +82,7 @@ public class Program {
                             Exibir.espera_em_ms(1500);
                         }
                     }
+
                     case 4 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         Turma turma = Cadastrar.turma(SCANNER);
@@ -90,19 +92,25 @@ public class Program {
                             turmaDao.buscarTodasTurmas();
                         }
                     }
-                    case 6 -> {
-                        Exibir.espera_em_ms(tempoEspera);
-                        Aula aula = Cadastrar.aula(SCANNER);
-                    }
+
                     case 5 -> {
                         Exibir.espera_em_ms(tempoEspera);
-                        Professor professor = Cadastrar.professor( SCANNER);
+                        Professor professor = Cadastrar.professor(SCANNER);
                         professorDao.inserirProfessor(professor);
                         resp = Exibir.exibicao("Mostrar lista de professores?");
                         if (resp.equals("S"))
                         {
                             professorDao.buscarTodosOsProfessores();
                         }
+                    }
+
+                    case 6 -> {
+                        Exibir.espera_em_ms(tempoEspera);
+                        Aula aula = Cadastrar.aula(SCANNER);
+                        if (aula != null){
+                            System.out.println("Ola");
+                        }
+
                     }
                     case 7 -> {
                         Exibir.espera_em_ms(tempoEspera);
@@ -183,7 +191,7 @@ public class Program {
                         System.out.print("ID ESCOLHIDO: ");
                         int id_sala = SCANNER.nextInt();
                         System.out.println("Escolha a aula que será anexada a sala");
-                        aulaDao.buscarTodosAulas();
+                        aulaDao.buscarTodasAulas();
                         System.out.print("ID ESCOLHIDO: ");
                         int id_aula = SCANNER.nextInt();
 

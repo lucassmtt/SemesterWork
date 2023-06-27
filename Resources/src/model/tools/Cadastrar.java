@@ -6,6 +6,7 @@ import model.dao.*;
 import model.dao.impl.AulaDaoJDBC;
 import model.entities.*;
 
+import java.lang.annotation.Inherited;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -55,8 +56,7 @@ public class Cadastrar {
                 lista_com_conteudo_ou_vazia.addAll(List.of(cpf_validado, nome, endereco, email, celular));
                 return lista_com_conteudo_ou_vazia;
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Saindo...");
         }
         return lista_com_conteudo_ou_vazia;
@@ -68,7 +68,7 @@ public class Cadastrar {
      * e cria um objeto Aluno caso o usuário confirme a operação.
      * </p>
      *
-     * @param SCANNER         O Scanner usado para ler as informações.
+     * @param SCANNER O Scanner usado para ler as informações.
      * @return Sem retorno.
      * @since 1.0
      */
@@ -80,8 +80,7 @@ public class Cadastrar {
         if (dados.size() == 0) {
             System.out.println("Operação cancelada.");
             return null;
-        }
-        else {
+        } else {
             Exibir.separador();
             System.out.println("CPF: " + dados.get(0));
             System.out.println("Nome: " + dados.get(1));
@@ -107,7 +106,7 @@ public class Cadastrar {
      * Cria um objeto sala caso o usuário confirme a operação.
      * </p>
      *
-     * @param SCANNER        O Scanner usado para ler as informações.
+     * @param SCANNER O Scanner usado para ler as informações.
      * @return Sem retorno.
      * @since 1.0
      */
@@ -146,7 +145,7 @@ public class Cadastrar {
      * Cria um objeto curso caso o usuário confirme a operação.
      * </p>
      *
-     * @param SCANNER         O Scanner usado para ler as informações.
+     * @param SCANNER O Scanner usado para ler as informações.
      * @return Sem retorno.
      * @since 1.0
      */
@@ -187,14 +186,13 @@ public class Cadastrar {
      * Cria um objeto turma caso o usuário confirme a operação.
      * </p>
      *
-     * @param SCANNER         O Scanner usado para ler as informações.
+     * @param SCANNER O Scanner usado para ler as informações.
      * @return a lista de Strings com as informações de pessoas
      * @since 1.0
      */
-    public static Turma turma(Scanner SCANNER)
-    {
+    public static Turma turma(Scanner SCANNER) {
         System.out.println("-Cadastrar nova turma-");
-        while (true){
+        while (true) {
             try {
                 System.out.print("Digite o nome da turma: ");
                 String nome_turma = SCANNER.nextLine();
@@ -202,16 +200,16 @@ public class Cadastrar {
                 Curso curso = new Curso();
 
                 System.out.print("\nAdicionar uma sala? (S/N) ");
-                String resposta = SCANNER.next().substring(0,1).toUpperCase();
-                if (resposta.equals("S")){
+                String resposta = SCANNER.next().substring(0, 1).toUpperCase();
+                if (resposta.equals("S")) {
                     Sala sala_a = sala(SCANNER);
                     sala = sala_a;
                     DaoFactory.criaSalaDao().inserirSala(sala);
                 }
 
                 System.out.print("\nAdicionar uma curso? (S/N) ");
-                resposta = SCANNER.next().substring(0,1).toUpperCase();
-                if (resposta.equals("S")){
+                resposta = SCANNER.next().substring(0, 1).toUpperCase();
+                if (resposta.equals("S")) {
                     Curso curso1 = curso(SCANNER);
                     curso = curso1;
                     DaoFactory.criaCursoDao().inserirCurso(curso);
@@ -219,8 +217,7 @@ public class Cadastrar {
 
                 Turma turma = new Turma(nome_turma, sala, curso);
                 return turma;
-            }
-            catch (InputMismatchException e){
+            } catch (InputMismatchException e) {
                 System.out.println("Digite corretamente os dados!");
                 return null;
             }
@@ -235,7 +232,7 @@ public class Cadastrar {
      * objeto Professor caso o usuário confirme a operação.
      * </p>
      *
-     * @param SCANNER              O Scanner usado para ler as informações.
+     * @param SCANNER O Scanner usado para ler as informações.
      * @return Sem retorno.
      * @since 1.0
      */
@@ -253,38 +250,105 @@ public class Cadastrar {
         );
     }
 
-    public static Aula aula(Scanner SCANNER)
-    {
+    public static Aula aula(Scanner SCANNER) {
         Exibir.separador();
         System.out.println("-Cadastrar nova aula-");
-        while (true)
-        {
+        while (true) {
             System.out.print("Qual é o nome da aula: ");
-            String nome_aula = SCANNER.next();
-
-            System.out.println("Em qual sala terá aula? \n --Selecione o ID da sala-- \n");
+            String nome_aula = SCANNER.nextLine();
+            System.out.println("Em qual sala terá aula? \n\n--Selecione o ID da sala-- \n");
             DaoFactory.criaSalaDao().buscarTodasSalas();
             System.out.print("ID: ");
-            int id = SCANNER.nextInt();
+            int id_sala = SCANNER.nextInt();
 
-            Sala sala = DaoFactory.criaSalaDao().buscarSalaPorIdTransformarEmOBjSala(id);
-            if (sala == null){
+            Sala sala = DaoFactory.criaSalaDao().buscarSalaPorIdTransformarEmOBjSala(id_sala);
+            if (sala == null) {
                 System.out.println("Sala inexistente... Por favor tente novamente");
-                System.out.println("Gostaria de cancelar a operação? (S/N) ");
-                String resp = SCANNER.next().substring(0,1).toUpperCase();
-                if (resp.equals("S")){
+                System.out.print("Gostaria de cancelar a operação? (S/N) : ");
+                String resp = SCANNER.next().substring(0, 1).toUpperCase();
+                if (resp.equals("S")) {
                     return null;
-                }
-                else {
+                } else {
                     continue;
                 }
-            }
-            else {
-                System.out.println("Em qual dia da semana terá aula? ");
-                System.out.print(": ");
-                String dia_semana = SCANNER.next();
-//                if (sala)
+            } else {
+                ArrayList<String> dias_de_aula = new ArrayList<>();
+                System.out.print("Em qual dia da semana terá aula: ");
+                while (true) {
+                    Exibir.diaDaSemana();
+                    String dia_semana = SCANNER.next();
+                    dias_de_aula.add(dia_semana);
+                    System.out.print("São apenas estes dias? (S/N) ");
+                    String resp = SCANNER.next().substring(0, 1).toUpperCase();
+                    if (resp.equals("S")) {
+                        break;
+                    }
+                    if (dias_de_aula.size() >= 5) {
+                        break;
+                    }
+                }
+                boolean controle = true;
+                System.out.println(dias_de_aula.get(1));
+                for (int x = 0; x < dias_de_aula.size(); x++) {
+                    if (DaoFactory.criaAulaDao().verSeTemSalaCadastradaAulaEmQueDia(id_sala, dias_de_aula.get(x))) {
+                        controle = false;
+                    }
+                }
+                if (!controle) {
+                    System.out.println("Impossível cadastrar aula neste(s) dia, sala já está sendo ocupada...");
+                    System.out.print("Gostaria de cancelar a operação? (S/N) : ");
+                    String resp = SCANNER.next().substring(0, 1).toUpperCase();
+                    if (resp.equals("S")) {
+                        return null;
+                    } else {
+                        continue;
+                    }
+                }
 
+                System.out.println("Qual turma terá aula de " + nome_aula + "?");
+                System.out.println("\n--Selecione o ID da turma--");
+                DaoFactory.criaTurmaDao().buscarTodasTurmas();
+                System.out.print("ID: ");
+                Integer id_turma = SCANNER.nextInt();
+
+                for (int x = 0; x < dias_de_aula.size(); x++) {
+                    if (DaoFactory.criaAulaDao().verSeTemTurmaCadastradaAulaEmQueDia(id_turma, dias_de_aula.get(x))) {
+                        controle = false;
+                    }
+                }
+
+                if (!controle) {
+                    System.out.println("Uma turma não pode ter mais de uma aula por dia...");
+                    System.out.print("Gostaria de cancelar a operação? (S/N) : ");
+                    String resp = SCANNER.next().substring(0, 1).toUpperCase();
+                    if (resp.equals("S")) {
+                        return null;
+                    } else {
+                        continue;
+                    }
+                }
+
+                Turma turma = DaoFactory.criaTurmaDao().buscarTurmaPorIdTransformaEmObjTurma(id_turma);
+                if (turma == null) {
+                    System.out.println("Turma inexistente...");
+                    System.out.print("Gostaria de cancelar a operação? (S/N) : ");
+                    String resp = SCANNER.next().substring(0, 1).toUpperCase();
+                    if (resp.equals("S")) {
+                        return null;
+                    } else {
+                        System.out.println("Tente cadastrar outra turma...");
+                    }
+                } else {
+                    Aula aula = new Aula();
+                    aula.setSala(sala);
+                    aula.setTurma(turma);
+                    aula.setNomeAula(nome_aula);
+                    for (int x = 0; x < dias_de_aula.size(); x++) {
+                        aula.setDiaSemana(dias_de_aula.get(x));
+                    }
+                    DaoFactory.criaAulaDao().inserirAula(aula);
+                    break;
+                }
             }
         }
     }

@@ -49,6 +49,7 @@ public class AulaDaoJDBC implements AulaDao
                 else {
                     System.out.println("Impossível inserir aula! ");
                 }
+                DB.fechaResultSet(resultSet);
             }
             catch (Exception e){
                 throw new DbException(e.getMessage());
@@ -143,7 +144,6 @@ public class AulaDaoJDBC implements AulaDao
     {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-
         if (connection != null)
         {
             try {
@@ -189,7 +189,7 @@ public class AulaDaoJDBC implements AulaDao
                 else {
                     System.out.println("Nenhum registro encontrado...");
                 }
-
+                DB.fechaResultSet(resultSet);
             }
             catch (SQLException e){
                 throw new DbException(e.getMessage());
@@ -220,31 +220,44 @@ public class AulaDaoJDBC implements AulaDao
                 resultSet = preparedStatement.executeQuery();
 
                 if (resultSet.next()){
+                    Object nome_aula = resultSet.getObject(2);
+                    Object ID_sala = resultSet.getObject(3);
+                    Object ID_turma = resultSet.getObject(4);
+                    Object dia_semana = resultSet.getObject(5);
+
                     Aula aula = new Aula();
-                    Sala sala = new Sala();
-                    Turma turma = new Turma();
 
-                    aula.setNomeAula(resultSet.getString(5));
-                    aula.setDiaSemana(resultSet.getString(4));
-
-                    Object obj = resultSet.getObject(2);
-                    if (obj == null){
-                        sala.setId_Sala(null);
+                    if (nome_aula == null){
+                        aula.setNomeAula(null);
                     }
                     else {
-                        sala.setId_Sala(resultSet.getInt(2));
+                        aula.setNomeAula((String) nome_aula);
                     }
 
-                    obj = resultSet.getObject(3);
-                    if (obj == null){
-                        turma.setId_Turma(null);
+                    if (ID_sala == null){
+                        aula.setSala(null);
                     }
                     else {
-                        turma.setId_Turma(resultSet.getInt(3));
+                        Sala sala = new Sala();
+                        sala.setId_Sala((Integer) ID_sala);
+                        aula.setSala(sala);
                     }
-                    aula.setSala(sala);
-                    aula.setTurma(turma);
-                    return aula;
+
+                    if (ID_turma == null){
+                        aula.setTurma(null);
+                    }
+                    else {
+                        Turma turma = new Turma();
+                        turma.setId_Turma((Integer) ID_turma);
+                        aula.setTurma(turma);
+                    }
+
+                    if (dia_semana == null){
+                        aula.setDiaSemana(null);
+                    }
+                    else {
+                        aula.setDiaSemana((String) dia_semana);
+                    }
                 }
                 else {
                     System.out.println("Nenhum registro encontrado...");
@@ -266,7 +279,7 @@ public class AulaDaoJDBC implements AulaDao
     }
 
     @Override
-    public void buscarTodosAulas()
+    public void buscarTodasAulas()
     {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -314,12 +327,12 @@ public class AulaDaoJDBC implements AulaDao
                     }
                     Exibir.espera_em_ms(500);
                 }
-                DB.fechaResultSet(resultSet);
             }
             catch (SQLException e){
                 throw new DbException(e.getMessage());
             }
             finally {
+                DB.fechaResultSet(resultSet);
                 DB.fechaStatement(preparedStatement);
             }
         }
@@ -327,5 +340,101 @@ public class AulaDaoJDBC implements AulaDao
             System.out.println("Impossível buscar dados com a conexão nula...");
         }
 
+    }
+
+    @Override
+    public boolean verSeTemAulaEmDiaEspecifico(Integer ID_aula, String diaSemana)
+    {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        if (connection != null)
+        {
+            try {
+                preparedStatement = connection.prepareStatement("SELECT * FROM faculdade.aula WHERE ID_aula = ?");
+                preparedStatement.setInt(1, ID_aula);
+                resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next())
+                {
+                    String dia_semana = resultSet.getString(5);
+                    return dia_semana.contains(diaSemana);
+                }
+            }
+            catch (Exception e){
+                throw new DbException(e.getMessage());
+            }
+            finally {
+                DB.fechaResultSet(resultSet);
+                DB.fechaStatement(preparedStatement);
+            }
+        }
+        else {
+            System.out.println("Não podemos consultar o banco de dados com uma conexão nula...");
+        }
+        return false;
+    }
+
+    @Override
+    public boolean verSeTemSalaCadastradaAulaEmQueDia(Integer ID_sala, String diaSemana)
+    {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        if (connection != null)
+        {
+            try {
+                preparedStatement = connection.prepareStatement("SELECT * FROM faculdade.aula WHERE ID_sala = ?");
+                preparedStatement.setInt(1, ID_sala);
+                resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next())
+                {
+                    String dia_semana = resultSet.getString(5);
+                    return dia_semana.contains(diaSemana);
+                }
+            }
+            catch (Exception e){
+                throw new DbException(e.getMessage());
+            }
+            finally {
+                DB.fechaResultSet(resultSet);
+                DB.fechaStatement(preparedStatement);
+            }
+        }
+        else {
+            System.out.println("Não podemos consultar o banco de dados com uma conexão nula...");
+        }
+        return false;
+    }
+
+    @Override
+    public boolean verSeTemTurmaCadastradaAulaEmQueDia(Integer ID_turma, String diaSemana)
+    {
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        if (connection != null)
+        {
+            try {
+                preparedStatement = connection.prepareStatement("SELECT * FROM faculdade.aula WHERE ID_turma = ?");
+                preparedStatement.setInt(1, ID_turma);
+                resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next())
+                {
+                    String dia_semana = resultSet.getString(5);
+                    return dia_semana.contains(diaSemana);
+                }
+            }
+            catch (Exception e){
+                throw new DbException(e.getMessage());
+            }
+            finally {
+                DB.fechaResultSet(resultSet);
+                DB.fechaStatement(preparedStatement);
+            }
+        }
+        else {
+            System.out.println("Não podemos consultar o banco de dados com uma conexão nula...");
+        }
+        return false;
     }
 }

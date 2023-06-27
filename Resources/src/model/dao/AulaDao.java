@@ -9,5 +9,9 @@ public interface AulaDao
     void atualizarAula(Aula aula);
     void buscarAulaPorId(Integer ID);
     Aula buscarAulaPorIdTransformarEmObjAula(Integer ID);
-    void buscarTodosAulas();
+    void buscarTodasAulas();
+    boolean verSeTemAulaEmDiaEspecifico(Integer ID_aula, String diaSemana);
+    boolean verSeTemSalaCadastradaAulaEmQueDia(Integer ID_sala, String diaSemana);
+    boolean verSeTemTurmaCadastradaAulaEmQueDia(Integer ID_turma, String diaSemana);
+
 }

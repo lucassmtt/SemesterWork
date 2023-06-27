@@ -271,7 +271,7 @@ public class TurmaDaoJDBC implements TurmaDao
                 DB.fechaResultSet(resultSet);
             }
             catch (Exception e){
-
+                throw new DbException(e.getMessage());
             }
         }
 

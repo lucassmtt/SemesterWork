@@ -35,8 +35,6 @@ public class Exibir {
 
 
     public static void diaDaSemana() {
-        System.out.println("Digite o dia da semana que terá aula nessa turma: ");
-        System.out.println();
         System.out.println("""
                 0 = Cancelar operação
                 1 = Segunda
@@ -44,9 +42,6 @@ public class Exibir {
                 3 = Quarta
                 4 = Quinta
                 5 = Sexta
-
-                (Se já estiver alocada uma turma na sala no dia enviado, será desconsiderado)
-                (Adicionar apenas um valor por vez)
 
                 """);
         System.out.print("Resposta: ");
