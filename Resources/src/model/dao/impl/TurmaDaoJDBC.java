@@ -6,6 +6,7 @@ import model.dao.TurmaDao;
 import model.entities.Curso;
 import model.entities.Sala;
 import model.entities.Turma;
+import model.tools.Exibir;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -265,6 +266,7 @@ public class TurmaDaoJDBC implements TurmaDao
                     if (curso == null){
                         System.out.println("Curso: sem curso anexado\n" );
                     }
+                    Exibir.espera_em_ms(500);
                 }
                 DB.fechaResultSet(resultSet);
             }

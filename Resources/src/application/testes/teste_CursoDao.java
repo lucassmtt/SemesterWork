@@ -14,7 +14,7 @@ public class teste_CursoDao
         cursoDao.inserirCurso(curso);
 
         System.out.println("Teste 2 Apagar com base no ID no BD");
-        cursoDao.apagarCursoPorID(1);
+//        cursoDao.apagarCursoPorID(1);
 
         System.out.println("Teste 3 Atualizar curso");
         curso.setNomeCurso("Curso de direito constitucional");

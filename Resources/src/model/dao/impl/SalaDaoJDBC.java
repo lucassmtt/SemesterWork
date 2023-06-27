@@ -4,6 +4,7 @@ import db.DB;
 import db.DbException;
 import model.dao.SalaDao;
 import model.entities.Sala;
+import model.tools.Exibir;
 
 import java.sql.*;
 import java.util.Scanner;
@@ -40,8 +41,8 @@ public class SalaDaoJDBC implements SalaDao
                         int ID = resultSet.getInt(1);
                         sala.setId_Sala(ID);
                     }
-                    DB.fechaResultSet(resultSet);
                     System.out.println("Inserção de sala no banco de dados feita com sucesso...");
+                    DB.fechaResultSet(resultSet);
                 }
                 else {
                     System.out.println("Impossível inserir sala! ");
@@ -237,6 +238,7 @@ public class SalaDaoJDBC implements SalaDao
                             "Local: " + resultSet.getString(3) + "\n" +
                             "Capcidade:  " + resultSet.getObject(4)
                     );
+                    Exibir.espera_em_ms(500);
                 }
 
                 DB.fechaResultSet(resultSet);

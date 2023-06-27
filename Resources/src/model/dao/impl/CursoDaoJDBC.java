@@ -4,6 +4,7 @@ import db.DB;
 import db.DbException;
 import model.dao.CursoDao;
 import model.entities.Curso;
+import model.tools.Exibir;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -237,6 +238,7 @@ public class CursoDaoJDBC implements CursoDao
                             "Nome do curso: " + resultSet.getString(2) + "\n" +
                             "Carga horária: " + resultSet.getInt(3) + "\n" +
                             "Descrição: " + resultSet.getString(4));
+                    Exibir.espera_em_ms(500);
                 }
                 DB.fechaResultSet(resultSet);
             }

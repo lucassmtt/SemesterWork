@@ -5,6 +5,7 @@ import db.DbException;
 import model.dao.ProfessorDao;
 import model.entities.Curso;
 import model.entities.Professor;
+import model.tools.Exibir;
 
 import java.sql.*;
 
@@ -264,6 +265,7 @@ public class ProfessorDaoJDBC implements ProfessorDao
                     else{
                         System.out.println("Curso ID: " + resultSet.getInt(7));
                     }
+                    Exibir.espera_em_ms(500);
                 }
             }
             catch (SQLException e){

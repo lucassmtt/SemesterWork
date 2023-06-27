@@ -18,16 +18,17 @@ public class Exibir {
                  3 = CADASTRAR CURSO
                  4 = CADASTRAR TURMA
                  5 = CADASTRAR PROFESSOR
-                 6 = MOSTRAR ALUNOS
-                 7 = MOSTRAR SALAS
-                 8 = MOSTRAR CURSOS
-                 9 = MOSTRAR TURMAS
-                 10 = MOSTRAR PROFESSORES
-                 11 = ADICIONAR ALUNO A CURSO
-                 12 = ADICIONAR TURMA A CURSO
-                 13 = ADICIONAR PROFESSOR A CURSO
-                 14 = ADICIONAR AULA A SALA
-                 15 = ADICIONAR TURMA A SALA
+                 6 = CADASTRAR AULA
+                 7 = MOSTRAR ALUNOS
+                 8 = MOSTRAR SALAS
+                 9 = MOSTRAR CURSOS
+                 10 = MOSTRAR TURMAS
+                 11 = MOSTRAR PROFESSORES
+                 12 = ADICIONAR ALUNO A CURSO
+                 13 = ADICIONAR TURMA A CURSO
+                 14 = ADICIONAR PROFESSOR A CURSO
+                 15 = ADICIONAR AULA A SALA
+                 16 = ADICIONAR TURMA A SALA
                 """);
         System.out.print("Resposta: ");
     }

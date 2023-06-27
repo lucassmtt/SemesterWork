@@ -1,5 +1,7 @@
 package model.entities;
 
+import db.DbException;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -25,11 +27,16 @@ public final class Aluno extends Pessoa implements Serializable {
     }
 
     public Object se_existir_o_curso_retorna_id_ou_null(){
-        if (curso.Id_Curso == null){
-            return null;
+        if (curso != null){
+            try {
+                return getId_Matricula();
+            }
+            catch (DbException e){
+                return null;
+            }
         }
         else {
-            return curso.getId_Curso();
+            return null;
         }
     }
 

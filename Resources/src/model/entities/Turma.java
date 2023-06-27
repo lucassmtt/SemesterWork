@@ -1,5 +1,7 @@
 package model.entities;
 
+import db.DbException;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -37,20 +39,30 @@ public class Turma implements Serializable
     }
 
     public Object se_existir_a_sala_retorna_id_ou_null(){
-        if (sala.getId_Sala() == null){
-            return null;
+        if (sala != null){
+            try {
+                return sala.getId_Sala();
+            }
+            catch (Exception e){
+                return null;
+            }
         }
         else {
-            return sala.getId_Sala();
+            return null;
         }
     }
 
     public Object se_existir_o_curso_retorna_id_ou_null(){
-        if (curso.getNomeCurso() == null){
-            return null;
+        if (curso != null){
+            try{
+                return curso.getId_Curso();
+            }
+            catch (Exception e){
+                return null;
+            }
         }
         else {
-            return curso.getId_Curso();
+            return null;
         }
     }
 

@@ -43,14 +43,12 @@ public class Program {
                         if (aluno == null){
                             break;
                         }
-                        resp = Exibir.exibicao("Deseja anexar o aluno a algum curso?");
+                        resp = Exibir.exibicao("Deseja anexar o aluno a algum curso?").substring(0,1).toUpperCase();
                         if (resp.equals("S")){
                             Curso curso_apoio = Cadastrar.curso(SCANNER);
                             cursoDao.inserirCurso(curso_apoio);
-                            assert aluno != null;
                             aluno.setCurso(curso_apoio);
                         }
-                        System.out.println(aluno.se_existir_o_curso_retorna_id_ou_null());
                         alunoDao.inserirAluno(aluno);
 
                         resp = Exibir.exibicao("Mostrar listas de alunos?");
@@ -86,12 +84,15 @@ public class Program {
                     case 4 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         Turma turma = Cadastrar.turma(SCANNER);
-                        System.out.println(turma);
                         turmaDao.inserirTurma(turma);
                         resp = Exibir.exibicao("Mostrar lista de salas?");
                         if (resp.equals("S")){
                             turmaDao.buscarTodasTurmas();
                         }
+                    }
+                    case 6 -> {
+                        Exibir.espera_em_ms(tempoEspera);
+                        Aula aula = Cadastrar.aula(SCANNER);
                     }
                     case 5 -> {
                         Exibir.espera_em_ms(tempoEspera);
@@ -103,27 +104,27 @@ public class Program {
                             professorDao.buscarTodosOsProfessores();
                         }
                     }
-                    case 6 -> {
+                    case 7 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         alunoDao.buscarTodosAlunos();
                     }
-                    case 7 -> {
+                    case 8 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         salaDao.buscarTodasSalas();
                     }
-                    case 8 -> {
+                    case 9 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         cursoDao.buscarTodosCursos();
                     }
-                    case 9 -> {
+                    case 10 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         turmaDao.buscarTodasTurmas();
                     }
-                    case 10 -> {
+                    case 11 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         professorDao.buscarTodosOsProfessores();
                     }
-                    case 11 -> {
+                    case 12 -> {
                         System.out.println("Adicionar aluno a curso: ");
                         System.out.println("Escolha o ID do curso que o aluno será adicionado: ");
                         cursoDao.buscarTodosCursos();
@@ -140,7 +141,7 @@ public class Program {
                         aluno.setId_Matricula(id_aluno);
                         alunoDao.atualizarAluno(aluno);
                     }
-                    case 12 -> {
+                    case 13 -> {
                         System.out.println("Adicionar turma a curso: ");
                         System.out.println("Escolha o ID do curso que a turma será alocada: ");
                         cursoDao.buscarTodosCursos();
@@ -157,7 +158,7 @@ public class Program {
                         turma.setId_Turma(id_turma);
                         turmaDao.atualizarTurma(turma);
                     }
-                    case 13 -> {
+                    case 14 -> {
                         System.out.println("Adicionar professor a curso: ");
                         System.out.println("Escolha o ID do curso que o professor sera anexado: ");
                         cursoDao.buscarTodosCursos();
@@ -175,7 +176,7 @@ public class Program {
                         professor.setId_Professor(id_professor);
                         professorDao.atualizarProfessor(professor);
                     }
-                    case 14 -> {
+                    case 15 -> {
                         System.out.println("Adicionar aula a sala: ");
                         System.out.print("Escolha da sala que a aula será anexada: ");
                         salaDao.buscarTodasSalas();
@@ -193,7 +194,7 @@ public class Program {
                         aula.setIdAula(id_aula);
                         aulaDao.atualizarAula(aula);
                     }
-                    case 15 -> {
+                    case 16 -> {
                         System.out.println("Adicionar turma a sala: ");
                         System.out.println("Escolha a turma que será adicionada a sala: ");
                         turmaDao.buscarTodasTurmas();
@@ -212,6 +213,18 @@ public class Program {
                         aula.setIdAula(id_aula);
                         aulaDao.atualizarAula(aula);
                     }
+                    case 17 -> {
+                        Sala sala = DaoFactory.criaSalaDao().buscarSalaPorIdTransformarEmOBjSala(10);
+                        System.out.println(sala);
+                    }
+                    case 18 -> {
+                        Set<String> diaSemana = new HashSet<>();
+                        diaSemana.add("Segunda");
+                        diaSemana.add("Terça");
+                        diaSemana.add("Quarta");
+                        System.out.println(diaSemana);
+                    }
+
                     default -> System.out.println("Por favor, envie um valor válido...");
                 }
             } catch (InputMismatchException e) {

@@ -3,6 +3,7 @@ package application.testes;
 import model.dao.AulaDao;
 import model.dao.DaoFactory;
 import model.entities.Aula;
+import model.entities.Turma;
 
 public class test_AulaDao
 {
@@ -11,8 +12,11 @@ public class test_AulaDao
         System.out.println("Test 1 - Inserção de Aula no BD");
         AulaDao aulaDao = DaoFactory.criaAulaDao();
         Aula aula = new Aula();
+        aula.setTurma(new Turma("Turma de adm"));
         aula.setDiaSemana("Segunda");
         aula.setNomeAula("Educação Financeira");
+        aula.setDiaSemana("Terça");
+        aula.setDiaSemana("Terça");
         aulaDao.inserirAula(aula);
 
         System.out.println("Test 2 - Apagar aula por ID");

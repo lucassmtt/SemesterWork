@@ -74,7 +74,7 @@ public class Cadastrar {
      */
     public static Aluno aluno(Scanner SCANNER) {
         Exibir.separador();
-        System.out.println("Cadastrar novo aluno:");
+        System.out.println("-Cadastrar novo aluno-");
 
         List<String> dados = info_pessoas(SCANNER);
         if (dados.size() == 0) {
@@ -113,7 +113,7 @@ public class Cadastrar {
      */
     public static Sala sala(Scanner SCANNER) {
         Exibir.separador();
-        System.out.println("Cadastrar nova sala:");
+        System.out.println("-Cadastrar nova sala-");
         System.out.print("Digite o nome da sala: ");
         String nome_sala = SCANNER.next();
         SCANNER.nextLine();
@@ -152,7 +152,7 @@ public class Cadastrar {
      */
     public static Curso curso(Scanner SCANNER) {
         Exibir.separador();
-        System.out.println("Cadastrar novo curso:");
+        System.out.println("-Cadastrar novo curso-");
 
         System.out.print("Digite o nome do curso: ");
         SCANNER.next();
@@ -206,6 +206,7 @@ public class Cadastrar {
                 if (resposta.equals("S")){
                     Sala sala_a = sala(SCANNER);
                     sala = sala_a;
+                    DaoFactory.criaSalaDao().inserirSala(sala);
                 }
 
                 System.out.print("\nAdicionar uma curso? (S/N) ");
@@ -213,11 +214,10 @@ public class Cadastrar {
                 if (resposta.equals("S")){
                     Curso curso1 = curso(SCANNER);
                     curso = curso1;
+                    DaoFactory.criaCursoDao().inserirCurso(curso);
                 }
 
                 Turma turma = new Turma(nome_turma, sala, curso);
-                DaoFactory.criaSalaDao().inserirSala(sala);
-                DaoFactory.criaCursoDao().inserirCurso(curso);
                 return turma;
             }
             catch (InputMismatchException e){
@@ -241,17 +241,52 @@ public class Cadastrar {
      */
     public static Professor professor(Scanner SCANNER) {
         Exibir.separador();
-        System.out.println("Cadastrar novo professor: ");
+        System.out.println("-Cadastrar novo professor-");
 
         List<String> dados = info_pessoas(SCANNER);
         if (dados.size() == 0) {
             System.out.println("Operação cancelada...");
         }
 
-        Professor professor = new Professor(
+        return new Professor(
                 dados.get(0), dados.get(1), dados.get(2), dados.get(3), dados.get(4)
         );
-        return professor;
+    }
+
+    public static Aula aula(Scanner SCANNER)
+    {
+        Exibir.separador();
+        System.out.println("-Cadastrar nova aula-");
+        while (true)
+        {
+            System.out.print("Qual é o nome da aula: ");
+            String nome_aula = SCANNER.next();
+
+            System.out.println("Em qual sala terá aula? \n --Selecione o ID da sala-- \n");
+            DaoFactory.criaSalaDao().buscarTodasSalas();
+            System.out.print("ID: ");
+            int id = SCANNER.nextInt();
+
+            Sala sala = DaoFactory.criaSalaDao().buscarSalaPorIdTransformarEmOBjSala(id);
+            if (sala == null){
+                System.out.println("Sala inexistente... Por favor tente novamente");
+                System.out.println("Gostaria de cancelar a operação? (S/N) ");
+                String resp = SCANNER.next().substring(0,1).toUpperCase();
+                if (resp.equals("S")){
+                    return null;
+                }
+                else {
+                    continue;
+                }
+            }
+            else {
+                System.out.println("Em qual dia da semana terá aula? ");
+                System.out.print(": ");
+                String dia_semana = SCANNER.next();
+//                if (sala)
+
+            }
+        }
     }
 
     private static String multiplica(String str, int n) {

@@ -5,6 +5,7 @@ import db.DbException;
 import model.dao.AlunoDao;
 import model.entities.Aluno;
 import model.entities.Curso;
+import model.tools.Exibir;
 
 import java.sql.*;
 import java.util.Scanner;
@@ -33,11 +34,9 @@ public class AlunoDaoJDBC implements AlunoDao
                 preparedStatement.setString(3, aluno.getCelular());
                 preparedStatement.setString(4, aluno.getEmail());
                 preparedStatement.setString(5, aluno.getCpf());
-                int linhas_afetadas = 0;
-
                 preparedStatement.setObject(6, aluno.se_existir_o_curso_retorna_id_ou_null());
 
-                linhas_afetadas = preparedStatement.executeUpdate();
+                int linhas_afetadas = preparedStatement.executeUpdate();
 
                 if (linhas_afetadas > 0) {
                     resultSet = preparedStatement.getGeneratedKeys();
@@ -270,6 +269,7 @@ public class AlunoDaoJDBC implements AlunoDao
                     else{
                         System.out.println("Curso ID: " + resultSet.getInt(7));
                     }
+                    Exibir.espera_em_ms(500);
                 }
                 DB.fechaResultSet(resultSet);
             }

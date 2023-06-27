@@ -6,6 +6,7 @@ import model.dao.AulaDao;
 import model.entities.Aula;
 import model.entities.Sala;
 import model.entities.Turma;
+import model.tools.Exibir;
 
 import javax.print.attribute.standard.JobKOctets;
 import java.sql.*;
@@ -25,14 +26,14 @@ public class AulaDaoJDBC implements AulaDao
             PreparedStatement preparedStatement = null;
             ResultSet resultSet = null;
             try{
-                String sql = "INSERT INTO faculdade.aula (ID_sala, ID_turma, dia_semana, nome_aula) " +
+                String sql = "INSERT INTO faculdade.aula (nome_aula, ID_sala, ID_turma, dia_semana) " +
                         "VALUES (?, ?, ?, ?);";
                 preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-                preparedStatement.setObject(1, aula.se_existir_a_sala_retorna_id_ou_null());
-                preparedStatement.setObject(2, aula.se_existir_a_turma_retorna_id_ou_null());
-                preparedStatement.setObject(3, aula.se_existir_a_dia_semana_retorna_dia_ou_null());
-                preparedStatement.setObject(4, aula.se_existir_nome_retorna_nome_ou_null());
+                preparedStatement.setObject(1, aula.se_existir_nome_retorna_nome_ou_null());
+                preparedStatement.setObject(2, aula.se_existir_a_sala_retorna_id_ou_null());
+                preparedStatement.setObject(3, aula.se_existir_a_turma_retorna_id_ou_null());
+                preparedStatement.setObject(4, aula.se_existir_a_dia_semana_retorna_dia_ou_null());
 
                 int linhas_afetadas = preparedStatement.executeUpdate();
 
@@ -105,14 +106,14 @@ public class AulaDaoJDBC implements AulaDao
             PreparedStatement preparedStatement = null;
             try{
                 String sql = "UPDATE faculdade.aula " +
-                        "SET ID_sala = ?, ID_turma = ?, dia_semana = ?, nome_aula = ? " +
+                        "SET nome_aula = ?, ID_sala = ?, ID_turma = ?, dia_semana = ?" +
                         "WHERE ID_aula = ?;";
                 preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-                preparedStatement.setObject(1, aula.se_existir_a_sala_retorna_id_ou_null());
-                preparedStatement.setObject(2, aula.se_existir_a_turma_retorna_id_ou_null());
-                preparedStatement.setObject(3, aula.se_existir_a_dia_semana_retorna_dia_ou_null());
-                preparedStatement.setObject(4, aula.se_existir_nome_retorna_nome_ou_null());
+                preparedStatement.setObject(1, aula.se_existir_nome_retorna_nome_ou_null());
+                preparedStatement.setObject(2, aula.se_existir_a_sala_retorna_id_ou_null());
+                preparedStatement.setObject(3, aula.se_existir_a_turma_retorna_id_ou_null());
+                preparedStatement.setObject(4, aula.se_existir_a_dia_semana_retorna_dia_ou_null());
                 preparedStatement.setInt(5, aula.getIdAula());
 
                 int linhas_afetadas = preparedStatement.executeUpdate();
@@ -152,41 +153,38 @@ public class AulaDaoJDBC implements AulaDao
                 preparedStatement.setInt(1, ID);
                 resultSet = preparedStatement.executeQuery();
 
-                if (resultSet.next()){
+                if (resultSet.next()) {
                     System.out.println("_____________________________");
                     System.out.println("ID Aula: " + resultSet.getInt(1));
-                    Object ID_sala = resultSet.getObject(2);
-                    Object ID_turma = resultSet.getObject(3);
-                    Object dia_semana = resultSet.getObject(4);
-                    Object nome_aula = resultSet.getObject(5);
-                    if (ID_sala == null){
+                    Object nome_aula = resultSet.getObject(2);
+                    Object ID_sala = resultSet.getObject(3);
+                    Object ID_turma = resultSet.getObject(4);
+                    Object dia_semana = resultSet.getObject(5);
+
+                    if (nome_aula == null) {
+                        System.out.println("Não existe nenhum nome para esta sala...");
+                    } else {
+                        System.out.println("Nome aula: " + nome_aula);
+                    }
+
+                    if (ID_sala == null) {
                         System.out.println("Não existe nenhuma sala anexada a aula...");
-                    }
-                    else {
-                        System.out.println("ID sala anexado a aula: " + ID_sala);
-                    }
-
-                    if (ID_turma == null){
-                        System.out.println("Não existe nenhuma turma anexada a aula...");
-                    }
-                    else {
-                        System.out.println("ID turma anexado a aula: " + ID_turma);
+                    } else {
+                        System.out.println("ID sala: " + ID_sala);
                     }
 
-                    if (dia_semana == null){
-                        System.out.println("Não existe nenhum dia anexado a aula...");
+                    if (ID_turma == null) {
+                        System.out.println("Não existe nenhuma turma anexada a sala...");
                     }
                     else {
-                        System.out.println("Dia da semana: " + dia_semana);
+                        System.out.println("ID turma: " + ID_turma);
                     }
 
-                    if (nome_aula == null){
-                        System.out.println("Não existe nenhum nome anexada a aula...");
+                    if (dia_semana == null) {
+                        System.out.println("A aula não está anexada a nenhum dia da semana...");
+                    } else {
+                        System.out.println("Dias de aula: " + dia_semana);
                     }
-                    else {
-                        System.out.println("Nome da aula: " + nome_aula);
-                    }
-                    DB.fechaResultSet(resultSet);
                 }
                 else {
                     System.out.println("Nenhum registro encontrado...");
@@ -282,39 +280,39 @@ public class AulaDaoJDBC implements AulaDao
                 resultSet = preparedStatement.executeQuery();
                 Object ID_sala, ID_turma, dia_semana, nome_aula;
                 while (resultSet.next()){
-                    System.out.println("_____________________________");
+
+                    System.out.println("______________________________________");
                     System.out.println("ID Aula: " + resultSet.getInt(1));
-                    ID_sala = resultSet.getObject(2);
-                    ID_turma = resultSet.getObject(3);
-                    dia_semana = resultSet.getObject(4);
-                    nome_aula = resultSet.getObject(5);
-                    if (ID_sala == null){
+                    nome_aula = resultSet.getObject(2);
+                    ID_sala = resultSet.getObject(3);
+                    ID_turma = resultSet.getObject(4);
+                    dia_semana = resultSet.getObject(5);
+
+                    if (nome_aula == null) {
+                        System.out.println("Não existe nenhum nome para esta sala...");
+                    } else {
+                        System.out.println("Nome aula: " + nome_aula);
+                    }
+
+                    if (ID_sala == null) {
                         System.out.println("Não existe nenhuma sala anexada a aula...");
-                    }
-                    else {
-                        System.out.println("ID sala anexado a aula: " + ID_sala);
-                    }
-
-                    if (ID_turma == null){
-                        System.out.println("Não existe nenhuma turma anexada a aula...");
-                    }
-                    else {
-                        System.out.println("ID turma anexado a aula: " + ID_turma);
+                    } else {
+                        System.out.println("ID sala: " + ID_sala);
                     }
 
-                    if (dia_semana == null){
-                        System.out.println("Não existe nenhum dia anexado a aula...");
+                    if (ID_turma == null) {
+                        System.out.println("Não existe nenhuma turma anexada a sala...");
                     }
                     else {
-                        System.out.println("Dia da semana: " + dia_semana);
+                        System.out.println("ID turma: " + ID_turma);
                     }
 
-                    if (nome_aula == null){
-                        System.out.println("Não existe nenhum nome anexada a aula...");
+                    if (dia_semana == null) {
+                        System.out.println("A aula não está anexada a nenhum dia da semana...");
+                    } else {
+                        System.out.println("Dias de aula: " + dia_semana);
                     }
-                    else {
-                        System.out.println("Nome da aula: " + nome_aula);
-                    }
+                    Exibir.espera_em_ms(500);
                 }
                 DB.fechaResultSet(resultSet);
             }
