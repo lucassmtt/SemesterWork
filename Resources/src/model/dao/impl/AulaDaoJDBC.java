@@ -8,8 +8,8 @@ import model.entities.Sala;
 import model.entities.Turma;
 import model.tools.Exibir;
 
-import javax.print.attribute.standard.JobKOctets;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class AulaDaoJDBC implements AulaDao
 {
@@ -386,11 +386,14 @@ public class AulaDaoJDBC implements AulaDao
                 preparedStatement.setInt(1, ID_sala);
                 resultSet = preparedStatement.executeQuery();
 
-                if (resultSet.next())
+                while (resultSet.next())
                 {
                     String dia_semana = resultSet.getString(5);
-                    return dia_semana.contains(diaSemana);
+                    if (dia_semana.contains(diaSemana)){
+                        return true;
+                    }
                 }
+                return false;
             }
             catch (Exception e){
                 throw new DbException(e.getMessage());
@@ -403,14 +406,15 @@ public class AulaDaoJDBC implements AulaDao
         else {
             System.out.println("Não podemos consultar o banco de dados com uma conexão nula...");
         }
-        return false;
+        return true;
     }
 
     @Override
-    public boolean verSeTemTurmaCadastradaAulaEmQueDia(Integer ID_turma, String diaSemana)
+    public boolean verSeTemTurmaCadastradaEmUmDiaEspecifico(Integer ID_turma, String diaSemana)
     {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
+
         if (connection != null)
         {
             try {
@@ -418,11 +422,13 @@ public class AulaDaoJDBC implements AulaDao
                 preparedStatement.setInt(1, ID_turma);
                 resultSet = preparedStatement.executeQuery();
 
-                if (resultSet.next())
-                {
-                    String dia_semana = resultSet.getString(5);
-                    return dia_semana.contains(diaSemana);
+                while (resultSet.next()){
+                    String dia = resultSet.getString(5);
+                    if (dia.contains(diaSemana)){
+                        return true;
+                    }
                 }
+                return false;
             }
             catch (Exception e){
                 throw new DbException(e.getMessage());
@@ -435,6 +441,6 @@ public class AulaDaoJDBC implements AulaDao
         else {
             System.out.println("Não podemos consultar o banco de dados com uma conexão nula...");
         }
-        return false;
+        return true;
     }
 }

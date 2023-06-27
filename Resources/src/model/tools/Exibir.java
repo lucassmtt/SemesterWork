@@ -2,6 +2,8 @@ package model.tools;
 
 import model.entities.*;
 
+import java.awt.image.AreaAveragingScaleFilter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -34,17 +36,87 @@ public class Exibir {
     }
 
 
-    public static void diaDaSemana() {
-        System.out.println("""
-                0 = Cancelar operação
+    public static ArrayList<String> diaDaSemana(Scanner SCANNER)
+    {
+        ArrayList<String> dias_de_aula = new ArrayList<>();
+
+        while (true){
+            System.out.println("""
+                \n0 = Cancelar operação
                 1 = Segunda
                 2 = Terça
                 3 = Quarta
                 4 = Quinta
                 5 = Sexta
-
+                
+                (Por favor, adicione um dia por vez)
+                
                 """);
-        System.out.print("Resposta: ");
+            System.out.print("Resposta: ");
+            int resp = SCANNER.nextInt();
+            if (resp > 5 || resp < 0){
+                continue;
+            }
+            switch (resp){
+                case 0 -> {
+                    return null;
+                }
+                case 1 -> {
+                    if (dias_de_aula.contains("Segunda")){
+                        System.out.println("Impossível inserir valores iguais...");
+                        Exibir.espera_em_ms(500);
+                        continue;
+                    }
+                    dias_de_aula.add("Segunda");
+
+                }
+                case 2 -> {
+                    if (dias_de_aula.contains("Terça")){
+                        System.out.println("Impossível inserir valores iguais...");
+                        Exibir.espera_em_ms(500);
+                        continue;
+                    }
+                    dias_de_aula.add("Terça");
+
+                }
+                case 3 -> {
+                    if (dias_de_aula.contains("Quarta")){
+                        System.out.println("Impossível inserir valores iguais...");
+                        Exibir.espera_em_ms(500);
+                        continue;
+                    }
+                    dias_de_aula.add("Quarta");
+                }
+                case 4 -> {
+                    if (dias_de_aula.contains("Quinta")){
+                        System.out.println("Impossível inserir valores iguais...");
+                        Exibir.espera_em_ms(500);
+                        continue;
+                    }
+                    dias_de_aula.add("Quinta");
+                }
+                case 5 -> {
+                    if (dias_de_aula.contains("Sexta")){
+                        System.out.println("Impossível inserir valores iguais...");
+                        Exibir.espera_em_ms(500);
+                        continue;
+                    }
+                    dias_de_aula.add("Sexta");
+                }
+            }
+            System.out.println("Dias escolhidos " + dias_de_aula);
+            System.out.print("São apenas estes dias? (S/N) ");
+            String resp_ = SCANNER.next().substring(0,1).toUpperCase();
+            if (resp_.equals("S")) {
+                return dias_de_aula;
+            }
+            if (dias_de_aula.size() > 5) {
+                dias_de_aula.clear();
+                System.out.println("Por favor adicione corretamente os dias da semana. (RECOMEÇANDO ANOTAÇÕES DOS DIAS)");
+                break;
+            }
+        }
+        return null;
     }
 
 

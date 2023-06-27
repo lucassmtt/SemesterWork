@@ -1,17 +1,17 @@
 CREATE TABLE curso
 (
     ID_curso     int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    nomeCurso    varchar(30)  DEFAULT NULL,
+    nomeCurso    varchar(255)  DEFAULT NULL,
     cargaHoraria int      DEFAULT NULL,
-    descricao   varchar(200) DEFAULT NULL
+    descricao   varchar(255) DEFAULT NULL
 );
 
 
 CREATE TABLE sala
 (
 	ID_sala int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	nomeSala varchar(200) DEFAULT NULL,
-	local varchar(50) DEFAULT NULL,
+	nomeSala varchar(255) DEFAULT NULL,
+	local varchar(255) DEFAULT NULL,
 	capacidade int DEFAULT NULL
 );
 
@@ -19,10 +19,9 @@ CREATE TABLE sala
 CREATE TABLE turma
 (
 	ID_turma int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	nomeTurma varchar(50) DEFAULT NULL,
+	nomeTurma varchar(255) DEFAULT NULL,
 	ID_Sala int DEFAULT NULL,
 	ID_curso int,
-	FOREIGN KEY (ID_sala) REFERENCES faculdade.sala(ID_sala),
 	FOREIGN KEY (ID_curso) REFERENCES faculdade.curso(ID_curso)
 );
 
@@ -30,10 +29,10 @@ CREATE TABLE turma
 CREATE TABLE aula
 (
     ID_aula int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    nome_aula varchar(50) DEFAULT NULL,
+    nome_aula varchar(255) DEFAULT NULL,
     ID_sala int,
     ID_turma int,
-    dia_semana VARCHAR(20),
+    dia_semana JSON,
 
     FOREIGN KEY (ID_sala) REFERENCES faculdade.sala(ID_sala),
     FOREIGN KEY (ID_turma) REFERENCES faculdade.turma(ID_turma)
@@ -43,11 +42,11 @@ CREATE TABLE aula
 CREATE TABLE aluno
 (
 	ID_matricula int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	nome varchar(200) DEFAULT NULL,
-	endereco varchar(200) DEFAULT NULL,
-	celular varchar(11) DEFAULT NULL,
-	email varchar(200) DEFAULT NULL,
-	cpf varchar(200) DEFAULT NULL,
+	nome varchar(255) DEFAULT NULL,
+	endereco varchar(255) DEFAULT NULL,
+	celular varchar(255) DEFAULT NULL,
+	email varchar(255) DEFAULT NULL,
+	cpf varchar(255) DEFAULT NULL,
 	ID_curso int DEFAULT NULL,
 	FOREIGN KEY (ID_curso) REFERENCES faculdade.curso (ID_curso)
 );
@@ -56,11 +55,11 @@ CREATE TABLE aluno
 CREATE TABLE professor
 (
 	ID_professor int PRIMARY KEY NOT NULL AUTO_INCREMENT,
-	nome varchar(200) DEFAULT NULL,
-	endereco varchar(200) DEFAULT NULL,
-	celular varchar(11) DEFAULT NULL,
-	email varchar(200) DEFAULT NULL,
-	cpf varchar(200) DEFAULT NULL,
+	nome varchar(255) DEFAULT NULL,
+	endereco varchar(255) DEFAULT NULL,
+	celular varchar(255) DEFAULT NULL,
+	email varchar(255) DEFAULT NULL,
+	cpf varchar(255) DEFAULT NULL,
 	ID_curso int DEFAULT NULL,
 	FOREIGN KEY (ID_curso) REFERENCES faculdade.curso (ID_curso)
 )

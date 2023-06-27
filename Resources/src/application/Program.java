@@ -2,6 +2,7 @@ package application;
 
 import model.dao.*;
 import model.entities.*;
+//import model.tools.Cadastrar;
 import model.tools.Cadastrar;
 import model.tools.Exibir;
 
@@ -61,16 +62,17 @@ public class Program {
                     }
                     case 2 -> {
                         Exibir.espera_em_ms(tempoEspera);
-                        Cadastrar.sala(SCANNER);
+                        Sala sala = Cadastrar.sala(SCANNER);
                         resp = Exibir.exibicao("Mostrar lista de salas?");
+                        salaDao = DaoFactory.criaSalaDao();
                         if (resp.equals("S")) {
                             System.out.println("\n");
-                            salaDao = DaoFactory.criaSalaDao();
                             salaDao.buscarTodasSalas();
                             Exibir.espera_em_ms(1500);
                         }
+                        salaDao.inserirSala(sala);
                     }
-                    
+
                     case 3 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         Curso curso = Cadastrar.curso(SCANNER);
@@ -95,7 +97,7 @@ public class Program {
 
                     case 5 -> {
                         Exibir.espera_em_ms(tempoEspera);
-                        Professor professor = Cadastrar.professor(SCANNER);
+                        Professor professor = Cadastrar.professor();
                         professorDao.inserirProfessor(professor);
                         resp = Exibir.exibicao("Mostrar lista de professores?");
                         if (resp.equals("S"))
@@ -108,9 +110,8 @@ public class Program {
                         Exibir.espera_em_ms(tempoEspera);
                         Aula aula = Cadastrar.aula(SCANNER);
                         if (aula != null){
-                            System.out.println("Ola");
+                            DaoFactory.criaAulaDao().inserirAula(aula);
                         }
-
                     }
                     case 7 -> {
                         Exibir.espera_em_ms(tempoEspera);

@@ -12,6 +12,6 @@ public interface AulaDao
     void buscarTodasAulas();
     boolean verSeTemAulaEmDiaEspecifico(Integer ID_aula, String diaSemana);
     boolean verSeTemSalaCadastradaAulaEmQueDia(Integer ID_sala, String diaSemana);
-    boolean verSeTemTurmaCadastradaAulaEmQueDia(Integer ID_turma, String diaSemana);
+    boolean verSeTemTurmaCadastradaEmUmDiaEspecifico(Integer ID_turma, String diaSemana);
 
 }

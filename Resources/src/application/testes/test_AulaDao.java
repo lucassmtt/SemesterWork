@@ -4,6 +4,10 @@ import model.dao.AulaDao;
 import model.dao.DaoFactory;
 import model.entities.Aula;
 import model.entities.Turma;
+import model.tools.Cadastrar;
+
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class test_AulaDao
 {
@@ -33,6 +37,12 @@ public class test_AulaDao
 //        System.out.println("Test 5 - Buscar todas as aulas");
 //        aulaDao.buscarTodasAulas();
 
-        aulaDao.verSeTemAulaEmDiaEspecifico(10, "Segunda");
+//        aulaDao.verSeTemAulaEmDiaEspecifico(10, "Segunda");
+        System.out.println(aulaDao.verSeTemTurmaCadastradaEmUmDiaEspecifico(1, "Monday"));
+        System.out.println(aulaDao.verSeTemTurmaCadastradaEmUmDiaEspecifico(1, "Wednesday"));
+        System.out.println(aulaDao.verSeTemTurmaCadastradaEmUmDiaEspecifico(1, "Segunda"));
+
+        Aula aula = Cadastrar.aula(new Scanner(System.in));
+
     }
 }
