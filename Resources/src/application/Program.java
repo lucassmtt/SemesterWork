@@ -40,7 +40,7 @@ public class Program {
                     case 1 -> {
                         Exibir.espera_em_ms(tempoEspera);
 
-                        Aluno aluno = Cadastrar.aluno(SCANNER);
+                        Aluno aluno = Cadastrar.aluno();
                         System.out.println();
                         Curso curso = null;
                         if (aluno == null){
@@ -48,7 +48,7 @@ public class Program {
                         }
                         resp = Exibir.exibicao("Deseja anexar o aluno a algum curso?").substring(0,1).toUpperCase();
                         if (resp.equals("S")){
-                            Curso curso_apoio = Cadastrar.curso(SCANNER);
+                            Curso curso_apoio = Cadastrar.curso();
                             cursoDao.inserirCurso(curso_apoio);
                             aluno.setCurso(curso_apoio);
                         }
@@ -64,7 +64,7 @@ public class Program {
                     }
                     case 2 -> {
                         Exibir.espera_em_ms(tempoEspera);
-                        Sala sala = Cadastrar.sala(SCANNER);
+                        Sala sala = Cadastrar.sala();
                         if (sala == null){
                             break;
                         }
@@ -80,7 +80,7 @@ public class Program {
 
                     case 3 -> {
                         Exibir.espera_em_ms(tempoEspera);
-                        Curso curso = Cadastrar.curso(SCANNER);
+                        Curso curso = Cadastrar.curso();
                         if (curso == null) {
                             break;
                         }
@@ -95,7 +95,7 @@ public class Program {
 
                     case 4 -> {
                         Exibir.espera_em_ms(tempoEspera);
-                        Turma turma = Cadastrar.turma(SCANNER);
+                        Turma turma = Cadastrar.turma();
                         if (turma == null) {
                             break;
                         }

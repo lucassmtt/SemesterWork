@@ -1,10 +1,6 @@
 package model.tools;
 
-import model.entities.*;
-
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 
@@ -36,29 +32,35 @@ public class Exibir {
     }
 
 
-    public static ArrayList<String> diaDaSemana(Scanner SCANNER)
+    public static ArrayList<String> diaDaSemana()
     {
+        Scanner SCANNER = new Scanner(System.in);
         ArrayList<String> dias_de_aula = new ArrayList<>();
 
         while (true){
-            System.out.println("""
+            System.out.printf("""
                 \n0 = Cancelar operação
                 1 = Segunda
                 2 = Terça
                 3 = Quarta
                 4 = Quinta
                 5 = Sexta
+                6 = Deixar dias cadastrados
                 
                 (Por favor, adicione um dia por vez)
                 
                 """);
+            if (dias_de_aula.size() == 0){
+                System.out.println("Dias cadastrados: Nenhum dia cadastrado." + "\n");
+            }
             System.out.print("Resposta: ");
             int resp = SCANNER.nextInt();
-            if (resp > 5 || resp < 0){
+            if (resp > 6 || resp < 0){
                 continue;
             }
             switch (resp){
                 case 0 -> {
+                    SCANNER.close();
                     return null;
                 }
                 case 1 -> {
@@ -103,11 +105,22 @@ public class Exibir {
                     }
                     dias_de_aula.add("Sexta");
                 }
+                case 6 -> {
+                    if (dias_de_aula.size() == 0){
+                        System.out.println("Por favor adicione algum dia para ter aula...");
+                        continue;
+                    }
+                    else {
+                        SCANNER.close();
+                        return dias_de_aula;
+                    }
+                }
             }
             System.out.println("Dias escolhidos " + dias_de_aula);
             System.out.print("São apenas estes dias? (S/N) ");
             String resp_ = SCANNER.next().substring(0,1).toUpperCase();
             if (resp_.equals("S")) {
+                SCANNER.close();
                 return dias_de_aula;
             }
             if (dias_de_aula.size() > 5) {
@@ -116,79 +129,9 @@ public class Exibir {
                 break;
             }
         }
+        SCANNER.close();
         return null;
     }
-
-
-//    public static void listaDeAlunos(List<Aluno> lista_de_alunos) {
-//        System.out.println("Lista de alunos: ");
-//        for (Aluno aluno : lista_de_alunos) {
-//            espera_em_ms(400);
-//            System.out.println("INFORMAÇÕES ALUNO: \n");
-//            System.out.println();
-//            System.out.println("\tNome: " + aluno.nome);
-//            System.out.println("\tCPF: " + aluno.cpf);
-//            System.out.println("\tEndereço: " + aluno.endereco);
-//            System.out.println("\tCelular: " + aluno.celular);
-//            System.out.println("\tNúmero da Matrícula: " + aluno.matricula);
-//            System.out.println();
-//            espera_em_ms(1500);
-//        }
-//        if (lista_de_alunos.size() == 0) {
-//            System.out.println("LISTA DE ALUNOS VAZIA!");
-//        }
-//    }
-
-
-    public static void listaDeSalas(List<Sala> lista_de_salas) {
-        System.out.println("Lista de salas: ");
-        for (Sala sala : lista_de_salas) {
-            System.out.println(sala);
-            espera_em_ms(1600);
-        }
-    }
-
-
-    public static void listaDeCursos(List<Curso> lista_de_cursos) {
-        System.out.println("Lista de cursos: ");
-        for (Curso curso : lista_de_cursos) {
-            System.out.println(curso);
-            espera_em_ms(1600);
-        }
-    }
-
-
-    public static void listaDeTurmas(List<Turma> lista_de_turmas) {
-        System.out.println("Lista de turmas: ");
-        for (Turma turma : lista_de_turmas) {
-            System.out.println(turma);
-        }
-    }
-
-
-//    public static void adicionarTurmaSala(List<Turma> lista_de_turmas, Scanner SCANNER) {
-//        listaDeTurmas(lista_de_turmas);
-//        System.out.println("""
-//                Adicionar turmas existentes = 1
-//                Criar nova turma = 2
-//                """);
-//        int resp = SCANNER.nextInt();
-//        SCANNER.nextLine();
-//        if (resp == 1) {
-//            System.out.println("Digite o código da turma que você quer adicionar a sala");
-//        }
-//        listaDeSalas(lista_de_salas);
-//    }
-
-
-    public static void listaDeProfessores(List<Professor> lista_de_professores) {
-        System.out.println("Lista de professores: ");
-        for (Professor professor : lista_de_professores) {
-            System.out.println(professor);
-            espera_em_ms(1600);
-        }
-    }
-
 
     public static void espera_em_ms(int ms) {
         try {
@@ -202,11 +145,9 @@ public class Exibir {
         System.out.println("_______________________\n");
     }
 
-
     public static String exibicao(String msg) {
         Scanner scanner = new Scanner(System.in);
         System.out.print(msg + "(S/N): ");
-        String retorno = scanner.next().substring(0, 1).toUpperCase();
-        return retorno;
+        return scanner.next().substring(0, 1).toUpperCase();
     }
 }
