@@ -254,7 +254,6 @@ public class AlunoDaoJDBC implements AlunoDao
                 resultSet = preparedStatement.executeQuery();
 
                 while (resultSet.next()){
-                    System.out.println("_______________________________");
                     System.out.println(
                             "Matricula: " + resultSet.getInt(1) + "\n" +
                             "Nome: " + resultSet.getString(2) + "\n" +
@@ -269,6 +268,7 @@ public class AlunoDaoJDBC implements AlunoDao
                     else{
                         System.out.println("Curso ID: " + resultSet.getInt(7));
                     }
+                    System.out.println("_______________________________");
                     Exibir.espera_em_ms(500);
                 }
                 DB.fechaResultSet(resultSet);

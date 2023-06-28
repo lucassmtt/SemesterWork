@@ -109,8 +109,8 @@ public class Cadastrar {
         Exibir.separador();
         System.out.println("-Cadastrar nova sala-");
         System.out.print("Digite o nome da sala: ");
-        String nome_sala = SCANNER.next();
-        SCANNER.nextLine();
+        String nome_sala = SCANNER.nextLine();
+//        SCANNER.nextLine();
 
         System.out.print("Digite o local: ");
         String local_sala = SCANNER.nextLine();
@@ -189,24 +189,98 @@ public class Cadastrar {
         while (true) try {
             System.out.print("Digite o nome da turma: ");
             String nome_turma = SCANNER.nextLine();
-            Sala sala = new Sala();
-            Curso curso = new Curso();
+            Turma turma = new Turma();
+            turma.setNomeTurma(nome_turma);
+
+            Sala sala = null;
+            Curso curso = null;
 
             System.out.print("\nAdicionar uma sala? (S/N) ");
             String resposta = SCANNER.next().substring(0, 1).toUpperCase();
             if (resposta.equals("S")) {
-                sala = sala(SCANNER);
-                DaoFactory.criaSalaDao().inserirSala(sala);
+                int resp = -1;
+                boolean continar = true;
+                while (continar){
+                    System.out.println("Sair = 0\n" +
+                            "Criar sala = 1\n" +
+                            "Adicionar em salas existentes = 2"  );
+                    System.out.print(": ");
+                    resp = SCANNER.nextInt();
+                    SCANNER.nextLine();
+                    switch (resp)
+                    {
+                        case 0:
+                            break;
+
+                        case 1:
+                            sala = sala(SCANNER);
+                            DaoFactory.criaSalaDao().inserirSala(sala);
+                            turma.setSala(sala);
+                            continar = false;
+                            break;
+
+                        case 2:
+                            System.out.println("--Escolha um ID da sala--");
+                            DaoFactory.criaSalaDao().buscarTodasSalas();
+                            System.out.println("______________________________________");
+                            System.out.print("ID ESCOLHIDO: ");
+                            int id = SCANNER.nextInt();
+                            Sala sala_ = DaoFactory.criaSalaDao().buscarSalaPorIdTransformarEmOBjSala(id);
+                            if (sala_ != null){
+                                turma.setSala(sala);
+                                continar = false;
+                                break;
+                            }
+                            else {
+                                System.out.println("Sala inexistente, por favor, tente novamente...");
+                            }
+                    }
+                }
             }
 
-            System.out.print("\nAdicionar uma curso? (S/N) ");
+            System.out.print("\nAdicionar um curso? (S/N) ");
             resposta = SCANNER.next().substring(0, 1).toUpperCase();
             if (resposta.equals("S")) {
-                curso = curso(SCANNER);
-                DaoFactory.criaCursoDao().inserirCurso(curso);
-            }
+                int resp = 0;
+                boolean continuar = true;
+                while (continuar) {
+                    System.out.println("0 = Sair\n" +
+                            "1 = Criar curso\n" +
+                            "2 = Adicionar a um curso existente");
+                    System.out.print(": ");
+                    resp = SCANNER.nextInt();
+                    switch (resp)
+                    {
+                        case 0:
+                            continuar = false;
+                            break;
 
-            return new Turma(nome_turma, sala, curso);
+                        case 1:
+                            curso = curso(SCANNER);
+                            DaoFactory.criaCursoDao().inserirCurso(curso);
+                            turma.setCurso(curso);
+                            continuar = false;
+                            break;
+
+                        case 2:
+                            System.out.println("--Escolha um ID de curso--");
+                            DaoFactory.criaCursoDao().buscarTodosCursos();
+                            System.out.println("______________________________________");
+                            System.out.print("ID ESCOLHIDO: ");
+                            int id = SCANNER.nextInt();
+                            curso = DaoFactory.criaCursoDao().buscarCursoPorIdTransformarEmObj(id);
+                            if (curso != null){
+                                turma.setCurso(curso);
+                                continuar = false;
+                                break;
+                            }
+                            else {
+                                System.out.println("Curso inexistente, por favor, tente novamente...");
+                            }
+                    }
+                }
+            }
+            return turma;
         } catch (InputMismatchException e) {
             System.out.println("Digite corretamente os dados!");
             return null;
@@ -230,6 +304,7 @@ public class Cadastrar {
         List<String> dados = info_pessoas();
         if (dados.size() == 0) {
             System.out.println("Operação cancelada...");
+            return null;
         }
 
         return new Professor(
@@ -245,7 +320,8 @@ public class Cadastrar {
             String nome_aula = SCANNER.nextLine();
             System.out.println("Em qual sala terá aula? \n\n--Selecione o ID da sala-- \n");
             DaoFactory.criaSalaDao().buscarTodasSalas();
-            System.out.print("ID: ");
+            System.out.println("______________________________________");
+            System.out.print("\nID ESCOLHIDO: ");
             int id_sala = SCANNER.nextInt();
 
             Sala sala = DaoFactory.criaSalaDao().buscarSalaPorIdTransformarEmOBjSala(id_sala);
@@ -282,7 +358,8 @@ public class Cadastrar {
                 System.out.println("Qual turma terá aula de " + nome_aula + "?");
                 System.out.println("\n--Selecione o ID da turma--");
                 DaoFactory.criaTurmaDao().buscarTodasTurmas();
-                System.out.print("ID: ");
+                System.out.println("______________________________________");
+                System.out.print("\nID ESCOLHIDO: ");
                 Integer id_turma = SCANNER.nextInt();
 
                 for (String s : dias_de_aula) {

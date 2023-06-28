@@ -1,5 +1,6 @@
 package application;
 
+import db.DB;
 import model.dao.*;
 import model.entities.*;
 //import model.tools.Cadastrar;
@@ -34,6 +35,7 @@ public class Program {
                     case 0 -> {
                         System.out.println("Saindo...");
                         continuar = false;
+                        DB.fechaConexao();
                     }
                     case 1 -> {
                         Exibir.espera_em_ms(tempoEspera);
@@ -63,6 +65,10 @@ public class Program {
                     case 2 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         Sala sala = Cadastrar.sala(SCANNER);
+                        if (sala == null){
+                            break;
+                        }
+                        salaDao.inserirSala(sala);
                         resp = Exibir.exibicao("Mostrar lista de salas?");
                         salaDao = DaoFactory.criaSalaDao();
                         if (resp.equals("S")) {
@@ -70,12 +76,14 @@ public class Program {
                             salaDao.buscarTodasSalas();
                             Exibir.espera_em_ms(1500);
                         }
-                        salaDao.inserirSala(sala);
                     }
 
                     case 3 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         Curso curso = Cadastrar.curso(SCANNER);
+                        if (curso == null) {
+                            break;
+                        }
                         cursoDao.inserirCurso(curso);
                         resp = Exibir.exibicao("Mostrar lista de cursos?");
                         if (resp.equals("S")) {
@@ -88,8 +96,11 @@ public class Program {
                     case 4 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         Turma turma = Cadastrar.turma(SCANNER);
+                        if (turma == null) {
+                            break;
+                        }
                         turmaDao.inserirTurma(turma);
-                        resp = Exibir.exibicao("Mostrar lista de salas?");
+                        resp = Exibir.exibicao("Mostrar lista de turmas?");
                         if (resp.equals("S")){
                             turmaDao.buscarTodasTurmas();
                         }
@@ -98,6 +109,9 @@ public class Program {
                     case 5 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         Professor professor = Cadastrar.professor();
+                        if (professor == null) {
+                            break;
+                        }
                         professorDao.inserirProfessor(professor);
                         resp = Exibir.exibicao("Mostrar lista de professores?");
                         if (resp.equals("S"))
@@ -109,9 +123,10 @@ public class Program {
                     case 6 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         Aula aula = Cadastrar.aula(SCANNER);
-                        if (aula != null){
-                            DaoFactory.criaAulaDao().inserirAula(aula);
+                        if (aula == null){
+                            break;
                         }
+                        DaoFactory.criaAulaDao().inserirAula(aula);
                     }
                     case 7 -> {
                         Exibir.espera_em_ms(tempoEspera);

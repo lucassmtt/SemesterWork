@@ -150,7 +150,7 @@ public class SalaDaoJDBC implements SalaDao
                     System.out.println("ID Sala: " + resultSet.getInt(1) + "\n" +
                             "Nome sala: " + resultSet.getString(2) + "\n" +
                             "Local: " + resultSet.getString(3) + "\n" +
-                            "Capcidade:  " + resultSet.getInt(4)
+                            "Capacidade:  " + resultSet.getInt(4)
                     );
                 }
 
@@ -236,7 +236,7 @@ public class SalaDaoJDBC implements SalaDao
                     System.out.println("ID Sala: " + resultSet.getInt(1) + "\n" +
                             "Nome sala: " + resultSet.getString(2) + "\n" +
                             "Local: " + resultSet.getString(3) + "\n" +
-                            "Capcidade:  " + resultSet.getObject(4)
+                            "Capacidade:  " + resultSet.getObject(4)
                     );
                     Exibir.espera_em_ms(500);
                 }
