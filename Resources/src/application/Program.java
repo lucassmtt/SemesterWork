@@ -15,7 +15,7 @@ public class Program {
     public static void main(String[] args)
     {
         Scanner SCANNER = new Scanner(System.in);
-        int resposta;
+
         boolean continuar = true;
         AlunoDao alunoDao = DaoFactory.criaAlunoDao();
         TurmaDao turmaDao = DaoFactory.criaTurmaDao();
@@ -25,17 +25,19 @@ public class Program {
         CursoDao cursoDao = DaoFactory.criaCursoDao();
 
 
-        while (continuar) {
-            try {
+        try {
+            while(continuar) {
+                Scanner scanner = new Scanner(System.in);
+                int resposta = 0;
+                String resp;
                 Exibir.menu();
-                resposta = SCANNER.nextInt();
-                SCANNER.nextLine();
-                String resp = null;
+                resposta = scanner.nextInt();
                 switch (resposta) {
                     case 0 -> {
                         System.out.println("Saindo...");
                         continuar = false;
                         DB.fechaConexao();
+                        SCANNER.close();
                     }
                     case 1 -> {
                         Exibir.espera_em_ms(tempoEspera);
@@ -61,11 +63,13 @@ public class Program {
                             Exibir.espera_em_ms(1500);
                             System.out.println("\n");
                         }
+
                     }
                     case 2 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         Sala sala = Cadastrar.sala();
                         if (sala == null){
+
                             break;
                         }
                         salaDao.inserirSala(sala);
@@ -76,12 +80,14 @@ public class Program {
                             salaDao.buscarTodasSalas();
                             Exibir.espera_em_ms(1500);
                         }
+
                     }
 
                     case 3 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         Curso curso = Cadastrar.curso();
                         if (curso == null) {
+
                             break;
                         }
                         cursoDao.inserirCurso(curso);
@@ -91,12 +97,14 @@ public class Program {
                             cursoDao.buscarTodosCursos();
                             Exibir.espera_em_ms(1500);
                         }
+
                     }
 
                     case 4 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         Turma turma = Cadastrar.turma();
                         if (turma == null) {
+
                             break;
                         }
                         turmaDao.inserirTurma(turma);
@@ -104,12 +112,14 @@ public class Program {
                         if (resp.equals("S")){
                             turmaDao.buscarTodasTurmas();
                         }
+
                     }
 
                     case 5 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         Professor professor = Cadastrar.professor();
                         if (professor == null) {
+
                             break;
                         }
                         professorDao.inserirProfessor(professor);
@@ -118,35 +128,142 @@ public class Program {
                         {
                             professorDao.buscarTodosOsProfessores();
                         }
+
                     }
 
                     case 6 -> {
-                        Exibir.espera_em_ms(tempoEspera);
-                        Aula aula = Cadastrar.aula(SCANNER);
-                        if (aula == null){
-                            break;
+                        Aula aula = null;
+                        System.out.println("-Adicionar nova aula-");
+
+                        System.out.print("Qual é o nome da aula: ");
+                        String nome_aula = SCANNER.nextLine();
+
+                        int id_sala = -1;
+                        int cont = 0;
+                        int res = 0;
+
+                        while (DaoFactory.criaSalaDao().buscarSalaPorIdTransformarEmOBjSala(id_sala) == null){
+                            if (cont == 0){
+                                System.out.println("Escolha uma sala para adicionar a aula: ");
+                            }
+                            if (cont > 0){
+                                System.out.println("""
+                                    ID da sala não encontrado, por favor digite um ID que conste no banco de dados...
+                                    
+                                    0 = Cancelar operação e voltar ao menu
+                                    1 = Continuar
+                                    1..Infinito = Continuar
+                                    """);
+                                System.out.print(": ");
+                                res = SCANNER.nextInt();
+                                SCANNER.next();
+                                if (res == 0){
+                                    System.out.println("Cancelando operação...");
+                                    break;
+                                }
+                            }
+                            System.out.println("_______________________________");
+                            salaDao.buscarTodasSalas();
+                            System.out.println("ID ESCOLHIDO: ");
+                            id_sala = SCANNER.nextInt();
+                            cont += 1;
+                            res = 1;
                         }
+                        if (res == 0){
+                            continue;
+                        }
+
+                        int id_turma = -1;
+                        cont = 0;
+                        res = 0;
+                        while (turmaDao.buscarTurmaPorIdTransformaEmObjTurma(id_turma) == null) {
+                            if (cont == 0){
+                                System.out.println("Escolha a turma que será adicionada anexada a aula: ");
+                            }
+                            if (cont > 0){
+                                System.out.println("""
+                                        ID da turma não encontrado, por favor digite um ID que conste no banco de dados...
+                                        
+                                        0 = Cancelar operação e voltar ao menu
+                                        1 = Continuar
+                                        1..Infinito = Continuar
+                                        """);
+                                System.out.print(": ");
+                                res = SCANNER.nextInt();
+                                if (res == 0){
+                                    System.out.println("Cancelando operação...");
+
+                                    break;
+                                }
+                            }
+                            turmaDao.buscarTodasTurmas();
+                            System.out.print("ID ESCOLHIDO: ");
+                            id_turma = SCANNER.nextInt();
+                            cont += 1;
+                            res = 1;
+                        }
+                        if (res == 0){
+
+                            continue;
+                        }
+
+                        System.out.print("Em qual dia da semana terá aula: ");
+                        ArrayList<String> dias_de_aula = Exibir.diaDaSemana();
+                        if (dias_de_aula == null){
+
+                            continue;
+                        }
+                        boolean controle = true;
+
+                        for (String value : dias_de_aula) {
+                            System.out.println(value);
+                            if (DaoFactory.criaAulaDao().verSeTemSalaCadastradaAulaEmQueDia(id_sala, value)) {
+                                controle = false;
+
+                                break;
+                            }
+                        }
+                        if (!controle) {
+                            System.out.println("Impossível cadastrar aula neste(s) dia, sala já está sendo ocupada...");
+
+                            continue;
+                        }
+
+                        Sala sala = salaDao.buscarSalaPorIdTransformarEmOBjSala(id_sala);
+                        Turma turma = turmaDao.buscarTurmaPorIdTransformaEmObjTurma(id_turma);
+
+                        aula = new Aula();
+                        aula.setNomeAula(nome_aula);
+                        aula.setSala(sala);
+                        aula.setTurma(turma);
+                        aula.setDiaSemana(String.valueOf(dias_de_aula));
                         DaoFactory.criaAulaDao().inserirAula(aula);
+                        SCANNER.next();
                     }
                     case 7 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         alunoDao.buscarTodosAlunos();
+
                     }
                     case 8 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         salaDao.buscarTodasSalas();
+
                     }
                     case 9 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         cursoDao.buscarTodosCursos();
+
                     }
                     case 10 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         turmaDao.buscarTodasTurmas();
+
                     }
                     case 11 -> {
                         Exibir.espera_em_ms(tempoEspera);
                         professorDao.buscarTodosOsProfessores();
+
                     }
                     case 12 -> {
                         System.out.println("Adicionar aluno a curso: ");
@@ -170,6 +287,7 @@ public class Program {
                                 res = SCANNER.nextInt();
                                 if (res == 0){
                                     System.out.println("Cancelando operação...");
+
                                     break;
                                 }
                             }
@@ -181,6 +299,7 @@ public class Program {
                             res = 1;
                         }
                         if (res == 0){
+
                             continue;
                         }
 
@@ -203,6 +322,7 @@ public class Program {
                                 res = SCANNER.nextInt();
                                 if (res == 0){
                                     System.out.println("Cancelando operação...");
+
                                     break;
                                 }
                             }
@@ -214,6 +334,7 @@ public class Program {
                             res = 1;
                         }
                         if (res == 0){
+
                             continue;
                         }
 
@@ -224,6 +345,7 @@ public class Program {
                             aluno.setCurso(curso);
                             aluno.setId_Matricula(id_aluno);
                             alunoDao.atualizarAluno(aluno);
+
                         }
                         else {
                             while (true){
@@ -237,6 +359,7 @@ public class Program {
                                     aluno.setCurso(curso);
                                     aluno.setId_Matricula(id_aluno);
                                     alunoDao.atualizarAluno(aluno);
+
                                     break;
                                 }
                                 else {
@@ -244,6 +367,7 @@ public class Program {
                                 }
                             }
                         }
+
                     }
                     case 13 -> {
                         System.out.println("Adicionar turma a curso: ");
@@ -268,6 +392,7 @@ public class Program {
                                 res = SCANNER.nextInt();
                                 if (res == 0){
                                     System.out.println("Cancelando operação...");
+
                                     break;
                                 }
                             }
@@ -278,6 +403,7 @@ public class Program {
                             res = 1;
                         }
                         if (res == 0){
+
                             continue;
                         }
 
@@ -300,6 +426,7 @@ public class Program {
                                 res = SCANNER.nextInt();
                                 if (res == 0){
                                     System.out.println("Cancelando operação...");
+
                                     break;
                                 }
                             }
@@ -311,6 +438,7 @@ public class Program {
                             res = 1;
                         }
                         if (res == 0){
+
                             continue;
                         }
 
@@ -321,6 +449,7 @@ public class Program {
                             turma.setCurso(curso);
                             turma.setId_Turma(id_turma);
                             turmaDao.atualizarTurma(turma);
+
                         }
 
                         else {
@@ -335,6 +464,7 @@ public class Program {
                                     turma.setCurso(curso);
                                     turma.setId_Turma(id_turma);
                                     turmaDao.atualizarTurma(turma);
+
                                     break;
                                 }
                                 else {
@@ -342,6 +472,7 @@ public class Program {
                                 }
                             }
                         }
+
 
                     }
                     case 14 -> {
@@ -367,6 +498,7 @@ public class Program {
                                 res = SCANNER.nextInt();
                                 if (res == 0){
                                     System.out.println("Cancelando operação...");
+
                                     break;
                                 }
                             }
@@ -377,6 +509,7 @@ public class Program {
                             res = 1;
                         }
                         if (res == 0){
+
                             continue;
                         }
 
@@ -400,6 +533,7 @@ public class Program {
                                 res = SCANNER.nextInt();
                                 if (res == 0){
                                     System.out.println("Cancelando operação...");
+
                                     break;
                                 }
                             }
@@ -410,6 +544,7 @@ public class Program {
                             res = 1;
                         }
                         if (res == 0){
+
                             continue;
                         }
 
@@ -420,6 +555,7 @@ public class Program {
                             professor.setCurso(curso);
                             professor.setId_Professor(id_professor);
                             professorDao.atualizarProfessor(professor);
+
                         }
                         else {
                             while (true){
@@ -427,12 +563,14 @@ public class Program {
                                 System.out.print("Resposta: ");
                                 String resp_ = SCANNER.next().substring(0,1).toUpperCase();
                                 if (resp_.equals("N")){
+
                                     break;
                                 }
                                 if (resp_.equals("S")){
                                     professor.setCurso(curso);
                                     professor.setId_Professor(id_professor);
                                     professorDao.atualizarProfessor(professor);
+
                                     break;
                                 }
                                 else {
@@ -440,6 +578,7 @@ public class Program {
                                 }
                             }
                         }
+
                     }
                     case 15 -> {
                         System.out.println("Adicionar aula a sala: ");
@@ -458,6 +597,7 @@ public class Program {
                         aula.setSala(sala);
                         aula.setIdAula(id_aula);
                         aulaDao.atualizarAula(aula);
+
                     }
                     case 16 -> {
                         System.out.println("Adicionar turma a sala: ");
@@ -477,10 +617,12 @@ public class Program {
                         aula.setTurma(turma);
                         aula.setIdAula(id_aula);
                         aulaDao.atualizarAula(aula);
+
                     }
                     case 17 -> {
                         Sala sala = DaoFactory.criaSalaDao().buscarSalaPorIdTransformarEmOBjSala(10);
                         System.out.println(sala);
+
                     }
                     case 18 -> {
                         Set<String> diaSemana = new HashSet<>();
@@ -488,23 +630,28 @@ public class Program {
                         diaSemana.add("Terça");
                         diaSemana.add("Quarta");
                         System.out.println(diaSemana);
+
                     }
 
-                    default -> System.out.println("Por favor, envie um valor válido...");
+                    default -> {
+                        System.out.println("Por favor, envie um valor válido...");
+                    }
                 }
-            } catch (InputMismatchException e) {
+
+            }
+        } catch (InputMismatchException e) {
                 System.out.println("Erro: Entrada inválida. Certifique-se de inserir o tipo correto para cada dado!!!");
                 Exibir.espera_em_ms(1000);
-                SCANNER.nextLine();
+                e.printStackTrace();
             } catch (NoSuchElementException e) {
                 System.out.println("Erro: Entrada não encontrada. Certifique-se de inserir todas as informações necessárias!!!");
-                SCANNER.nextLine();
+                e.printStackTrace();
+                continuar = false;
             } catch (Exception e) {
                 System.out.println("Ocorreu um erro inesperado. Por favor tente mais tarde");
                 e.printStackTrace();
                 continuar = false;
             }
-        }
-        SCANNER.close();
-    }
+                SCANNER.close();
+            }
 }

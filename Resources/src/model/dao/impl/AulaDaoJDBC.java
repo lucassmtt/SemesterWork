@@ -3,6 +3,7 @@ package model.dao.impl;
 import db.DB;
 import db.DbException;
 import model.dao.AulaDao;
+import model.dao.DaoFactory;
 import model.entities.Aula;
 import model.entities.Sala;
 import model.entities.Turma;
@@ -114,7 +115,7 @@ public class AulaDaoJDBC implements AulaDao
                 preparedStatement.setObject(1, aula.se_existir_nome_retorna_nome_ou_null());
                 preparedStatement.setObject(2, aula.se_existir_a_sala_retorna_id_ou_null());
                 preparedStatement.setObject(3, aula.se_existir_a_turma_retorna_id_ou_null());
-                preparedStatement.setObject(4, aula.se_existir_a_dia_semana_retorna_dia_ou_null());
+                preparedStatement.setObject(4, aula.getDiaSemana());
                 preparedStatement.setInt(5, aula.getIdAula());
 
                 int linhas_afetadas = preparedStatement.executeUpdate();
@@ -220,12 +221,14 @@ public class AulaDaoJDBC implements AulaDao
                 resultSet = preparedStatement.executeQuery();
 
                 if (resultSet.next()){
+                    Aula aula = new Aula();
+                    Sala sala = null;
+                    Turma turma = null;
+
                     Object nome_aula = resultSet.getObject(2);
                     Object ID_sala = resultSet.getObject(3);
                     Object ID_turma = resultSet.getObject(4);
                     Object dia_semana = resultSet.getObject(5);
-
-                    Aula aula = new Aula();
 
                     if (nome_aula == null){
                         aula.setNomeAula(null);
@@ -234,22 +237,12 @@ public class AulaDaoJDBC implements AulaDao
                         aula.setNomeAula((String) nome_aula);
                     }
 
-                    if (ID_sala == null){
-                        aula.setSala(null);
-                    }
-                    else {
-                        Sala sala = new Sala();
-                        sala.setId_Sala((Integer) ID_sala);
-                        aula.setSala(sala);
+                    if (ID_sala != null){
+                        sala = DaoFactory.criaSalaDao().buscarSalaPorIdTransformarEmOBjSala((Integer) ID_sala);
                     }
 
-                    if (ID_turma == null){
-                        aula.setTurma(null);
-                    }
-                    else {
-                        Turma turma = new Turma();
-                        turma.setId_Turma((Integer) ID_turma);
-                        aula.setTurma(turma);
+                    if (ID_turma != null){
+                        turma = DaoFactory.criaTurmaDao().buscarTurmaPorIdTransformaEmObjTurma((Integer) ID_turma);
                     }
 
                     if (dia_semana == null){
@@ -258,11 +251,15 @@ public class AulaDaoJDBC implements AulaDao
                     else {
                         aula.setDiaSemana((String) dia_semana);
                     }
+
+                    aula.setSala(sala);
+                    aula.setTurma(turma);
+                    DB.fechaResultSet(resultSet);
+                    return aula;
                 }
                 else {
                     return null;
                 }
-                DB.fechaResultSet(resultSet);
 
             }
             catch (SQLException e){

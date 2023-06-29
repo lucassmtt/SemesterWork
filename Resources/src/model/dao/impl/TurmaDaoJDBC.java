@@ -30,13 +30,12 @@ public class TurmaDaoJDBC implements TurmaDao
             ResultSet resultSet = null;
             try{
                 preparedStatement = connection.prepareStatement(
-                        "INSERT INTO faculdade.turma (nomeTurma, ID_sala, ID_curso)" +
+                        "INSERT INTO faculdade.turma (nomeTurma, ID_curso)" +
                         " VALUES (?, ?, ?);"
                         , Statement.RETURN_GENERATED_KEYS);
 
                 preparedStatement.setString(1, turma.getNomeTurma());
-                preparedStatement.setObject(2, turma.se_existir_a_sala_retorna_id_ou_null());
-                preparedStatement.setObject(3, turma.se_existir_o_curso_retorna_id_ou_null());
+                preparedStatement.setObject(2, turma.se_existir_o_curso_retorna_id_ou_null());
 
                 int linhas_afetadas = 0;
 
@@ -109,14 +108,13 @@ public class TurmaDaoJDBC implements TurmaDao
             PreparedStatement preparedStatement = null;
             try{
                 String sql = "UPDATE faculdade.turma " +
-                        "SET nomeTurma = ?, ID_sala = ?, ID_curso = ? " +
+                        "SET nomeTurma = ?, ID_curso = ? " +
                         "WHERE ID_turma = ?;";
 
                 preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 preparedStatement.setObject(1, turma.se_existir_o_nome_retorna_nome_ou_null());
-                preparedStatement.setObject(2, turma.se_existir_a_sala_retorna_id_ou_null());
-                preparedStatement.setObject(3, turma.se_existir_o_curso_retorna_id_ou_null());
-                preparedStatement.setObject(4, turma.getId_Turma());
+                preparedStatement.setObject(2, turma.se_existir_o_curso_retorna_id_ou_null());
+                preparedStatement.setObject(3, turma.getId_Turma());
 
                 int linhas_afetadas = preparedStatement.executeUpdate();
 
@@ -157,13 +155,9 @@ public class TurmaDaoJDBC implements TurmaDao
 
                 if (resultSet.next()){
                     System.out.println("______________________________");
-                    Object sala = resultSet.getObject(3);
-                    Object curso = resultSet.getObject(4);
+                    Object curso = resultSet.getObject(3);
                     System.out.println("ID turma: " + resultSet.getInt(1));
                     System.out.println("Nome da turma: " + resultSet.getString(2));
-                    if (sala == null){
-                        System.out.print("Sala: sem salas anexadas\n");
-                    }
                     if (curso == null){
                         System.out.println("Curso: sem curso anexado\n" );
                     }
@@ -206,21 +200,13 @@ public class TurmaDaoJDBC implements TurmaDao
                     int id_turma = resultSet.getInt(1);
                     String nome_turma = resultSet.getString(2);
                     Turma turma = new Turma();
-                    Sala sala = null;
                     Curso curso = null;
 
                     if (resultSet.getObject(3) != null){
-                        sala = DaoFactory.criaSalaDao().buscarSalaPorIdTransformarEmOBjSala((Integer) resultSet.getObject(3));
+                        curso = DaoFactory.criaCursoDao().buscarCursoPorIdTransformarEmObj((Integer) resultSet.getObject(3));
                     }
 
-                    if (resultSet.getObject(4) != null){
-                        curso = DaoFactory.criaCursoDao().buscarCursoPorIdTransformarEmObj((Integer) resultSet.getObject(4));
-                    }
-
-                    turma.setSala(sala);
                     turma.setCurso(curso);
-                    System.out.println(sala);
-                    System.out.println(curso);
                     return turma;
                 }
                 DB.fechaResultSet(resultSet);
@@ -255,16 +241,9 @@ public class TurmaDaoJDBC implements TurmaDao
 
                 while (resultSet.next()){
                     System.out.println("______________________________");
-                    Object sala_id = resultSet.getObject(3);
-                    Object curso_id = resultSet.getObject(4);
+                    Object curso_id = resultSet.getObject(3);
                     System.out.println("ID turma: " + resultSet.getInt(1));
                     System.out.println("Nome da turma: " + resultSet.getString(2));
-                    if (sala_id == null){
-                        System.out.print("Sala: sem salas anexadas\n");
-                    }
-                    else {
-                        System.out.println(DaoFactory.criaSalaDao().buscarSalaPorIdTransformarEmOBjSala((Integer) sala_id));
-                    }
                     if (curso_id == null){
                         System.out.println("Curso: sem curso anexado\n" );
                     }

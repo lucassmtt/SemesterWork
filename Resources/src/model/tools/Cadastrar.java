@@ -13,6 +13,8 @@ import java.util.Scanner;
  * Classe utilizada para cadastrar objetos...
  */
 public class Cadastrar {
+    static Scanner SCANNER = new Scanner(System.in);
+
     /**
      * <p>
      * Monta as informações que precisamos para cadastrar o Aluno ou o Professor.
@@ -69,7 +71,6 @@ public class Cadastrar {
      */
     public static Aluno aluno()
     {
-        Scanner SCANNER = new Scanner(System.in);
         Exibir.separador();
         System.out.println("-Cadastrar novo aluno-");
 
@@ -110,7 +111,6 @@ public class Cadastrar {
      */
     public static Sala sala()
     {
-        Scanner SCANNER = new Scanner(System.in);
         Exibir.separador();
         System.out.println("-Cadastrar nova sala-");
         System.out.print("Digite o nome da sala: ");
@@ -151,7 +151,6 @@ public class Cadastrar {
      */
     public static Curso curso()
     {
-        Scanner SCANNER = new Scanner(System.in);
         Exibir.separador();
         System.out.println("-Cadastrar novo curso-");
 
@@ -195,7 +194,6 @@ public class Cadastrar {
      */
     public static Turma turma()
     {
-        Scanner SCANNER = new Scanner(System.in);
         System.out.println("-Cadastrar nova turma-");
         while (true) try {
             System.out.print("Digite o nome da turma: ");
@@ -226,7 +224,6 @@ public class Cadastrar {
                         case 1:
                             sala = sala();
                             DaoFactory.criaSalaDao().inserirSala(sala);
-                            turma.setSala(sala);
                             continar = false;
                             break;
 
@@ -238,7 +235,6 @@ public class Cadastrar {
                             int id = SCANNER.nextInt();
                             Sala sala_ = DaoFactory.criaSalaDao().buscarSalaPorIdTransformarEmOBjSala(id);
                             if (sala_ != null){
-                                turma.setSala(sala);
                                 continar = false;
                                 break;
                             }
@@ -290,6 +286,7 @@ public class Cadastrar {
                             }
                     }
                 }
+                SCANNER.close();
             }
             SCANNER.close();
             return turma;
@@ -323,123 +320,5 @@ public class Cadastrar {
         return new Professor(
                 dados.get(0), dados.get(1), dados.get(2), dados.get(3), dados.get(4)
         );
-    }
-
-    public static Aula aula(Scanner SCANNER)
-    {
-        Exibir.separador();
-        System.out.println("-Cadastrar nova aula-");
-        while (true)
-        {
-            Sala sala = null;
-            System.out.print("Qual é o nome da aula: ");
-            String nome_aula = SCANNER.nextLine();
-            System.out.println("""
-                    0 = Sair
-                    1 = Criar sala
-                    2 = Adicionar a salas existentes""");
-            System.out.print(": ");
-            int resp = SCANNER.nextInt();
-            switch (resp)
-            {
-                case 0:
-                    break;
-
-                case 1:
-                    sala = sala();
-                    if (sala == null){
-                        break;
-                    }
-                    DaoFactory.criaSalaDao().inserirSala(sala);
-
-                case 2:
-                    System.out.println("\n--Selecione o ID da sala-- \n");
-                    DaoFactory.criaSalaDao().buscarTodasSalas();
-                    System.out.println("______________________________________");
-                    System.out.print("\nID ESCOLHIDO: ");
-                    int id_sala = SCANNER.nextInt();
-                    sala = DaoFactory.criaSalaDao().buscarSalaPorIdTransformarEmOBjSala(id_sala);
-                    if (sala == null) {
-                        System.out.println("Sala inexistente... Por favor tente novamente");
-                        System.out.print("Gostaria de cancelar a operação? (S/N) : ");
-                        String resp_ = SCANNER.next().substring(0, 1).toUpperCase();
-                        if (resp_.equals("S")) {
-                            return null;
-                        }
-                    } else {
-                        System.out.print("Em qual dia da semana terá aula: ");
-                        ArrayList<String> dias_de_aula = Exibir.diaDaSemana();
-                        if (dias_de_aula == null){
-                            return null;
-                        }
-                        boolean controle = true;
-
-                        for (String value : dias_de_aula) {
-                            System.out.println(value);
-                            if (DaoFactory.criaAulaDao().verSeTemSalaCadastradaAulaEmQueDia(id_sala, value)) {
-                                controle = false;
-                                break;
-                            }
-                        }
-                        if (!controle) {
-                            System.out.println("Impossível cadastrar aula neste(s) dia, sala já está sendo ocupada...");
-                            System.out.print("Gostaria de cancelar a operação? (S/N) : ");
-                            String resp_ = SCANNER.next().substring(0, 1).toUpperCase();
-                            if (resp_.equals("S")) {
-                                return null;
-                            } else {
-                                continue;
-                            }
-                        }
-                        Turma turma = null;
-                        while (turma == null)
-                        {
-                            System.out.println("Qual turma terá aula de " + nome_aula + "?");
-                            System.out.println("\n--Selecione o ID da turma--");
-                            DaoFactory.criaTurmaDao().buscarTodasTurmas();
-                            System.out.println("______________________________________");
-                            System.out.print("\nID ESCOLHIDO: ");
-                            Integer id_turma = SCANNER.nextInt();
-                            for (String s : dias_de_aula) {
-                                if (DaoFactory.criaAulaDao().verSeTemTurmaCadastradaEmUmDiaEspecifico(id_turma, s)){
-                                    controle = false;
-                                    break;
-                                }
-                            }
-                            if (!controle) {
-                                System.out.println("Uma turma não pode ter mais de uma aula por dia...");
-                                System.out.print("Gostaria de cancelar a operação? (S/N) : ");
-                                String resp_ = SCANNER.next().substring(0, 1).toUpperCase();
-                                if (resp_.equals("S")) {
-                                    return null;
-                                } else {
-                                    continue;
-                                }
-                            }
-                            turma = DaoFactory.criaTurmaDao().buscarTurmaPorIdTransformaEmObjTurma(id_turma);
-                            if (turma == null) {
-                                System.out.println("Turma inexistente...");
-                                System.out.print("Gostaria de cancelar a operação? (S/N) : ");
-                                String resp_ = SCANNER.next().substring(0, 1).toUpperCase();
-                                if (resp_.equals("S")) {
-                                    return null;
-                                } else {
-                                    System.out.println("Tente cadastrar outra turma...");
-                                }
-                            }
-                            else {
-                                Aula aula = new Aula();
-                                aula.setSala(sala);
-                                aula.setTurma(turma);
-                                aula.setNomeAula(nome_aula);
-                                for (String dia : dias_de_aula) {
-                                    aula.setDiaSemana(dia);
-                                }
-                                return aula;
-                            }
-                        }
-                }
-            }
-        }
     }
 }

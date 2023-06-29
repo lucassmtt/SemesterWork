@@ -56,6 +56,7 @@ public class Exibir {
             System.out.print("Resposta: ");
             int resp = SCANNER.nextInt();
             if (resp > 6 || resp < 0){
+                SCANNER.close();
                 continue;
             }
             switch (resp){
@@ -146,8 +147,9 @@ public class Exibir {
     }
 
     public static String exibicao(String msg) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner SCANNER = new Scanner(System.in);
         System.out.print(msg + "(S/N): ");
-        return scanner.next().substring(0, 1).toUpperCase();
+        String resp = SCANNER.next();
+        return resp;
     }
 }

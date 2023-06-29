@@ -9,7 +9,7 @@ public class Turma implements Serializable
 {
     public Integer Id_Turma;
     public String nomeTurma;
-    public Sala sala;
+
     public Curso curso;
 
     public Turma(){};
@@ -19,38 +19,12 @@ public class Turma implements Serializable
         this.nomeTurma = nomeTurma;
     }
 
-    public Turma(String nomeTurma, Sala sala)
-    {
-        this.nomeTurma = nomeTurma;
-        this.sala = sala;
-    }
-
     public Turma(String nomeTurma, Curso curso)
     {
         this.nomeTurma = nomeTurma;
         this.curso = curso;
     }
 
-    public Turma(String nomeTurma, Sala sala, Curso curso)
-    {
-        this.nomeTurma = nomeTurma;
-        this.sala = sala;
-        this.curso = curso;
-    }
-
-    public Object se_existir_a_sala_retorna_id_ou_null(){
-        if (sala != null){
-            try {
-                return sala.getId_Sala();
-            }
-            catch (Exception e){
-                return null;
-            }
-        }
-        else {
-            return null;
-        }
-    }
 
     public Object se_existir_o_curso_retorna_id_ou_null(){
         if (curso != null){
@@ -91,14 +65,6 @@ public class Turma implements Serializable
         this.nomeTurma = nomeTurma;
     }
 
-    public Sala getSala() {
-        return sala;
-    }
-
-    public void setSala(Sala sala) {
-        this.sala = sala;
-    }
-
     public Curso getCurso() {
         return curso;
     }
@@ -112,19 +78,18 @@ public class Turma implements Serializable
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Turma turma = (Turma) o;
-        return Objects.equals(Id_Turma, turma.Id_Turma) && Objects.equals(nomeTurma, turma.nomeTurma) && Objects.equals(sala, turma.sala) && Objects.equals(curso, turma.curso);
+        return Objects.equals(Id_Turma, turma.Id_Turma) && Objects.equals(nomeTurma, turma.nomeTurma) && Objects.equals(curso, turma.curso);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id_Turma, nomeTurma, sala, curso);
+        return Objects.hash(Id_Turma, nomeTurma, curso);
     }
 
     @Override
     public String toString() {
         return "Turma ID: " + getId_Turma() + "\n" +
                 "Nome da turma: " + getNomeTurma() + "\n" +
-                "Sala: " + getSala() + "\n" +
                 "Curso: " + getCurso();
     }
 }

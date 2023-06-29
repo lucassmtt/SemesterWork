@@ -20,7 +20,6 @@ CREATE TABLE turma
 (
 	ID_turma int PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	nomeTurma varchar(255) DEFAULT NULL,
-	ID_Sala int DEFAULT NULL,
 	ID_curso int,
 	FOREIGN KEY (ID_curso) REFERENCES faculdade.curso(ID_curso)
 );
