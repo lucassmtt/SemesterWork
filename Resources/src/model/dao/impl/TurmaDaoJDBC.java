@@ -205,23 +205,22 @@ public class TurmaDaoJDBC implements TurmaDao
                 if (resultSet.next()){
                     int id_turma = resultSet.getInt(1);
                     String nome_turma = resultSet.getString(2);
-                    Object sala = resultSet.getObject(3);
-                    Object curso = resultSet.getObject(4);
-
                     Turma turma = new Turma();
-                    Curso curso2 = new Curso();
+                    Sala sala = null;
+                    Curso curso = null;
 
-                    if (curso != null){
-                        curso2.setId_Curso(resultSet.getInt(4));
+                    if (resultSet.getObject(3) != null){
+                        sala = DaoFactory.criaSalaDao().buscarSalaPorIdTransformarEmOBjSala((Integer) resultSet.getObject(3));
                     }
 
-                    Sala sala1 = new Sala();
-                    sala1.setId_Sala(resultSet.getInt(3));
+                    if (resultSet.getObject(4) != null){
+                        curso = DaoFactory.criaCursoDao().buscarCursoPorIdTransformarEmObj((Integer) resultSet.getObject(4));
+                    }
 
-                    turma.setId_Turma(id_turma);
-                    turma.setNomeTurma(nome_turma);
-                    turma.setSala(sala1);
-                    turma.setCurso(curso2);
+                    turma.setSala(sala);
+                    turma.setCurso(curso);
+                    System.out.println(sala);
+                    System.out.println(curso);
                     return turma;
                 }
                 DB.fechaResultSet(resultSet);

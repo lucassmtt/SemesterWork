@@ -213,6 +213,7 @@ public class AlunoDaoJDBC implements AlunoDao
                     else {
                         Curso curso = new Curso();
                         curso.setId_Curso(resultSet.getInt(7));
+                        aluno.setCurso(curso);
                     }
                     aluno.setEndereco(resultSet.getString(3));
                     aluno.setCelular(resultSet.getString(4));

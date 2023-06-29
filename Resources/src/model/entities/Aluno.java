@@ -29,7 +29,7 @@ public final class Aluno extends Pessoa implements Serializable {
     public Object se_existir_o_curso_retorna_id_ou_null(){
         if (curso != null){
             try {
-                return getId_Matricula();
+                return getCurso().getId_Curso();
             }
             catch (DbException e){
                 return null;
