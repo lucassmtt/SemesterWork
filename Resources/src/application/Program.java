@@ -150,30 +150,165 @@ public class Program {
                     }
                     case 12 -> {
                         System.out.println("Adicionar aluno a curso: ");
-                        System.out.println("Escolha o ID do curso que o aluno será adicionado: ");
-                        cursoDao.buscarTodosCursos();
-                        System.out.print("ID ESCOLHIDO: ");
-                        int id_curso = SCANNER.nextInt();
-                        System.out.println("Escolha o aluno que será adicionado ao curso: ");
-                        alunoDao.buscarTodosAlunos();
-                        int id_aluno = SCANNER.nextInt();
+                        int id_curso = -1;
+                        int cont = 0;
+                        int res = 0;
+                        while (cursoDao.buscarCursoPorIdTransformarEmObj(id_curso) == null){
+                            if (cont == 0){
+                                System.out.println("Escolha o ID do curso que o aluno será adicionado:");
+                            }
+                            if (cont > 0){
+                                System.out.println("""
+                                    ID do curso não encontrado, por favor digite um ID que conste no banco de dados...
+                                    
+                                    0 = Cancelar operação e voltar ao menu
+                                    1 = Continuar
+                                    1..Infinito = Continuar
+                                    """);
+                                System.out.print(": ");
+                                res = SCANNER.nextInt();
+                                if (res == 0){
+                                    System.out.println("Cancelando operação...");
+                                    break;
+                                }
+                            }
+                            cursoDao.buscarTodosCursos();
+                            System.out.println("______________________________");
+                            System.out.print("ID ESCOLHIDO: ");
+                            id_curso = SCANNER.nextInt();
+                            cont += 1;
+                            res = 1;
+                        }
+                        if (res == 0){
+                            continue;
+                        }
 
+                        int id_aluno = -1;
+                        cont = 0;
+                        res = 0;
+                        while (alunoDao.buscarAlunoPorIdTransformaEmAluno(id_aluno) == null){
+                            if (cont == 0){
+                                System.out.println("Escolha o aluno que será adicionado ao curso: ");
+                            }
+                            if (cont > 0){
+                                System.out.println("""
+                                        ID do aluno não encontrado, por favor digite um ID que conste no banco de dados...
+                                        
+                                        0 = Cancelar operação e voltar ao menu
+                                        1 = Continuar
+                                        1..Infinito = Continuar
+                                        """);
+                                System.out.print(": ");
+                                res = SCANNER.nextInt();
+                                if (res == 0){
+                                    System.out.println("Cancelando operação...");
+                                    break;
+                                }
+                            }
+                            System.out.println("_______________________________");
+                            alunoDao.buscarTodosAlunos();
+                            System.out.print("ID ESCOLHIDO: ");
+                            id_aluno = SCANNER.nextInt();
+                            cont += 1;
+                            res = 1;
+                        }
+                        if (res == 0){
+                            continue;
+                        }
                         Curso curso = cursoDao.buscarCursoPorIdTransformarEmObj(id_curso);
                         Aluno aluno = alunoDao.buscarAlunoPorIdTransformaEmAluno(id_aluno);
 
-                        aluno.setCurso(curso);
-                        aluno.setId_Matricula(id_aluno);
-                        alunoDao.atualizarAluno(aluno);
+                        if (aluno.getCurso() == null){
+                            aluno.setCurso(curso);
+                            aluno.setId_Matricula(id_aluno);
+                            alunoDao.atualizarAluno(aluno);
+                        }
+                        else {
+                            while (true){
+                                System.out.println("Tem certeza que deseja trocar o aluno de curso? (S/N) ");
+                                System.out.print("Resposta: ");
+                                String resp_ = SCANNER.next().substring(0,1).toUpperCase();
+                                if (resp_.equals("N")){
+                                    break;
+                                }
+                                if (resp_.equals("S")){
+                                    aluno.setCurso(curso);
+                                    aluno.setId_Matricula(id_aluno);
+                                    alunoDao.atualizarAluno(aluno);
+                                    break;
+                                }
+                                else {
+                                    System.out.println("Por favor digite uma resposta válida...");
+                                }
+                            }
+                        }
                     }
                     case 13 -> {
                         System.out.println("Adicionar turma a curso: ");
-                        System.out.println("Escolha o ID do curso que a turma será alocada: ");
-                        cursoDao.buscarTodosCursos();
-                        System.out.print("ID ESCOLHIDO: ");
-                        int id_curso = SCANNER.nextInt();
-                        System.out.println("Escolha a turma que será adicionada ao curso: ");
-                        turmaDao.buscarTodasTurmas();
-                        int id_turma = SCANNER.nextInt();
+                        int cont = 0;
+                        int id_curso = -1;
+                        int res = 0;
+                        while (cursoDao.buscarCursoPorIdTransformarEmObj(id_curso) == null) {
+                            if (cont == 0){
+                                System.out.println("Escolha o ID do curso que a turma será alocada: ");
+                            }
+                            if (cont > 0){
+                                System.out.println("""
+                                        ID do curso não encontrado, por favor digite um ID que conste no banco de dados...
+                                        
+                                        0 = Cancelar operação e voltar ao menu
+                                        1 = Continuar
+                                        1..Infinito = Continuar
+                                        """);
+                                System.out.print(": ");
+                                res = SCANNER.nextInt();
+                                if (res == 0){
+                                    System.out.println("Cancelando operação...");
+                                    break;
+                                }
+                            }
+                            cursoDao.buscarTodosCursos();
+                            System.out.println("______________________________");
+                            System.out.print("ID ESCOLHIDO: ");
+                            id_curso = SCANNER.nextInt();
+                            cont += 1;
+                            res = 1;
+                        }
+                        if (res == 0){
+                            continue;
+                        }
+
+                        int id_turma = -1;
+                        cont = 0;
+                        res = 0;
+                        while (turmaDao.buscarTurmaPorIdTransformaEmObjTurma(id_turma) == null) {
+                            if (cont == 0){
+                                System.out.println("Escolha a turma que será adicionada ao curso: ");
+                            }
+                            if (cont > 0){
+                                System.out.println("""
+                                        ID da turma não encontrado, por favor digite um ID que conste no banco de dados...
+                                        
+                                        0 = Cancelar operação e voltar ao menu
+                                        1 = Continuar
+                                        1..Infinito = Continuar
+                                        """);
+                                System.out.print(": ");
+                                res = SCANNER.nextInt();
+                                if (res == 0){
+                                    System.out.println("Cancelando operação...");
+                                    break;
+                                }
+                            }
+                            turmaDao.buscarTodasTurmas();
+                            System.out.print("ID ESCOLHIDO: ");
+                            id_turma = SCANNER.nextInt();
+                            cont += 1;
+                            res = 1;
+                        }
+                        if (res == 0){
+                            continue;
+                        }
 
                         Turma turma = turmaDao.buscarTurmaPorIdTransformaEmObjTurma(id_turma);
                         Curso curso = cursoDao.buscarCursoPorIdTransformarEmObj(id_curso);

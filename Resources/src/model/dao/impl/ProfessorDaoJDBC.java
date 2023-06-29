@@ -217,16 +217,16 @@ public class ProfessorDaoJDBC implements ProfessorDao
                         Curso curso = new Curso();
                         curso.setId_Curso(resultSet.getInt(7));
                     }
+                    DB.fechaResultSet(resultSet);
                     return professor;
                 } else {
-                    System.out.println("Nenhum registro encontrado...");
+                    return null;
                 }
 
             } catch (SQLException e) {
                 throw new DbException(e.getMessage());
             } finally {
                 DB.fechaStatement(preparedStatement);
-                DB.fechaResultSet(resultSet);
             }
         }
         else {

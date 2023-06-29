@@ -221,15 +221,14 @@ public class AlunoDaoJDBC implements AlunoDao
 
                 }
                 else {
-                    System.out.println("Nenhum registro encontrado...");
+                    return null;
                 }
-                DB.fechaResultSet(resultSet);
-
             }
             catch (SQLException e){
                 throw new DbException(e.getMessage());
             }
             finally {
+                DB.fechaResultSet(resultSet);
                 DB.fechaStatement(preparedStatement);
             }
         }

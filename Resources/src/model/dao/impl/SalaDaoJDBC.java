@@ -198,12 +198,12 @@ public class SalaDaoJDBC implements SalaDao
                 }
 
                 else {
-                    System.out.println("Nenhum registro encontrado...");
+                    return null;
                 }
-                DB.fechaResultSet(resultSet);
             }
 
             catch (Exception e){
+                DB.fechaResultSet(resultSet);
                 throw new DbException(e.getMessage());
             }
             finally {

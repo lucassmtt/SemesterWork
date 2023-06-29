@@ -199,7 +199,6 @@ public class CursoDaoJDBC implements CursoDao
                     return curso;
                 }
                 else {
-                    System.out.println("Nenhum registro encontrado...");
                     return null;
                 }
 

@@ -260,7 +260,7 @@ public class AulaDaoJDBC implements AulaDao
                     }
                 }
                 else {
-                    System.out.println("Nenhum registro encontrado...");
+                    return null;
                 }
                 DB.fechaResultSet(resultSet);
 

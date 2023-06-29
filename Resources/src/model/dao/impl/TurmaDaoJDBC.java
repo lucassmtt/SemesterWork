@@ -223,15 +223,14 @@ public class TurmaDaoJDBC implements TurmaDao
                     turma.setCurso(curso2);
                     return turma;
                 }
-                System.out.println("Nenhum registro encontrado...");
-
+                DB.fechaResultSet(resultSet);
+                return null;
             }
             catch (Exception e){
                 throw new DbException(e.getMessage());
             }
             finally {
                 DB.fechaStatement(preparedStatement);
-                DB.fechaResultSet(resultSet);
             }
         }
         else {
