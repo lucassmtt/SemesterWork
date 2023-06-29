@@ -3,6 +3,7 @@ package model.dao.impl;
 import db.DB;
 import db.DbException;
 import model.dao.AlunoDao;
+import model.dao.DaoFactory;
 import model.entities.Aluno;
 import model.entities.Curso;
 import model.tools.Exibir;
@@ -166,9 +167,8 @@ public class AlunoDaoJDBC implements AlunoDao
                         System.out.println("Curso: Nenhum curso matriculado");
                     }
                     else{
-                        System.out.println("Curso ID: " + resultSet.getInt(7));
+                        System.out.println(DaoFactory.criaCursoDao().buscarCursoPorIdTransformarEmObj(resultSet.getInt(7)));
                     }
-
                 }
                 else {
                     System.out.println("Nenhum registro encontrado...");
@@ -265,7 +265,7 @@ public class AlunoDaoJDBC implements AlunoDao
                         System.out.println("Curso: Nenhum curso matriculado");
                     }
                     else{
-                        System.out.println("Curso ID: " + resultSet.getInt(7));
+                        System.out.println(DaoFactory.criaCursoDao().buscarCursoPorIdTransformarEmObj(resultSet.getInt(7)));
                     }
                     System.out.println("_______________________________");
                     Exibir.espera_em_ms(500);

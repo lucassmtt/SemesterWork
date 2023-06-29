@@ -122,11 +122,9 @@ public class Turma implements Serializable
 
     @Override
     public String toString() {
-        return "Turma{" +
-                "Id_Turma=" + Id_Turma +
-                ", nomeTurma='" + nomeTurma + '\'' +
-                ", sala=" + sala +
-                ", curso=" + curso +
-                '}';
+        return "Turma ID: " + getId_Turma() + "\n" +
+                "Nome da turma: " + getNomeTurma() + "\n" +
+                "Sala: " + getSala() + "\n" +
+                "Curso: " + getCurso();
     }
 }

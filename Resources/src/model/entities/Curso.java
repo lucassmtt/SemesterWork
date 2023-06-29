@@ -79,9 +79,9 @@ public class Curso implements Serializable {
     //to String da classe
     @Override
     public String toString() {
-        return "código do curso: " + Id_Curso +
-                ", nome do curso: " + nomeCurso +
-                ", carga horária: " + cargaHoraria +
-                ", descricao: " + descricao + ".";
+        return "Curso ID: " + getId_Curso() + "\n" +
+                "Nome do curso: " + getNomeCurso() + "\n" +
+                "Descrição do curso: " + getDescricao() + "\n" +
+                "Carga horária do curso: " + getCargaHoraria();
     }
 }

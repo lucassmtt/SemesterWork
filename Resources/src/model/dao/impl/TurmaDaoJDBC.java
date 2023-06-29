@@ -2,6 +2,7 @@ package model.dao.impl;
 
 import db.DB;
 import db.DbException;
+import model.dao.DaoFactory;
 import model.dao.TurmaDao;
 import model.entities.Curso;
 import model.entities.Sala;
@@ -255,16 +256,23 @@ public class TurmaDaoJDBC implements TurmaDao
 
                 while (resultSet.next()){
                     System.out.println("______________________________");
-                    Object sala = resultSet.getObject(3);
-                    Object curso = resultSet.getObject(4);
+                    Object sala_id = resultSet.getObject(3);
+                    Object curso_id = resultSet.getObject(4);
                     System.out.println("ID turma: " + resultSet.getInt(1));
                     System.out.println("Nome da turma: " + resultSet.getString(2));
-                    if (sala == null){
+                    if (sala_id == null){
                         System.out.print("Sala: sem salas anexadas\n");
                     }
-                    if (curso == null){
+                    else {
+                        System.out.println(DaoFactory.criaSalaDao().buscarSalaPorIdTransformarEmOBjSala((Integer) sala_id));
+                    }
+                    if (curso_id == null){
                         System.out.println("Curso: sem curso anexado\n" );
                     }
+                    else{
+                        System.out.println(DaoFactory.criaCursoDao().buscarCursoPorIdTransformarEmObj((Integer) curso_id));
+                    }
+
                     Exibir.espera_em_ms(500);
                 }
                 DB.fechaResultSet(resultSet);

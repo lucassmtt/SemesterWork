@@ -68,12 +68,11 @@ public final class Professor extends Pessoa implements Serializable {
     // to String da classe "Professor"
     @Override
     public String toString() {
-        return "Professor{" +
-                "cpf='" + cpf + '\'' +
-                ", nome='" + nome + '\'' +
-                ", endereco='" + endereco + '\'' +
-                ", email='" + email + '\'' +
-                ", celular='" + celular + '\'' +
-                '}';
+        return "Professor: " + "\n" +
+                "CPF: " + getCpf() + '\n' +
+                "Nome: " + getNome() + '\n' +
+                "Endereço: " + getEndereco() + '\n' +
+                "Email: " + getEmail() + '\n' +
+                "Celular: " + getCelular();
     }
 }

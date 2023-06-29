@@ -69,11 +69,9 @@ public class Sala implements Serializable {
 
     @Override
     public String toString() {
-        return "Sala{" +
-                "Id_Sala=" + Id_Sala +
-                ", nomeSala='" + nomeSala + '\'' +
-                ", localSala='" + localSala + '\'' +
-                ", capacidadeSala=" + capacidadeSala +
-                '}';
+        return "ID sala: " + getId_Sala() + "\n" +
+                "Nome da sala: " + getNomeSala() + "\n" +
+                "Local: " + getLocalSala() + "\n" +
+                "Capacidade: " + getCapacidadeSala();
     }
 }
