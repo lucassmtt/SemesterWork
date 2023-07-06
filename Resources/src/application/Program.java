@@ -28,7 +28,7 @@ public class Program {
         try {
             while(continuar) {
                 Scanner scanner = new Scanner(System.in);
-                int resposta = 0;
+                int resposta;
                 String resp;
                 Exibir.menu();
                 resposta = scanner.nextInt();
@@ -651,7 +651,6 @@ public class Program {
                 System.out.println("Ocorreu um erro inesperado. Por favor tente mais tarde");
                 e.printStackTrace();
                 continuar = false;
-            }
-                SCANNER.close();
-            }
+        }
+    }
 }
